@@ -10,16 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_27_173722) do
+ActiveRecord::Schema.define(version: 2021_04_27_194247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "password"
+  create_table "furbabies", force: :cascade do |t|
+    t.string "dna"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "tokens", force: :cascade do |t|
+    t.integer "vibes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "furbaby_id"
+    t.index ["furbaby_id"], name: "index_tokens_on_furbaby_id"
+    t.index ["user_id"], name: "index_tokens_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "tokens", "furbabies"
+  add_foreign_key "tokens", "users"
 end

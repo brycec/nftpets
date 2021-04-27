@@ -1,0 +1,2 @@
+class Furbaby < ApplicationRecord
+end
