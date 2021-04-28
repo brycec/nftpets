@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :furbabies
   resources :tokens
   resources :users
   root 'sessions#welcome'
