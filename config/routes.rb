@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tokens
   resources :users
   root 'sessions#welcome'
   get 'login', to: 'sessions#new'
