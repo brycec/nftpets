@@ -1,7 +1,7 @@
 class TokensController < ApplicationController
   def create
     if logged_in?
-      @token = Token.create(user_id:current_user.id)
+      @token = Token.create(user_id:current_user.id, vibes:0)
     end
   end
 
