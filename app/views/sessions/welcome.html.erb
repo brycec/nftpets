@@ -1,10 +1,20 @@
-<h2>Welcome</h2>
-<% if logged_in? %>
-    <p>logged in as
-    <%= link_to current_user.name, '/users/'+current_user.id.to_s %>
-    <br>
-    <%= link_to "Logout", '/logout'%>
-<% else %>
-  <%= link_to "Login", '/login' %><br>
-  <%= link_to "Sign Up", '/users/new' %>
-<%end%>
+<h3><i>the furbabies of Neptune need your help!</i></h3>
+<table>
+<thead>
+  <tr><th>rarity</th><th>phenotype</th><th>genus</th></tr>
+    </thead>
+    <tbody>
+<tr><td>⭐️⭐️</td><td>😻</td><td>🐈‍⬛smol demon </td></tr>
+<tr><td>⭐️</td><td>🍎</td><td>🐈regie tabbers </td></tr>
+<tr><td>⭐️</td><td>🔥</td><td>🐕chonker doge </td></tr>
+</tbody>
+</table>
+<sub>these digital creatures don't have a user assigned to them!
+  if they aren't adopted they will eventually be garbage collected by
+  memory management algorithms.
+  (they will cease to exist!)</sub>
+<h4>news feed</h4>
+<ul>
+<li>fred adopted a smol demon for 345 neptunium </li>
+<li>george pet Whiskers (bob's chonker doge) </li>
+</ul>
