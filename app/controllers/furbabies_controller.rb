@@ -12,6 +12,7 @@ class FurbabiesController < ApplicationController
   end
 
   def index
+    @path = 'furbabies'
     @furbabies = Array.new(3) {|i|
        Furbaby.new(dna:'x'+i.to_s)
       }

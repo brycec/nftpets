@@ -17,7 +17,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-  
+
+    @path = 'users / '+@user.id.to_s
+
     @tokens = Token.where(user_id: params[:id])
     @token = Token.new
   end
