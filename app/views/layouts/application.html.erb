@@ -8,10 +8,9 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+    <%= javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js" %>
 
-  <body>
-    <%= javascript_include_tag "three" %>
+      <%= javascript_include_tag "three" %>
 
       <script type="x-shader/x-vertex" id="vertexshader">
 
@@ -64,8 +63,6 @@
         const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
         const renderer = new THREE.WebGLRenderer({antialias: true});
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
 
         const boxGeometry = new THREE.SphereGeometry(3,9,8);
         const boxMaterial = new THREE.MeshBasicMaterial( { color: 0x73F8ED,
@@ -127,7 +124,12 @@
 
         animate();
 
-
+</script>
+</head>
+<body>
+        <script>
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
       </script>
 
 
@@ -148,8 +150,9 @@
 <%=@path %>
   </sub></h1>
 
-
+    <div id="winb">
     <%= yield %>
+    </div>
     </div>
   </body>
 </html>
