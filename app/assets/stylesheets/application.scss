@@ -13,17 +13,13 @@
  *= require_tree .
  *= require_self
  */
+$bcyan: #B9FDE6;
 $cyan: #73F8ED;
+$pcyan: #306E61;
 $dcyan: #0D2120;
 body {
   margin: 0;
   background: $dcyan;
-}
-
-.login {
-  float: right;
-  margin: 0.5em;
-  font-weight: bold;
 }
 
 a {
@@ -46,11 +42,20 @@ canvas {
     font-size: 1.6em;
     font-style: italic;
     text-align: left;
-    padding: 0.2em 0.6em;
+    padding: 0.3em 0.6em;
     background: $cyan;
     color: $dcyan;
     margin: 0;
     border-radius: 0.4em 0.4em 0 0;
+  }
+  .login {
+    float: right;
+    margin: 0.4em;
+    font-weight: bold;
+    color: $pcyan;
+  }
+  .login a:hover {
+    color: $bcyan;
   }
 }
 #win, #win input, .btn a {

@@ -138,18 +138,20 @@
 <div id="win">
   <div class="login">
   <% if logged_in? %>
-
-  logged in
-      as
+    YOU:
       <%= link_to current_user.name, '/users/'+current_user.id.to_s %>
+      / <%= link_to "mail", '/messages/'%>
       / <%= link_to "logout", '/logout'%>
   <% else %>
     <%= link_to "login", '/login' %>
     <%= link_to "sign up", '/users/new' %>
   <%end%>
+  <br>
+  <%=
+   (DateTime.now + 365.24219*1200).utc
+  %>
   </div>
-  <h1><%= link_to "🐈 nftpets/", '/' %>
-<%=@path %></h1>
+  <h1><%= link_to "🐈 nftpets/", '/' %><%=@path %></h1>
 
     <div id="winb">
     <%= yield %>

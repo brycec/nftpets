@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  resources :users
+  resources :messages
   resources :furbabies
   resources :tokens
-  resources :users
   root 'sessions#welcome'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
