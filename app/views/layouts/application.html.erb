@@ -140,18 +140,24 @@
       / <%= link_to "mail", '/messages/'%>
       / <%= link_to "logout", '/logout'%>
   <% else %>
-    <%= link_to "login", '/login' %>
+    <%= link_to "login", '/login' %> /
     <%= link_to "sign up", '/users/new' %>
   <%end%>
   <br>
   <%=
-   (DateTime.now + 365.24219*1200).utc
+   (DateTime.now + 365.2421875*1200).utc #magic time
   %>
   </div>
-  <h1><%= link_to "🐈 nftpets/", '/' %><%=@path %></h1>
+  <h1><%= link_to "🐈 nftpets/", '/' %><%= yield :path %></h1>
 
     <div id="winb">
     <%= yield %>
+    <br>
+    <div id="foot">
+      The N.F.T. Pet System is made possible by a grant from
+      The Society to Protect Neptunian Furbabies
+      and by contributions from users like you.
+    </div>
     </div>
     </div>
     <%= javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js" %>

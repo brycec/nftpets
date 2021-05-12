@@ -1,3 +1,7 @@
+<% content_for :path do %>
+
+    <%='users/'+@user.id.to_s%>
+<% end %>
 <h2>users</h2>
 <table>
   <% @users.each do |user| %>

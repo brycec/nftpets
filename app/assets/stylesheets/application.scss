@@ -14,6 +14,7 @@
  *= require_self
  */
 $bcyan: #B9FDE6;
+$acyan: #5CC1BA;
 $cyan: #73F8ED;
 $pcyan: #306E61;
 $dcyan: #0D2120;
@@ -46,14 +47,14 @@ canvas {
     font-style: italic;
     text-align: left;
     padding: 0.3em 0.6em;
-    background: $cyan;
+    background: $acyan;
     color: $dcyan;
     margin: 0;
     border-radius: 0.4em 0.4em 0 0;
   }
   .login {
     float: right;
-    margin: 0.4em;
+    margin: 0.3em 0.5em;
     font-weight: bold;
     color: $pcyan;
   }
@@ -61,7 +62,7 @@ canvas {
     color: $bcyan;
   }
 }
-#win, #win input, .btn a {
+#win, #win input, .btn a, textarea {
   font-family: monospace;
   font-size: 1em;
   background-color: rgba(0, 0, 0, 0.6);
@@ -89,6 +90,17 @@ canvas {
     font-size: 0.7em;
     text-shadow: 0 1px $cyan;
   }
+}
+#foot {
+  clear: both;
+  text-align: right;
+  font-style: italic;
+  font-size: 0.5em;
+  top: 1em;
+  position: relative;
+  padding-top: 0.5em;
+  border-top: solid 1px $pcyan;
+  color: $pcyan;
 }
 
 
@@ -122,12 +134,11 @@ width: 1em;
     filter: hue-rotate(125deg); background: #887D03;}
 }
 
-
 #mails {
   float: left;
   margin: -1.2em;
   padding: 1em;
-  width: 10em;
+  width: 20%;
 }
 
 #mails .maili {
@@ -140,9 +151,14 @@ width: 1em;
 }
 
 #mailbody {
+  width: 75%;
   border-left: solid 1px $cyan;
   float: left;
-  height: 20em;
+  min-height: 19em;
   margin-left: 1em;
   padding-left: 1em;
+  .btn {
+    float: right;
+    margin-right: -2.3em;
+  }
 }

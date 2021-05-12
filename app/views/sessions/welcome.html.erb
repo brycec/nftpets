@@ -1,6 +1,6 @@
 <pre>
 CONNECTING...
-=============================================================================
+-========================================================================-
   __    _   _______ _______ _______ __   __ __    _ ___ _______ __    _
  |  |  | | |       |       |       |  | |  |  |  | |   |   _   |  |  | |
  |   |_| | |    ___|    _  |_     _|  | |  |   |_| |   |  |_|  |   |_| |
@@ -30,7 +30,7 @@ CONNECTING...
 |   |   |   |___  |   |    _____| | |   |  _____| | |   | |   |___| ||_|| |
 |___|   |_______| |___|   |_______| |___| |_______| |___| |_______|_|   |_|
 
-============================================================================
+-===============================- ONLINE -=================================-
 v0.0.1 - (C)opyleft 3000 and Never. No rights reserved. All works stolen.
 SERVER STATUS - FULLY OPERATIONAL    MAY 1, 3103 99% UPTIME
 
@@ -41,7 +41,7 @@ SERVER STATUS - FULLY OPERATIONAL    MAY 1, 3103 99% UPTIME
 
     <% if logged_in? %>
       Currently logged in as <%=current_user.name%>
-      <%= link_to "user page", '/users/'+current_user.id.to_s %>
+      <%= link_to "go to mail", '/messages' %>
     <% else %>
       <%= link_to "start new", '/users/new' %>
       <%= link_to "continue", '/login' %>

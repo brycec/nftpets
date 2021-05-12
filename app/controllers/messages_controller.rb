@@ -1,4 +1,8 @@
 class MessagesController < ApplicationController
+  def new
+    @message = Message.new
+  end
+
   def create
   end
 
@@ -6,9 +10,9 @@ class MessagesController < ApplicationController
   end
 
   def index
-    @path = 'messages'
     @messages = Message.all
   end
+
   def delete
   end
 end
