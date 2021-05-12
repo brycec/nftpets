@@ -1,6 +1,9 @@
 class MessagesController < ApplicationController
   def new
     @message = Message.new
+    @message.to = params[:to]
+    @message.subject = params[:subject]
+    @message.body = params[:body]
   end
 
   def create
@@ -12,7 +15,7 @@ class MessagesController < ApplicationController
   end
 
  def my_messages
-   Message.where(to: current_user.name)
+   Message.where(to: current_user.name).reverse
 end
   def show
     @messages = my_messages
