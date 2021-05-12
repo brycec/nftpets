@@ -16,6 +16,7 @@
 $bcyan: #B9FDE6;
 $acyan: #5CC1BA;
 $cyan: #73F8ED;
+$lcyan: #3C8469;
 $pcyan: #306E61;
 $dcyan: #0D2120;
 $magenta: #C8326D;
@@ -66,7 +67,7 @@ canvas {
 #win, #win input, .btn a, textarea {
   font-family: monospace;
   font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
   color: $cyan !important;
   border: solid 1px $cyan;
   border-radius: 0.9em;
@@ -93,6 +94,33 @@ canvas {
   }
   a {
     color: $bcyan;
+  }
+  a:hover {
+    color: $pcyan;
+  }
+  h3 {
+    color: $lcyan;
+  }
+  table {
+    border-radius: 0.5em;
+    border-spacing: 0;
+    border: solid 1px $cyan;;
+    border-bottom: none;
+    th, td {
+    border-radius: 0.5em;
+      padding: 0.8em;
+      border-bottom: solid 1px $cyan;
+    }
+    th {
+      border-right: none;
+      background: $dcyan;
+    }
+    td {
+      color: $lcyan;
+    }
+    tr:hover td {
+      background: $dcyan;
+    }
   }
 }
 #notice {
@@ -163,7 +191,8 @@ width: 1em;
     color: $pcyan;
   }
 }
-#mails .maili:hover {
+
+.maili:hover {
   cursor: pointer;
   background: $hcyan;
 }

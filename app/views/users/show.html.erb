@@ -1,23 +1,25 @@
 <% content_for :path do %><%='users/'+@user.id.to_s%>
 <% end %>
-<h2> <%=@user.name%> </h2>
 <table>
-  <tr><th>joined:</th><td> <%=@user.created_at.strftime('%m/%d/%Y')%> </td></tr>
- <tr><th>uid:</th><td> <%=@user.id %></td></tr>
+  <tr><th>users/<%=@user.id %>:</th><td><%=@user.name%></td></tr>
+  <tr><th>joined:</th><td> <%=space_time @user.created_at.to_datetime%> </td></tr>
+ <tr><th>networth:</th><td>$9999</td></tr>
 </table>
 
-<h3>tokens</h3>
+<h2><%=@user.name%>'s tokens</h2>
 <table>
   <tr>
-    <th>tid</th><th>furbaby</th><th>vibes</th>
+    <th>id</th><th>furbaby</th><th>vibes</th>
   </tr>
   <%@tokens.each do |t|%>
-   <tr>
-    <td><%=t.id%></td>
+   <tr class="maili">
+    <td>
+     <%=link_to t.id.to_s, '/tokens/'+t.id.to_s %>
+    </td>
     <td>
       <%if t.furbaby_id %>
       <%else%>
-      none
+      ready for adoption
       <%end%></td>
     <td><%=t.vibes.to_s%></td>
    </tr>

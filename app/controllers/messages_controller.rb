@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.create(params.require(:message).permit(
+    @message = Message.new(params.require(:message).permit(
       :to,:subject,:body))
     @message.from = current_user.name
     @message.save

@@ -3,10 +3,12 @@ class Message < ApplicationRecord
 end
 
 def Message.new_welcome(u)
-  @message = Message.create({
+  token = Token.create({user_id: 1})
+  Message.create({
     to: u.name,
     from: 'The Commissioner',
     subject: 'Your First Assignment',
+    token_id: token.id,
     body: %{
 On behalf of the S.P.N.F., thank you. With volunteers operating our pet tokens,
 adopted Furbabies are protected from the Plutonian poachers seeking to harvest

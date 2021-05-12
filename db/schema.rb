@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_172718) do
+ActiveRecord::Schema.define(version: 2021_05_12_190641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2021_05_12_172718) do
     t.string "body"
     t.string "to"
     t.string "from"
+    t.bigint "token_id"
+    t.index ["token_id"], name: "index_messages_on_token_id"
   end
 
   create_table "tokens", force: :cascade do |t|
@@ -48,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_05_12_172718) do
     t.index ["name"], name: "index_users_on_name"
   end
 
+  add_foreign_key "messages", "tokens"
   add_foreign_key "tokens", "furbabies"
   add_foreign_key "tokens", "users"
 end

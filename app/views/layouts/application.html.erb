@@ -55,7 +55,8 @@
 
 
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0D2120);
+        scene.background = new THREE.Color(0x001110);
+				scene.fog = new THREE.FogExp2( 0x001110, 0.0011 );
 
         const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -83,7 +84,7 @@
 
         const vertices = [];
 
-        for ( let i = 0; i < 10000; i ++ ) {
+        for ( let i = 0; i < 20000; i ++ ) {
 
           const x = rand( 2000 )^2;
           const y = rand( 2000 )^2;
@@ -168,5 +169,19 @@
      twemoji.parse(document.getElementById('win'));
      twemoji.parse(document.getElementById('winb'));
     </script>
+
+    <script>
+      mi=document.getElementsByClassName('maili');
+      for (i=0; i<mi.length; i++) {
+        mi[i].onclick = (function(e){
+          e=this.children[0];
+          while(e!==undefined){
+            e.click();
+            e=e.children[0];
+          }
+        });
+      }
+    </script>
+
   </body>
 </html>

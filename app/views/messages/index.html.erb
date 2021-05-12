@@ -9,15 +9,7 @@
 
   <% end %>
 </div>
-<script>
-  mi=document.getElementsByClassName('maili');
-  for (i=0; i<mi.length; i++) {
-    mi[i].onclick = (function(e){
-      e=e.srcElement.children[0];
-      if(e!==undefined)e.click();
-    });
-  }
-  </script>
+
 <div id="mailbody">
   <div class="btn">
   <% if @fmessage %>
@@ -34,6 +26,10 @@
   <h3>from: <%=@fmessage.from%></h3>
   <p><%=@fmessage.body%>
     </p>
+    <% if @fmessage.token_id %>
+      <%=button_to "claim attached token", '/tokens/'+@fmessage.token_id.to_s,
+       method: :patch  %>
+      <%end%>
     <% else %>
   <h2>no messages</h2>
   <% end %>
