@@ -1,4 +1,5 @@
-
+<% content_for :path do %><%='users/new' %>
+<% end %>
 <h2>Sign Up</h2>
 <%= form_for @user do |f| %>
   <%= f.label :name%><br>

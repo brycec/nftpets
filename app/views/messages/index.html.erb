@@ -1,22 +1,31 @@
 
 <div id="mails">
-  <div class="maili"><b>Subject</b> bob</div>
-  <div class="maili"><b>RE: weclome</b> The Commisioner</div>
+  <% @messages.each do |message| %>
+    <div class="maili">
+    <%=link_to message.subject, '/messages/'+message.id.to_s%>
+      <span><%=message.from%></span>
+    </div>
+
+  <% end %>
 </div>
+<script>
+  mi=document.getElementsByClassName('maili');
+  for (i=0; i<mi.length; i++) {
+    mi[i].onclick = (function(e){
+      e=e.srcElement.children[0];
+      if(e!==undefined)e.click();
+    });
+  }
+  </script>
 <div id="mailbody">
   <div class="btn">
+  <%=link_to 'reply', '/messages/new' %>
   <%=link_to 'new message', '/messages/new' %>
   </div>
 
-  RE: welcome
-  <p>fadskjdnfksdnf
-     skdjnf jskdnf knsdjkf ksdn fksdnfj ksdnkfn skdjnfas
-      skdjnf jskdnf knsdjkf ksdn fksdnfj ksdnkfn skdjnfas
-       skdjnf jskdnf knsdjkf ksdn fksdnfj ksdnkfn skdjnfas
-       skdjnf jskdnf knsdjkf ksdn fksdnfj ksdnkfn skdjnfas
-        skdjnf jskdnf knsdjkf ksdn fksdnfj ksdnkfn skdjnfas
-         skdjnf jskdnf knsdjkf ksdn fksdnfj ksdnkfn skdjnfas
-
+  <h2><%=@fmessage.subject%></h2>
+  <h3>from: <%=@fmessage.from%></h3>
+  <p><%=@fmessage.body%>
     </p>
 
 </div>

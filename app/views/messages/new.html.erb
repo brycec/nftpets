@@ -1,5 +1,7 @@
 <h2>Write a Message</h2>
 <%= form_for @message do |f| %>
+  <%= f.label :to%><br>
+  <%= f.text_field :to%><br>
   <%= f.label :subject%><br>
   <%= f.text_field :subject%><br>
   <%= f.label :body%><br>

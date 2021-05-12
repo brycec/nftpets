@@ -1,13 +1,11 @@
-<% content_for :path do %>
-
-    <%='users/'+@user.id.to_s%>
+<% content_for :path do %><%='users/' %>
 <% end %>
 <h2>users</h2>
 <table>
   <% @users.each do |user| %>
    <tr>
      <td>
-     <%= link_to user.name, 'users/' + user.id.to_s %>
+     <%= link_to user.name, '/users/' + user.id.to_s %>
      </td>
    </tr>
   <% end %>

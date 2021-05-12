@@ -66,7 +66,7 @@ canvas {
   font-family: monospace;
   font-size: 1em;
   background-color: rgba(0, 0, 0, 0.6);
-  color: $cyan;
+  color: $cyan !important;
   border: solid 1px $cyan;
   border-radius: 0.9em;
 }
@@ -82,13 +82,16 @@ canvas {
 }
 .btn a {
   display: inline;
-  margin-left: 40px;
+  margin-left: 2em;
 }
 #winb {
   margin: 1em;
   pre {
     font-size: 0.7em;
     text-shadow: 0 1px $cyan;
+  }
+  a {
+    color: $bcyan;
   }
 }
 #foot {
@@ -144,6 +147,13 @@ width: 1em;
 #mails .maili {
   border-bottom: solid 1px $cyan;
   padding: 1em;
+  a {
+    color: $bcyan;
+    display: block;
+  }
+  span {
+    color: $pcyan;
+  }
 }
 #mails .maili:hover {
   cursor: pointer;
@@ -159,6 +169,6 @@ width: 1em;
   padding-left: 1em;
   .btn {
     float: right;
-    margin-right: -2.3em;
+    margin: 1em -1.5em;
   }
 }
