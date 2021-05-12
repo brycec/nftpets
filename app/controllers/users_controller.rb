@@ -8,7 +8,10 @@ class UsersController < ApplicationController
     :password))
    if @user.valid?
      session[:user_id] = @user.id
-     flash.notice = "Welcome, " + @user.name + " (its case senstive)."
+
+     Message.new_welcome @user
+
+     flash.notice = "Created new user: " + @user.name + " (it's case senstive)."
      redirect_to '/messages'
    else
      flash.notice = "Failed to create user. " +

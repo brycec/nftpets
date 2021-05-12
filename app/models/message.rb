@@ -1,2 +1,17 @@
 class Message < ApplicationRecord
+
+end
+
+def Message.new_welcome(u)
+  @message = Message.create({
+    to: u.name,
+    from: 'The Commissioner',
+    subject: 'Your First Assignment',
+    body: %{
+On behalf of the S.P.N.F., thank you. With volunteers operating our pet tokens,
+adopted Furbabies are protected from the Plutonian poachers seeking to harvest
+their extremely valuable fur. Attached is a new token as a gift. Use it to adopt
+a Furbaby and begin investing.
+}
+    })
 end
