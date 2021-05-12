@@ -105,6 +105,8 @@
 
         scene.add( points );
         camera.position.z = 10;
+        camera.position.y = -1;
+        camera.position.x = -3;
         sin = Math.sin;
         cos = Math.cos;
 
@@ -146,13 +148,17 @@
     <%= link_to "sign up", '/users/new' %>
   <%end%>
   </div>
-  <h1>nftpets<sub><%= link_to "/", '/' %>
-<%=@path %>
-  </sub></h1>
+  <h1><%= link_to "🐈 nftpets/", '/' %>
+<%=@path %></h1>
 
     <div id="winb">
     <%= yield %>
     </div>
     </div>
+    <script>
+
+              twemoji.parse(document.getElementById('win'));
+              twemoji.parse(document.getElementById('winb'));
+              </script>
   </body>
 </html>

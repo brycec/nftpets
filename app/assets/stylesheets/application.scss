@@ -13,14 +13,23 @@
  *= require_tree .
  *= require_self
  */
+$cyan: #73F8ED;
+$dcyan: #0D2120;
 body {
   margin: 0;
+  background: $dcyan;
 }
 
 .login {
   float: right;
+  margin: 0.5em;
+  font-weight: bold;
 }
 
+a {
+  text-decoration: none;
+  color: $dcyan;
+}
 
 canvas {
   position: absolute;
@@ -30,32 +39,77 @@ canvas {
   position: absolute;
   top: 10%;
   left: 5%;
-  max-width: 70%;
+  max-width: 800px;
+  padding: 3px;
+  h1 {
+    min-width: 500px;
+    font-size: 1.6em;
+    font-style: italic;
+    text-align: left;
+    padding: 0.2em 0.6em;
+    background: $cyan;
+    color: $dcyan;
+    margin: 0;
+    border-radius: 0.4em 0.4em 0 0;
+  }
 }
-#win, #win input {
+#win, #win input, .btn a {
   font-family: monospace;
   font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.4);
-  color: #73F8ED;
-  border: solid 1px #73F8ED;
-  border-radius: 0.6em;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: $cyan;
+  border: solid 1px $cyan;
+  border-radius: 0.9em;
 }
-#win input:hover {
+#win input, .btn a {
+  padding: .7em 2em;
+}
+#win input:hover, .btn a:hover {
+  cursor: pointer;
   background-color: rgba(73, 119, 110, 0.4);
 }
-#win input:active {
+#win input:active, .btn a:active {
   background-color: rgba(73, 119, 110, 0.9);
 }
-#win h1 {
-  font-size: 1.2em;
-  font-style: italic;
-  text-align: center;
-  padding: 0.1em;
-  background: #73F8ED;
-  color: #0D2120;
-  margin: 0;
-  border-radius: 0.4em 0.4em 0 0;
+.btn a {
+  display: inline;
+  margin-left: 40px;
 }
 #winb {
   margin: 1em;
+  pre {
+    font-size: 0.7em;
+    text-shadow: 0 1px $cyan;
+  }
+}
+
+
+#win .emoji {
+filter: hue-rotate(130deg) brightness(.1);
+position: relative;
+top: 2px;
+height: 1em;
+width: 1em;
+}
+#winb .emoji {
+  height: 2em;
+  width: 2em;
+  filter: hue-rotate(130deg);
+  //animation-name: colors;
+  animation-duration: 0.088s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  position:relative;
+}
+@keyframes colors {
+  0% {
+    top: 0; left: 1px; background: none;
+  filter: hue-rotate(125deg);}
+  90% {
+    top: 0;
+  filter: hue-rotate(125deg);}
+    96% { top: 1px; left: 0px;
+      filter: hue-rotate(185deg); background: none;}
+  100% { top: 0; left: 2px;
+    filter: hue-rotate(125deg); background: #887D03;}
 }
