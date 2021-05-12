@@ -6,9 +6,15 @@ class UsersController < ApplicationController
   def create
    @user = User.create(params.require(:user).permit(:name,
     :password))
-   session[:user_id] = @user.id
-   redirect_to '/'
-
+   if @user.valid?
+     session[:user_id] = @user.id
+     flash.notice = "Welcome, " + @user.name + " (its case senstive)."
+     redirect_to '/messages'
+   else
+     flash.notice = "Failed to create user. " +
+      @user.errors.full_messages.join(". ")
+     redirect_to '/users/new'
+   end
   end
 
   def index

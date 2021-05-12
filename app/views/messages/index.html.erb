@@ -20,16 +20,22 @@
   </script>
 <div id="mailbody">
   <div class="btn">
-  <%=link_to 'reply', controller: 'messages', action: 'new',
-    to: @fmessage.from,
-      subject: 'RE: '+@fmessage.subject,
-      body: @fmessage.from + ' sent a message with subject ' + @fmessage.subject + ' on ' + (space_time @fmessage.created_at.to_datetime) +'. It said: '+@fmessage.body %>
+  <% if @fmessage %>
+    <%=link_to 'reply', controller: 'messages', action: 'new',
+      to: @fmessage.from,
+        subject: 'RE: '+@fmessage.subject,
+        body: @fmessage.from + ' sent a message with subject ' + @fmessage.subject + ' on ' + (space_time @fmessage.created_at.to_datetime) +'. It said: '+@fmessage.body %>
+   <% end %>
   <%=link_to 'new message', '/messages/new' %>
   </div>
 
+  <% if @fmessage %>
   <h2><%=@fmessage.subject%></h2>
   <h3>from: <%=@fmessage.from%></h3>
   <p><%=@fmessage.body%>
     </p>
+    <% else %>
+  <h2>no messages</h2>
+  <% end %>
 
 </div>

@@ -151,6 +151,9 @@
   <h1><%= link_to "🐈 nftpets/", '/' %><%= yield :path %></h1>
 
     <div id="winb">
+      <% if flash.notice %>
+        <div id="notice"><%=flash.notice %></div>
+      <% end %>
     <%= yield %>
     <br>
     <div id="foot">
