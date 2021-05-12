@@ -118,3 +118,24 @@ width: 1em;
   100% { top: 0; left: 2px;
     filter: hue-rotate(125deg); background: #887D03;}
 }
+
+
+#mails {
+  float: left;
+  margin: -1.2em;
+  padding: 1em;
+  width: 10em;
+  height: 19em;
+  border-right: solid 1px $cyan;
+}
+
+#mails .maili {
+  border-bottom: solid 1px $cyan;
+  padding: 1em;
+}
+
+#mailbody {
+  float: left;
+  height: 20em;
+  padding-left: 2em;
+}
