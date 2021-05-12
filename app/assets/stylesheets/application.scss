@@ -17,6 +17,9 @@ $bcyan: #B9FDE6;
 $cyan: #73F8ED;
 $pcyan: #306E61;
 $dcyan: #0D2120;
+
+$hcyan: rgba(73, 119, 110, 0.4);
+
 body {
   margin: 0;
   background: $dcyan;
@@ -125,17 +128,21 @@ width: 1em;
   margin: -1.2em;
   padding: 1em;
   width: 10em;
-  height: 19em;
-  border-right: solid 1px $cyan;
 }
 
 #mails .maili {
   border-bottom: solid 1px $cyan;
   padding: 1em;
 }
+#mails .maili:hover {
+  cursor: pointer;
+  background: $hcyan;
+}
 
 #mailbody {
+  border-left: solid 1px $cyan;
   float: left;
   height: 20em;
-  padding-left: 2em;
+  margin-left: 1em;
+  padding-left: 1em;
 }

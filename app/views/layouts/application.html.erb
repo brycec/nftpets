@@ -8,11 +8,8 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js" %>
-
-      <%= javascript_include_tag "three" %>
-
-      <script type="x-shader/x-vertex" id="vertexshader">
+    <%= javascript_include_tag "three" %>
+    <script type="x-shader/x-vertex" id="vertexshader">
 
         varying vec2 vUv;
 
@@ -157,10 +154,10 @@
     <%= yield %>
     </div>
     </div>
+    <%= javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js" %>
     <script>
-
-              twemoji.parse(document.getElementById('win'));
-              twemoji.parse(document.getElementById('winb'));
-              </script>
+     twemoji.parse(document.getElementById('win'));
+     twemoji.parse(document.getElementById('winb'));
+    </script>
   </body>
 </html>
