@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   def space_time(t)
-    (t + 365.2421875*1200).to_s
+    (t + 365.2421875*1200).to_s :db
   end
 end

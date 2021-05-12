@@ -23,7 +23,7 @@
   <%=link_to 'reply', controller: 'messages', action: 'new',
     to: @fmessage.from,
       subject: 'RE: '+@fmessage.subject,
-      body: 'At '+ space_time( @fmessage.created_at ) +' they sent: '+@fmessage.body %>
+      body: @fmessage.from + ' sent a message with subject ' + @fmessage.subject + ' on ' + (space_time @fmessage.created_at.to_datetime) +'. It said: '+@fmessage.body %>
   <%=link_to 'new message', '/messages/new' %>
   </div>
 
