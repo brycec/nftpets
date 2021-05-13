@@ -112,11 +112,11 @@ class Furbaby < ApplicationRecord
     s=s.to_sym
     i = SYM_COORDS[s][0] * GENES.length * 2
     g = gene_from_sym(s)
-    dna = self.dna.slice(0,i)+g+self.dna.slice(i+4,self.dna.length)
+    self.dna = self.dna.slice(0,i)+g+self.dna.slice(i+4,self.dna.length)
   end
 
   def combo_dna_with(b)
-    a = @dna
+    a = self.dna
     p = rand(2)>0
     a.split('').zip(b.split('')).map{|g| g[rand(2)]}.join
   end
