@@ -1,2 +1,28 @@
-<h1>Furbabies#new</h1>
-<p>Find me in app/views/furbabies/new.html.erb</p>
+<h2>You've located a stray furbaby</h2>
+
+<%= form_with url: '/furbabies', method: :post do |f| %>
+   <%= f.hidden_field :dna, value: @furbaby.dna_to_s %>
+  <%= f.hidden_field :token_id, value: @token.id %>
+<%=f.submit 'Adopt this stray with token #'+@token.id.to_s %>
+ <% end %>
+
+
+<table>
+  <tr><th>symbol</th><td>
+    <%=@furbaby.pheno.last %> <%=@furbaby.trade_symbol.upcase %>
+  </td></tr>
+  <tr><th>rarity</th><td>
+     <% @furbaby.count_rare_dna.times do %>
+     ⭐️
+   <% end %>
+
+ </td></tr>
+  <tr><th>phenotype</th><td><%=@furbaby.pheno %></td></tr>
+  <tr><th>description</th><td><%=@furbaby.description %></td></tr>
+  <tr><th>genotype</th><td><%=@furbaby.dna_to_s %></td></tr>
+
+</table>
+
+<p class="btn">
+<%=link_to 'look again', ''%>
+</p>

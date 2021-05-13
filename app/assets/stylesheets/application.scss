@@ -14,14 +14,15 @@
  *= require_self
  */
 $bcyan: #B9FDE6;
-$acyan: #5CC1BA;
 $cyan: #73F8ED;
+$acyan: #5CC1BA;
 $lcyan: #3C8469;
 $pcyan: #306E61;
 $dcyan: #0D2120;
 $magenta: #C8326D;
 
-$hcyan: rgba(73, 119, 110, 0.4);
+$hcyan: rgba(115, 248, 237, 0.2);
+$hhcyan: rgba(115, 248, 237, 0.8);
 
 body {
   margin: 0;
@@ -49,7 +50,7 @@ canvas {
     font-style: italic;
     text-align: left;
     padding: 0.3em 0.6em;
-    background: $acyan;
+    background: $hhcyan;
     color: $dcyan;
     margin: 0;
     border-radius: 0.4em 0.4em 0 0;
@@ -67,7 +68,7 @@ canvas {
 #win, #win input, .btn a, textarea {
   font-family: monospace;
   font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.75);
   color: $cyan !important;
   border: solid 1px $cyan;
   border-radius: 0.9em;
@@ -77,10 +78,10 @@ canvas {
 }
 #win input:hover, .btn a:hover {
   cursor: pointer;
-  background-color: rgba(73, 119, 110, 0.4);
+  background-color: $hcyan;
 }
 #win input:active, .btn a:active {
-  background-color: rgba(73, 119, 110, 0.9);
+  background-color: $hhcyan;
 }
 .btn a {
   display: inline;
@@ -113,10 +114,10 @@ canvas {
     }
     th {
       border-right: none;
-      background: $dcyan;
+      background: $hcyan;
     }
     td {
-      color: $lcyan;
+      color: $acyan;
     }
     tr:hover td {
       background: $dcyan;

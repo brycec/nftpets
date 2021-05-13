@@ -28,6 +28,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
 
     @tokens = Token.where(user_id: params[:id])
+
     @token = Token.new
   end
 end

@@ -1,0 +1,20 @@
+<table>
+  <tr><th>this is</th><td>/tokens/<%=@token.id.to_s%></td></tr>
+  <tr><th>operator</th><td>/users/<%=@token.user_id.to_s%> </td></tr>
+ <tr><th>vibes</th><td><%=@token.vibes%></td></tr>
+ <tr><th>furbaby</th><td><%=@token.furbaby_id %></td></tr>
+</table>
+
+<% if current_user and current_user.id==@token.user_id and !@token.furbaby_id %>
+ <h2>Adopt a Furbaby!</h2>
+ <h3>Look for a furbaby trading under this symbol:</h3>
+
+ <div class="btn">
+   <%
+{sun:'🌞', moon:'🌛', terra: '🌏'}.entries.each do |k,v|
+   %>
+ <%= link_to v+k.to_s, controller: 'furbabies', action: 'new',
+    token_id: @token.id, symbol: k %>
+  <% end %>
+ </div>
+<% end %>

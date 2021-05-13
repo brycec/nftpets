@@ -3,9 +3,11 @@ class TokensController < ApplicationController
     if logged_in?
       @token = Token.create(user_id:current_user.id)
     end
+    redirect_to '/users/'+current_user.id.to_s
   end
 
   def show
+    @token = Token.find(params[:id])
   end
 
   def update
@@ -19,7 +21,7 @@ class TokensController < ApplicationController
       @token.save
 
       flash.notice='Claimed a token!'
-      redirect_to '/users/'+current_user.id.to_s
+      redirect_to '/users/'+current_user_id.to_s
     end
   end
 
