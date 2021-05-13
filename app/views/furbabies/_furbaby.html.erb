@@ -1,0 +1,16 @@
+
+<table>
+  <tr><th>symbol</th><td>
+    <%=@furbaby.pheno.last %> <%=@furbaby.trade_symbol.upcase %>
+  </td></tr>
+  <tr><th>rarity</th><td>
+     <% @furbaby.count_rare_dna.times do %>
+     ⭐️
+   <% end %>
+
+ </td></tr>
+  <tr><th>phenotype</th><td><%=@furbaby.pheno %></td></tr>
+  <tr><th>description</th><td><%=@furbaby.description %></td></tr>
+  <tr><th>genotype</th><td><%=@furbaby.dna %></td></tr>
+
+</table>

@@ -19,7 +19,7 @@ $acyan: #5CC1BA;
 $lcyan: #3C8469;
 $pcyan: #306E61;
 $dcyan: #0D2120;
-$magenta: #C8326D;
+$magenta: #f8429D;
 
 $hcyan: rgba(115, 248, 237, 0.2);
 $hhcyan: rgba(115, 248, 237, 0.8);
@@ -103,17 +103,17 @@ canvas {
     color: $lcyan;
   }
   table {
-    border-radius: 0.5em;
+    border-radius: 0.6em;
     border-spacing: 0;
-    border: solid 1px $cyan;;
+    border: solid 1px $cyan;
     border-bottom: none;
     th, td {
     border-radius: 0.5em;
       padding: 0.8em;
+        border-right: solid 1px $hcyan;
       border-bottom: solid 1px $cyan;
     }
     th {
-      border-right: none;
       background: $hcyan;
     }
     td {

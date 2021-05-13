@@ -1,9 +1,14 @@
+<% content_for :path do %>tokens/<%=@token.id.to_s%><% end %>
 <table>
-  <tr><th>this is</th><td>/tokens/<%=@token.id.to_s%></td></tr>
-  <tr><th>operator</th><td>/users/<%=@token.user_id.to_s%> </td></tr>
+  <tr><th>path</th><td>/tokens/<%=@token.id.to_s%></td></tr>
+  <tr><th>operator</th><td>/users/<%=@token.user_id.to_s%></td></tr>
  <tr><th>vibes</th><td><%=@token.vibes%></td></tr>
- <tr><th>furbaby</th><td><%=@token.furbaby_id %></td></tr>
+ <tr><th>furbaby</th><td><%=@token.furbaby_id or 'none'%></td></tr>
 </table>
+<% if @furbaby %>
+<%= render @furbaby %>
+<%=button_to '👋 Pet this furbaby'%>
+<% end %>
 
 <% if current_user and current_user.id==@token.user_id and !@token.furbaby_id %>
  <h2>Adopt a Furbaby!</h2>

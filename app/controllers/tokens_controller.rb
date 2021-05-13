@@ -8,6 +8,9 @@ class TokensController < ApplicationController
 
   def show
     @token = Token.find(params[:id])
+    if @token.furbaby_id
+      @furbaby = Furbaby.find(@token.furbaby_id)
+    end
   end
 
   def update

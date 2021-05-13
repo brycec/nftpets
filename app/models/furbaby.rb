@@ -54,7 +54,7 @@ class Furbaby < ApplicationRecord
   RARE_G = 2.times.map{GENES.last.downcase}.join # the rare gene 'bb'
   NUM_GENES = 20 # (x2 chars/chromosome = dna string length)
 
-  def description()
+  def description
 
     a = self.numerical_pheno().zip(WORDS.map{|e|
      e.split(', ').filter{|s| s.length>0} }).map {|e|
@@ -73,34 +73,26 @@ class Furbaby < ApplicationRecord
      trades under the %s symbol.}, *a)
   end
 
-  def trade_symbol()
+  def trade_symbol
     WORDS.last.split(', ')[self.numerical_pheno.last]
   end
 
-  def dna_to_s
-    @dna
-  end
-
-  def rand_dna()
-    @dna = NUM_GENES.times.map {
+  def rand_dna
+    self.dna = NUM_GENES.times.map {
       GENES.map{ |g|
         2.times.map{rand(2)>0 ? g : g.swapcase}.join
       }.join
     }.join
   end
 
-  def count_rare_dna()
-    (@dna.scan RARE_G).length
+  def count_rare_dna
+    (dna.scan RARE_G).length
   end
 
   def limit_rare_dna(l)
     g = RARE_G
-    a = @dna
-    if self.count_rare_dna() > l then
-      @dna = @dna.sub(g, g.upcase)
-      self.limit_rare_dna(l)
-    else
-      @dna = a
+    while self.count_rare_dna() > l
+      self.dna = self.dna.sub(g, g.upcase)
     end
   end
 
@@ -120,7 +112,7 @@ class Furbaby < ApplicationRecord
     s=s.to_sym
     i = SYM_COORDS[s][0] * GENES.length * 2
     g = gene_from_sym(s)
-    @dna = @dna.slice(0,i)+g+@dna.slice(i+4,@dna.length)
+    dna = self.dna.slice(0,i)+g+self.dna.slice(i+4,self.dna.length)
   end
 
   def combo_dna_with(b)
@@ -130,15 +122,15 @@ class Furbaby < ApplicationRecord
   end
 
   def numerical_pheno()
-    @dna.split(/(....)/).filter{|e| e.length>0}.map{|e|
+    self.dna.split(/(....)/).filter{|e| e.length>0}.map{|e|
       (2 - e.scan(GENES[0]).length +
        (e.scan(GENES[1].downcase).length > 1 ? 3 : 0)
      )
    }
   end
 
-  def pheno()
-    self.numerical_pheno().zip(SYMBOLS).map{|e|
+  def pheno
+    self.numerical_pheno.zip(SYMBOLS).map{|e|
       e[1].split(',')[e[0]]
     }.join
   end

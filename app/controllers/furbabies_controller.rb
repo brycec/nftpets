@@ -4,7 +4,7 @@ class FurbabiesController < ApplicationController
     @token = Token.find(params[:token_id])
     if current_user and current_user.id==@token.user_id and !@token.furbaby_id
       @furbaby = Furbaby.new
-      @furbaby.rand_dna()
+      @furbaby.rand_dna
       @furbaby.ensure_symbol(params[:symbol])
       @furbaby.limit_rare_dna(2)
     end
