@@ -65,7 +65,7 @@
 
         const boxGeometry = new THREE.SphereGeometry(3,9,8);
         const boxMaterial = new THREE.MeshBasicMaterial( { color: 0x73F8ED,
-          wireframe: true, opacity: 0.3, transparent: true  } );
+          wireframe: true, opacity: 0.8, transparent: true  } );
         const planet = new THREE.Mesh( boxGeometry, boxMaterial );
         scene.add( planet );
 
@@ -74,9 +74,8 @@
 
                       const cat = new THREE.Mesh(gltf.scene.children[0].geometry, boxMaterial);
 
-                      cat.rotation.y-=Math.PI/2;
-                      cat.position.z-=0;
-                      cat.position.y+=2;
+                      cat.rotation.y-=1.2;
+                      cat.position.y+=2.3;
                       cat.scale.x*=0.3;
                       cat.scale.y*=0.3;
                       cat.scale.z*=0.3;
@@ -117,7 +116,7 @@
 
         scene.add( points );
         camera.position.z = 10;
-        camera.position.y = 4;
+        camera.position.y = 3;
         camera.position.x = -4;
 
         const animate = function () {
