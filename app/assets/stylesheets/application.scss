@@ -38,7 +38,7 @@ canvas {
   position: absolute;
   z-index: -1;
 }
-#win { opacity: 0.8;
+#win { opacity: 0.85;
   position: absolute;
   top: 10%;
   left: 5%;
@@ -140,7 +140,9 @@ canvas {
   position: relative;
   padding-top: 0.5em;
   border-top: solid 1px $pcyan;
-  color: $pcyan;
+  a {
+    color: $pcyan;
+  }
 }
 
 

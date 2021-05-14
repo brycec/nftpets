@@ -58,6 +58,8 @@
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x001110);
 				scene.fog = new THREE.FogExp2( 0x001110, 0.0011 );
+        const directionalLight = new THREE.DirectionalLight( 0x73F8ED, 0.6 );
+        scene.add( directionalLight );
 
         const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -66,20 +68,38 @@
         const boxGeometry = new THREE.SphereGeometry(3,9,8);
         const boxMaterial = new THREE.MeshBasicMaterial( { color: 0x73F8ED,
           wireframe: true, opacity: 0.8, transparent: true  } );
+
+				const phong = new THREE.MeshPhongMaterial( {
+          color: 0x73F8ED,
+        					shininess: 100,
+                  emissive: 0x001515,
+				} );
         const planet = new THREE.Mesh( boxGeometry, boxMaterial );
         scene.add( planet );
 
 				const loader = new GLTFLoader();
-        loader.load('<%=javascript_url 'lpolycat.gltf' %>', function ( gltf ) {
+        loader.load('<%=javascript_url 'nftpets.gltf' %>', function ( gltf ) {
 
-                      const cat = new THREE.Mesh(gltf.scene.children[0].geometry, boxMaterial);
-
-                      cat.rotation.y-=1.2;
-                      cat.position.y+=2.3;
-                      cat.scale.x*=0.3;
-                      cat.scale.y*=0.3;
-                      cat.scale.z*=0.3;
+                      let catgeo = gltf.scene.children[0].geometry;
+                      const cat = new THREE.Mesh(catgeo, boxMaterial);
+                      let catmesh = new THREE.Mesh( catgeo, phong );
+                      cat.add(catmesh);
+                      cat.rotation.y-=0.7;
+                      cat.position.y+=2.8;
                       scene.add(cat);
+
+
+                      let coingeo = gltf.scene.children[1].geometry;
+                      const coin = new THREE.Mesh(coingeo, boxMaterial);
+                      let coinmesh = new THREE.Mesh( coingeo, phong );
+                      coin.add(coinmesh);
+                      coin.rotation.x -= 1.5;
+                      scene.add(coin);
+                      const coinspin = function(){
+                        requestAnimationFrame(coinspin);
+                        coin.rotation.z += 0.01;
+                        renderer.render( scene, camera );
+                      };coinspin();
         						} );
 
         const moons = [];
@@ -115,9 +135,9 @@
         const points = new THREE.Points( geometry, material );
 
         scene.add( points );
-        camera.position.z = 10;
-        camera.position.y = 3;
-        camera.position.x = -4;
+        camera.position.z = 7;
+        camera.position.y = 2;
+
 
         const animate = function () {
           requestAnimationFrame( animate );
@@ -127,8 +147,8 @@
             moon.position.x = Math.cos(r*Date.now()/10e3)*3*(r*10);
           });
 
-          scene.rotation.x += 0.0003;
-          scene.rotation.y += 0.0002;
+          scene.rotation.x -= 0.00001;
+          scene.rotation.y -= 0.0001;
 
           renderer.render( scene, camera );
         };
@@ -169,9 +189,11 @@ window.renderer = renderer;
     <%= yield %>
     <br>
     <div id="foot">
+      <a href="https://patreon.com/happyfeelscompany">
       The N.F.T. Pet System is made possible by a grant from
       The Society to Protect Neptunian Furbabies
       and by contributions from users like you.
+      </a>
     </div>
     </div>
     </div>
