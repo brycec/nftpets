@@ -6,8 +6,9 @@
  <tr><th>furbaby</th><td><%=@token.furbaby_id or 'none'%></td></tr>
 </table>
 <% if @furbaby %>
-<%= render @furbaby %>
+<h2>This token's furbaby:</h2>
 <%=button_to '👋 Pet this furbaby'%>
+<%= render @furbaby %>
 <% end %>
 
 <% if current_user and current_user.id==@token.user_id and !@token.furbaby_id %>

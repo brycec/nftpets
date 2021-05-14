@@ -8,7 +8,6 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "three" %>
     <script type="x-shader/x-vertex" id="vertexshader">
 
         varying vec2 vUv;
@@ -38,7 +37,9 @@
 
       </script>
 
-      <script>
+      <script type="module">
+			import * as THREE from '<%=javascript_url 'three.module' %>';
+      import { GLTFLoader } from '<%=javascript_url 'GLTFLoader' %>';
 
             const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
 
@@ -64,10 +65,23 @@
 
         const boxGeometry = new THREE.SphereGeometry(3,9,8);
         const boxMaterial = new THREE.MeshBasicMaterial( { color: 0x73F8ED,
-          wireframe: true } );
+          wireframe: true, opacity: 0.3, transparent: true  } );
         const planet = new THREE.Mesh( boxGeometry, boxMaterial );
         scene.add( planet );
 
+				const loader = new GLTFLoader();
+        loader.load('<%=javascript_url 'lpolycat.gltf' %>', function ( gltf ) {
+
+                      const cat = new THREE.Mesh(gltf.scene.children[0].geometry, boxMaterial);
+
+                      cat.rotation.y-=Math.PI/2;
+                      cat.position.z-=0;
+                      cat.position.y+=2;
+                      cat.scale.x*=0.3;
+                      cat.scale.y*=0.3;
+                      cat.scale.z*=0.3;
+                      scene.add(cat);
+        						} );
 
         const moons = [];
         const rand = THREE.MathUtils.randFloatSpread;
@@ -103,17 +117,15 @@
 
         scene.add( points );
         camera.position.z = 10;
-        camera.position.y = -1;
-        camera.position.x = -3;
-        sin = Math.sin;
-        cos = Math.cos;
+        camera.position.y = 4;
+        camera.position.x = -4;
 
         const animate = function () {
           requestAnimationFrame( animate );
           moons.forEach((moon,i) => {
-            r = moon.geometry.parameters.radius;
-            moon.position.z = sin(r*Date.now()/10e3)*2*(r*10);
-            moon.position.x = cos(r*Date.now()/10e3)*3*(r*10);
+            const r = moon.geometry.parameters.radius;
+            moon.position.z = Math.sin(r*Date.now()/10e3)*2*(r*10);
+            moon.position.x = Math.cos(r*Date.now()/10e3)*3*(r*10);
           });
 
           scene.rotation.x += 0.0003;
@@ -123,13 +135,13 @@
         };
 
         animate();
-
+window.renderer = renderer;
 </script>
 </head>
 <body>
-        <script>
+        <script type="module">
         renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
+        document.body.appendChild( window.renderer.domElement );
       </script>
 
 
@@ -149,7 +161,7 @@
    space_time DateTime.now #magic time
   %>
   </div>
-  <h1><%= link_to "🐈 nftpets/", '/' %><%= yield :path %></h1>
+  <h1><%= link_to "nftpets/", '/' %><%= yield :path %></h1>
 
     <div id="winb">
       <% if flash.notice %>
