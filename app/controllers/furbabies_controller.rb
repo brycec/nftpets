@@ -17,11 +17,13 @@ class FurbabiesController < ApplicationController
       furbaby.save
       token.furbaby_id = furbaby.id
       token.save
+      flash.notice = 'Adopted a furbaby!'
+      redirect_to '/tokens/'+token.id.to_s
     else
       flash.notice = furbaby.errors.full_messages.join(' ')
+      redirect_to '/users/'+current_user_id.to_s
     end
 
-    redirect_to '/users/'+current_user_id.to_s
   end
 
   def show

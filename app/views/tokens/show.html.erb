@@ -1,13 +1,14 @@
 <% content_for :path do %><%=link_to 'tokens/','/tokens'%><%=@token.id.to_s%><% end %>
 <table>
-  <tr><th>path</th><td>/tokens/<%=@token.id.to_s%></td></tr>
-  <tr><th>operator</th><td>/users/<%=@token.user_id.to_s%></td></tr>
+  <tr><th>operator</th><td>
+   <%=link_to @token.user.name, '/users/'+@token.user_id.to_s%></td></tr>
  <tr><th>vibes</th><td><%=@token.vibes%><s>N</s></td></tr>
- <tr><th>furbaby</th><td><%=@token.furbaby_id or 'none'%></td></tr>
+ <tr><th>furbaby#</th><td><%=@token.furbaby_id or 'none'%></td></tr>
 </table>
 <% if @furbaby %>
 <h2>This token's furbaby:</h2>
 <%=button_to '👋 Pet this furbaby', '/tokens/'+@token.id.to_s, method: :patch%>
+<%=button_to '👋 Name this furbaby', '/tokens/'+@token.id.to_s, method: :patch%>
 <%= render @furbaby %>
 <% end %>
 

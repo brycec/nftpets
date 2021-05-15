@@ -94,8 +94,9 @@ canvas {
 }
 #winb {
   margin: 1em;
-  pre {
-    font-size: 0.7em;
+  #splash {
+    font-size: 0.8em;
+    font-weight: bold;
     text-shadow: 0 1px $cyan;
   }
   a {
@@ -184,8 +185,8 @@ width: 1em;
 #mails {
   float: left;
   margin-left: -1.2em;
-  padding: 1em;
-  width: 20%;
+  padding: 0.25em;
+  width: 30%;
 }
 
 #mails .maili {
@@ -206,7 +207,7 @@ width: 1em;
 }
 
 #mailbody {
-  width: 70%;
+  width: 65%;
   border-left: solid 1px $cyan;
   float: left;
   min-height: 19em;

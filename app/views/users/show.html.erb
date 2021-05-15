@@ -18,11 +18,11 @@
     </td>
     <td>
       <%if t.furbaby_id %>
-       <%=t.furbaby_id%>
+       <%=t.furbaby.pheno%>
       <%else%>
-      ready for adoption
+       None. <%=link_to 'Find one', '/tokens/'+t.id.to_s %>
       <%end%></td>
-    <td><%=t.vibes.to_s%></td>
+    <td><%=t.vibes.to_s%><s>N</s></td>
    </tr>
   <%end%>
 </table>

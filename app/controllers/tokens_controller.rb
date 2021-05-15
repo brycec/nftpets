@@ -3,7 +3,8 @@ class TokensController < ApplicationController
     if logged_in?
       @token = Token.create(user_id:current_user.id)
     end
-    redirect_to '/users/'+current_user.id.to_s
+    flash.notice='Minted a token!'
+    redirect_to '/tokens/'+@token.id.to_s
   end
 
   def show
@@ -24,7 +25,7 @@ class TokensController < ApplicationController
       @token.save
 
       flash.notice='Claimed a token!'
-      redirect_to '/users/'+current_user_id.to_s
+      redirect_to '/tokens/'+@token.id.to_s
     elsif @token.user_id==current_user.id
       @token.vibes+=1
       @token.save

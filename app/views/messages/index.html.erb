@@ -24,7 +24,9 @@
   <% if @fmessage %>
   <h2><%=@fmessage.subject%></h2>
   <h3>from: <%=@fmessage.from%></h3>
-  <p><%=@fmessage.body%>
+  <p><% @fmessage.body.split("\n").map do |e| %>
+      <%=e %>  <br/>
+      <% end %>
     </p>
     <% if @fmessage.token_id %>
       <%=button_to "claim attached token", '/tokens/'+@fmessage.token_id.to_s,

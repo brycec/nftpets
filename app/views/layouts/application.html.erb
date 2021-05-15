@@ -8,51 +8,11 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script type="x-shader/x-vertex" id="vertexshader">
-
-        varying vec2 vUv;
-
-        void main() {
-
-          vUv = uv;
-
-          gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-
-        }
-
-      </script>
-
-      <script type="x-shader/x-fragment" id="fragmentshader">
-
-        uniform sampler2D baseTexture;
-        uniform sampler2D bloomTexture;
-
-        varying vec2 vUv;
-
-        void main() {
-
-          gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
-
-        }
-
-      </script>
 
       <script type="module">
 			import * as THREE from '<%=javascript_url 'three.module' %>';
+//			import * from '<%=javascript_url 'three.module' %>';
       import { GLTFLoader } from '<%=javascript_url 'GLTFLoader' %>';
-
-            const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
-
-            const bloomLayer = new THREE.Layers();
-            bloomLayer.set( BLOOM_SCENE );
-
-            const params = {
-              exposure: 10,
-              bloomStrength: 5,
-              bloomThreshold: 0,
-              bloomRadius: 0,
-              scene: "Scene with Glow"
-            };
 
 
         const scene = new THREE.Scene();
@@ -116,9 +76,17 @@
                           coin.rotation.z=0;
                           coin.rotation.x=-coin.rotation.x/4.0;
 
-                            camera.position.x+=(cat.position.x-camera.position.x-0.5)/4.0;
-                            camera.position.y+=(cat.position.y-camera.position.y+0.5)/4.0;
-                            camera.position.z+=(cat.position.z-camera.position.z+2.7)/4.0;
+                          camera.position.x+=(cat.position.x-camera.position.x-0.5)/4.0;
+                          camera.position.y+=(cat.position.y-camera.position.y+0.5)/4.0;
+                          camera.position.z+=(cat.position.z-camera.position.z+2.7)/4.0;
+                        } else if (renderer.flyTo=="stray") {
+                          cat.position.y+=(12-cat.position.y)/4.0;
+                          cat.rotation.z+=Math.sin(Date.now()/3e5)/3e2;
+                          cat.rotation.y-=Math.cos(Date.now()/1e5)/1e2;
+                          cat.rotation.x+=Math.sin(Date.now()/2e5)/3e2;
+                          camera.position.x+=(cat.position.x-camera.position.x)/4.0;
+                          camera.position.y+=(cat.position.y-camera.position.y+1)/4.0;
+                          camera.position.z+=(cat.position.z-camera.position.z+3.5)/4.0;
                         } else {
                           cat.position.y+=(2.8-cat.position.y)/4.0;
                           cat.scale.x+=(1-cat.scale.x)/4.0;
@@ -170,8 +138,8 @@
           requestAnimationFrame( animate );
           moons.forEach((moon,i) => {
             const r = moon.geometry.parameters.radius;
-            moon.position.z = Math.sin(r*Date.now()/10e3)*2*(r*10);
-            moon.position.x = Math.cos(r*Date.now()/10e3)*3*(r*10);
+            moon.position.z = Math.sin(r*Date.now()/1e5)*2*(r*10);
+            moon.position.x = Math.cos(r*Date.now()/1e5)*3*(r*10);
           });
 
           scene.rotation.x -= 0.0001;
@@ -200,8 +168,7 @@ window.renderer = renderer;
 <div id="win">
   <div class="login">
   <% if logged_in? %>
-    YOU:
-      <%= link_to current_user.name, '/users/'+current_user.id.to_s %>
+      <%= link_to current_user.name+"'s page", '/users/'+current_user.id.to_s %>
       / <%= link_to "mail", '/messages/'%>
       / <%= link_to "logout", '/logout'%>
   <% else %>
