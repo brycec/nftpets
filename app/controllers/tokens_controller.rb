@@ -26,11 +26,11 @@ class TokensController < ApplicationController
 
       flash.notice='Claimed a token!'
       redirect_to '/tokens/'+@token.id.to_s
-    elsif @token.user_id==current_user.id
+    elsif @token.furbaby_id
       @token.vibes+=1
       @token.save
-      flash.notice='You pet the Furbaby!'
-      redirect_to '/tokens/'+@token.id.to_s
+      flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
+      redirect_to '/tokens/'+@token.id.to_s+'?pet=true'
     end
   end
 

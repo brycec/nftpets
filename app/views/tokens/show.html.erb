@@ -8,7 +8,7 @@
 <% if @furbaby %>
 <h2>This token's furbaby:</h2>
 <%=button_to '👋 Pet this furbaby', '/tokens/'+@token.id.to_s, method: :patch%>
-<%=button_to '👋 Name this furbaby', '/tokens/'+@token.id.to_s, method: :patch%>
+<%=link_to 'Name this furbaby', '/tokens/'+@token.id.to_s+'/edit'%>
 <%= render @furbaby %>
 <% end %>
 
@@ -31,7 +31,10 @@
 <script type="module">
 <% if @furbaby %>
 renderer.flyTo="cat";
-  <% else %>
-    renderer.flyTo="coin";
-  <% end %>
+<% else %>
+  renderer.flyTo="coin";
+<% end %>
+<% if params[:pet]=="true" %>
+ renderer.flyTo="hand";
+<%end %>
 </script>

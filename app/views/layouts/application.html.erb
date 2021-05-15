@@ -1,207 +1,218 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>nftpets</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>nftpets</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-      <script type="module">
-			import * as THREE from '<%=javascript_url 'three.module' %>';
-//			import * from '<%=javascript_url 'three.module' %>';
-      import { GLTFLoader } from '<%=javascript_url 'GLTFLoader' %>';
-
-
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x001110);
-				scene.fog = new THREE.FogExp2( 0x001110, 0.0011 );
-        const light = new THREE.PointLight( 0x73F8ED, 0.6, );
-        light.position.x=-10;
-        light.position.y=1;
-        scene.add( light );
-
-        const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
-        const renderer = new THREE.WebGLRenderer({antialias: true});
-
-        const boxGeometry = new THREE.SphereGeometry(3,9,8);
-        const boxMaterial = new THREE.MeshBasicMaterial( { color: 0x73F8ED,
-          wireframe: true, opacity: 0.8, transparent: true  } );
-
-				const phong = new THREE.MeshPhongMaterial( {
-          color: 0x73F8ED,
-        					shininess: 100,
-                  emissive: 0x001515,
-				} );
-        const planet = new THREE.Mesh( boxGeometry, boxMaterial );
-        scene.add( planet );
-
-				const loader = new GLTFLoader();
-        loader.load('<%=javascript_url 'nftpets.gltf' %>', function ( gltf ) {
-
-                      let catgeo = gltf.scene.children[0].geometry;
-                      const cat = new THREE.Mesh(catgeo, boxMaterial);
-                      let catmesh = new THREE.Mesh( catgeo, phong );
-                      catmesh.scale.x=.99;
-                      cat.add(catmesh);
-                      cat.rotation.y-=0.7;
-                      scene.add(cat);
-
-                      let coingeo = gltf.scene.children[1].geometry;
-                      const coin = new THREE.Mesh(coingeo, boxMaterial);
-                      let coinmesh = new THREE.Mesh( coingeo, phong );
-                      coinmesh.scale.y=.95;
-                      coin.add(coinmesh);
-                      scene.add(coin);
-                      const coinspin = function(){
-                        requestAnimationFrame(coinspin);
-                        coin.rotation.z += 0.01;
-                        if(renderer.flyTo=="coin") {
-                          camera.position.x+=(coin.position.x-camera.position.x)/4.0;
-                          camera.position.y+=(coin.position.y-camera.position.y)/4.0;
-                          camera.position.z+=(coin.position.z-camera.position.z+2)/4.0;
-                        }
-                      };coinspin();
-
-                      const catspin = function(){
-                        requestAnimationFrame(catspin);
-                        if(renderer.flyTo=="cat") {
-                          cat.position.y+=(0.1-cat.position.y)/4.0;
-                          cat.scale.x+=(0.6-cat.scale.x)/4.0;
-                          cat.scale.y+=(0.6-cat.scale.y)/4.0;
-                          cat.scale.z+=(0.6-cat.scale.z)/4.0;
-                          coin.rotation.z=0;
-                          coin.rotation.x=-coin.rotation.x/4.0;
-
-                          camera.position.x+=(cat.position.x-camera.position.x-0.5)/4.0;
-                          camera.position.y+=(cat.position.y-camera.position.y+0.5)/4.0;
-                          camera.position.z+=(cat.position.z-camera.position.z+2.7)/4.0;
-                        } else if (renderer.flyTo=="stray") {
-                          cat.position.y+=(12-cat.position.y)/4.0;
-                          cat.rotation.z+=Math.sin(Date.now()/3e5)/3e2;
-                          cat.rotation.y-=Math.cos(Date.now()/1e5)/1e2;
-                          cat.rotation.x+=Math.sin(Date.now()/2e5)/3e2;
-                          camera.position.x+=(cat.position.x-camera.position.x)/4.0;
-                          camera.position.y+=(cat.position.y-camera.position.y+1)/4.0;
-                          camera.position.z+=(cat.position.z-camera.position.z+3.5)/4.0;
-                        } else {
-                          cat.position.y+=(2.8-cat.position.y)/4.0;
-                          cat.scale.x+=(1-cat.scale.x)/4.0;
-                          cat.scale.y+=(1-cat.scale.y)/4.0;
-                          cat.scale.z+=(1-cat.scale.z)/4.0;
-                          coin.rotation.x = (-6.4-coin.rotation.x)/4.0;
-                        }
-                      };catspin();
-
-        						} );
-
-        const moons = [];
-        const rand = THREE.MathUtils.randFloatSpread;
-        for ( let i = 0; i < 12; i ++ ) {
-
-          const moonGeo = new THREE.SphereGeometry(rand(4),
-           5+Math.round(rand(5)),
-           5+Math.round(rand(5)));
-          const moon = new THREE.Mesh( moonGeo, boxMaterial );
-          moons.push(moon);
-          scene.add( moon );
-        }
+  <script type="module">
+    import * as THREE from '<%=javascript_url 'three.module' %>';
+    import { GLTFLoader } from '<%=javascript_url 'GLTFLoader' %>';
 
 
-        const vertices = [];
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x001110);
+    scene.fog = new THREE.FogExp2( 0x001110, 0.0011 );
+    const light = new THREE.PointLight( 0x73F8ED, 0.6, );
+    light.position.x=-10;
+    light.position.y=1;
+    scene.add( light );
 
-        for ( let i = 0; i < 20000; i ++ ) {
+    const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-          const x = rand( 2000 )^2;
-          const y = rand( 2000 )^2;
-          const z = rand( 2000 )^2;
+    const renderer = new THREE.WebGLRenderer({antialias: true});
 
-          vertices.push( x, y, z );
+    const boxGeometry = new THREE.SphereGeometry(3,9,8);
+    const boxMaterial = new THREE.MeshBasicMaterial( { color: 0x73F8ED,
+      wireframe: true, opacity: 0.8, transparent: true  } );
 
-        }
+      const phong = new THREE.MeshPhongMaterial( {
+        color: 0x73F8ED,
+        shininess: 100,
+        emissive: 0x001515,
+      } );
 
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+      const rand = THREE.MathUtils.randFloatSpread;
+      const stars = [];
+      for ( let i = 0; i < 20000; i ++ ) {
+        const x = rand( 2000 )^2;
+        const y = rand( 2000 )^2;
+        const z = rand( 2000 )^2;
+        stars.push( x, y, z );
+      }
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( stars, 3 ) );
+      const material = new THREE.PointsMaterial( { color: 0x73F8ED } );
+      const starsMesh = new THREE.Points( geometry, material );
+      scene.add( starsMesh );
+      const moons = [];
+      for ( let i = 0; i < 12; i ++ ) {
+        const moonGeo = new THREE.SphereGeometry(rand(4),
+        5+Math.round(rand(5)),
+        5+Math.round(rand(5)));
+        const moon = new THREE.Mesh( moonGeo, boxMaterial );
+        moons.push(moon);
+        scene.add( moon );
+      }
 
-        const material = new THREE.PointsMaterial( { color: 0x73F8ED } );
 
-        const points = new THREE.Points( geometry, material );
+      const planet = new THREE.Mesh( boxGeometry, boxMaterial );
+      scene.add( planet );
 
-        scene.add( points );
+      const loader = new GLTFLoader();
+      loader.load('<%=image_url 'nftpets.gltf' %>', function ( gltf ) {
 
+        let catgeo = gltf.scene.children[0].geometry;
+        const cat = new THREE.Mesh(catgeo, boxMaterial);
+        let catmesh = new THREE.Mesh( catgeo, phong );
+        catmesh.scale.x=.995;
+        cat.add(catmesh);
+        scene.add(cat);
 
-        renderer.flyToOrigin=true;
-        const animate = function () {
-          requestAnimationFrame( animate );
-          moons.forEach((moon,i) => {
-            const r = moon.geometry.parameters.radius;
-            moon.position.z = Math.sin(r*Date.now()/1e5)*2*(r*10);
-            moon.position.x = Math.cos(r*Date.now()/1e5)*3*(r*10);
-          });
+        let coingeo = gltf.scene.children[1].geometry;
+        const coin = new THREE.Mesh(coingeo, boxMaterial);
+        let coinmesh = new THREE.Mesh( coingeo, phong );
+        coinmesh.scale.y=.95;
+        coin.add(coinmesh);
+        scene.add(coin);
 
-          scene.rotation.x -= 0.0001;
-          scene.rotation.y -= 0.00001;
-
-          if(renderer.flyTo=="origin") {
-            camera.position.x+=(-1.0-camera.position.x)/2.0;
-            camera.position.y+=(2.0-camera.position.y)/2.0;
-            camera.position.z+=(7.0-camera.position.z)/2.0;
+        let handgeo = gltf.scene.children[2].geometry;
+        const hand = new THREE.Mesh(handgeo, boxMaterial);
+        let handmesh = new THREE.Mesh( handgeo, phong );
+        handmesh.scale.y=.99;
+        hand.add(handmesh);
+        scene.add(hand);
+        hand.scale.x=.4;
+        hand.scale.y=.4;
+        hand.scale.z=.4;
+        const updateModels = function(){
+          requestAnimationFrame(updateModels);
+          coin.rotation.z += 0.01;
+          cat.rotation.y=cat.rotation.y||Math.random()*-0.9;
+          if(renderer.flyTo=="coin") {
+            scene.position.x+=(coin.position.x-scene.position.x)/4.0;
+            scene.position.y+=(coin.position.y-scene.position.y)/4.0;
+            scene.position.z+=(coin.position.z-scene.position.z-2)/4.0;
           }
-          renderer.render( scene, camera );
-        };
+          if(renderer.flyTo=="cat" || renderer.flyTo=="hand") {
+            cat.position.y+=(1.02-cat.position.y)/4.0;
+            cat.scale.x+=(0.6-cat.scale.x)/4.0;
+            cat.scale.y+=(0.6-cat.scale.y)/4.0;
+            cat.scale.z+=(0.6-cat.scale.z)/4.0;
+            coin.rotation.z=0;
+            coin.rotation.x=-coin.rotation.x/4.0;
 
-        animate();
-window.renderer = renderer;
-</script>
-</head>
-<body>
-        <script type="module">
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.flyTo="origin";
-        document.body.appendChild( window.renderer.domElement );
-      </script>
+            scene.position.x+=(cat.position.x-scene.position.x)/4.0;
+            scene.position.y+=(cat.position.y-scene.position.y-1.9)/4.0;
+            scene.position.z+=(cat.position.z-scene.position.z-2.75)/4.0;
+          } else if (renderer.flyTo=="stray") {
+            cat.position.y+=(50-cat.position.y)/4.0;
+            cat.rotation.z+=Math.sin(Date.now()/3e5)/3e2;
+            cat.rotation.y+=Math.cos(Date.now()/1e5)/2e2;
+            cat.rotation.x+=Math.sin(Date.now()/2e5)/3e2;
+            scene.position.x+=(-cat.position.x-scene.position.x)/4.0;
+            scene.position.y+=(-cat.position.y-scene.position.y)/4.0;
+            scene.position.z+=(-cat.position.z-scene.position.z-2)/4.0;
+          } else {
+            cat.position.y+=(4.25-cat.position.y)/3.0;
+            cat.scale.x+=(1-cat.scale.x)/4.0;
+            cat.scale.y+=(1-cat.scale.y)/4.0;
+            cat.scale.z+=(1-cat.scale.z)/4.0;
+            cat.rotation.z=0;
+            cat.rotation.x=0;
+            coin.rotation.x+=(-1.7-coin.rotation.x)/4.0;
+          }
+          if (renderer.flyTo=="hand") {
+          cat.rotation.y=0;
+          scene.rotation.y=-0.4 ;
+          hand.rotation.z=1;
+          hand.rotation.x=-1.3;
+          hand.rotation.y=0.9;
+            hand.position.y+=(1.38+Math.cos(Date.now()/5e2)/6-hand.position.y)/4.0;
+            hand.position.x+=(0.43+Math.cos(Date.now()/5e2)/8-hand.position.x)/4.0;
+            hand.position.z+=(0.4+Math.sin(Date.now()/5e2)/2-hand.position.z)/4.0;
+            scene.rotation.x+=3e-4
+          } else {
+            hand.position.y+=(999-hand.position.y)/4.0;
+          }
+        };updateModels();
+
+      } );
 
 
-<div id="win">
-  <div class="login">
-  <% if logged_in? %>
-      <%= link_to current_user.name+"'s page", '/users/'+current_user.id.to_s %>
-      / <%= link_to "mail", '/messages/'%>
-      / <%= link_to "logout", '/logout'%>
-  <% else %>
-    <%= link_to "login", '/login' %> /
-    <%= link_to "sign up", '/users/new' %>
-  <%end%>
-  <br>
-  <%=
-   space_time DateTime.now #magic time
-  %>
-  </div>
-  <h1><%= link_to "nftpets/", '/' %><%= yield :path %></h1>
+      renderer.flyToOrigin=true;
+      const animate = function () {
+        requestAnimationFrame( animate );
+        moons.forEach((moon,i) => {
+          const r = moon.geometry.parameters.radius;
+          moon.position.z = Math.sin(r*Date.now()/1e5)*2*(r*10);
+          moon.position.x = Math.cos(r*Date.now()/1e5)*3*(r*10);
+        });
 
-    <div id="winb">
-      <% if flash.notice %>
+        scene.rotation.x -= 0.00003;
+        scene.rotation.y -= 0.0002;
+
+        if(renderer.flyTo=="origin") {
+          scene.position.x+=(1.0-scene.position.x)/2.0;
+          scene.position.y+=(-2.0-scene.position.y)/2.0;
+          scene.position.z+=(-7.0-scene.position.z)/2.0;
+        }
+        renderer.render( scene, camera );
+      };
+
+      animate();
+      window.renderer = renderer;
+    </script>
+  </head>
+  <body>
+    <script type="module">
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      renderer.flyTo="origin";
+      document.body.appendChild( window.renderer.domElement );
+    </script>
+
+
+    <div id="win">
+      <div class="login">
+        <% if logged_in? %>
+        <%= link_to current_user.name+"'s page", '/users/'+current_user.id.to_s %>
+        / <%= link_to "mail", '/messages/'%>
+        / <%= link_to "logout", '/logout'%>
+        <% else %>
+        <%= link_to "login", '/login' %> /
+        <%= link_to "sign up", '/users/new' %>
+        <%end%>
+        <br>
+        <%=
+        space_time DateTime.now #magic time
+        %>
+      </div>
+      <h1><%= link_to "nftpets/", '/' %><%= yield :path %></h1>
+
+      <div id="winb">
+        <% if flash.notice %>
         <div id="notice"><%=flash.notice %></div>
-      <% end %>
-    <%= yield %>
-    <br>
-    <div id="foot">
-      <a href="https://patreon.com/happyfeelscompany">
-      The N.F.T. Pet System is made possible by a grant from
-      The Society to Protect Neptunian Furbabies
-      and by contributions from users like you.
-      </a>
-    </div>
-    </div>
+        <% end %>
+        <%= yield %>
+        <br>
+        <div id="foot">
+          <a href="https://patreon.com/happyfeelscompany">
+            The N.F.T. Pet System is made possible by a grant from
+            The Society to Protect Neptunian Furbabies
+            and by contributions from users like you.
+          </a>
+        </div>
+      </div>
     </div>
     <%# javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js"
     %>
     <script>
-     //twemoji.parse(document.getElementById('win'));
-     //twemoji.parse(document.getElementById('winb'));
+      //twemoji.parse(document.getElementById('win'));
+      //twemoji.parse(document.getElementById('winb'));
     </script>
 
     <script>
@@ -217,4 +228,4 @@ window.renderer = renderer;
       }
     </script>
   </body>
-</html>
+  </html>
