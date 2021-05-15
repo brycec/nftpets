@@ -15,7 +15,7 @@ class TokensController < ApplicationController
 
   def update
     @token = Token.find(params[:id])
-    if @token.user_id = 1
+    if @token.user_id==1
       @message=Message.where(token_id: @token.id).first
       @message.token_id=nil
       @token.user_id = current_user.id
@@ -25,6 +25,11 @@ class TokensController < ApplicationController
 
       flash.notice='Claimed a token!'
       redirect_to '/users/'+current_user_id.to_s
+    elsif @token.user_id==current_user.id
+      @token.vibes+=1
+      @token.save
+      flash.notice='You pet the Furbaby!'
+      redirect_to '/tokens/'+@token.id.to_s
     end
   end
 
