@@ -83,19 +83,18 @@ canvas {
   background-color: $hhcyan;
 }
 .btn a {
-  display: inline;
-  margin-left: 2em;
+  margin: 0 0 1em 2em;
 }
 #win, input, .btn a, textarea, select {
   font-family: monospace;
   font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.6);
   color: $cyan !important;
   border: solid 1px $cyan;
   border-radius: 0.9em;
 }
 #winb {
-  margin: 1em 1em 0.5em 1em;
+  margin: 0.5em;
   #splash {
     font-size: 0.9em;
     font-weight: bold;
@@ -190,6 +189,7 @@ width: 1em;
   margin-left: -1.2em;
   padding: 0.25em;
   width: 30%;
+  height: 100%;
 }
 
 #mails .maili {
@@ -211,6 +211,7 @@ width: 1em;
 
 #mailbody {
   width: 66%;
+  height: 100%;
   border-left: solid 1px $cyan;
   float: left;
   min-height: 19em;

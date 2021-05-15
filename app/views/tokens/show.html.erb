@@ -17,15 +17,16 @@
  <p>You can use this unoccupied token to adopt a stray a furbaby and save it
    from a terrible fate.</p>
  <h3>Look for a furbaby trading under this symbol:</h3>
-
- <div class="btn">
+<p>
+ <span class="btn">
    <%
 {sun:'🌞', moon:'🌛', terra: '🌏'}.entries.each do |k,v|
    %>
  <%= link_to v+k.to_s, controller: 'furbabies', action: 'new',
     token_id: @token.id, symbol: k %>
   <% end %>
- </div>
+ </span>
+ </p>
 <% end %>
 
 <script type="module">
