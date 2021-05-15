@@ -44,7 +44,7 @@ canvas {
 #win {
   opacity: 0.9;
   max-width: 575px;
-  padding: 3px;
+  padding: 4px;
   margin-top: 1em;
   margin-left: 1em;
   margin-bottom: 1000px;
@@ -67,10 +67,13 @@ canvas {
   .login a:hover {
     color: $bcyan;
   }
+  div {
+    overflow: scroll;
+  }
 }
 
-#win input, .btn a {
-  padding: .7em 2em;
+#win input, .btn a, textarea {
+  padding: 0.8em 1em;
 }
 #win input:hover, .btn a:hover {
   cursor: pointer;
@@ -83,17 +86,16 @@ canvas {
   display: inline;
   margin-left: 2em;
 }
-#win, #win input, .btn a, textarea {
+#win, input, .btn a, textarea, select {
   font-family: monospace;
   font-size: 1em;
   background-color: rgba(0, 0, 0, 0.9);
   color: $cyan !important;
   border: solid 1px $cyan;
   border-radius: 0.9em;
-  padding: 0.8em 1em;
 }
 #winb {
-  margin: 1em;
+  margin: 1em 1em 0.5em 1em;
   #splash {
     font-size: 0.9em;
     font-weight: bold;
@@ -114,16 +116,18 @@ canvas {
     border: solid 1px $cyan;
     border-bottom: none;
     th, td {
-    border-radius: 0.5em;
+      border-radius: 0.5em;
       padding: 0.8em;
-        border-right: solid 1px $hcyan;
+      border-right: solid 1px $hcyan;
       border-bottom: solid 1px $cyan;
+    }
+    td {
+      word-break: break-all;
+      color: $acyan;
+      background: $vdcyan;
     }
     th {
       background: $hcyan;
-    }
-    td {
-      color: $acyan;
     }
     tr:hover td {
       background: $dcyan;
@@ -143,7 +147,6 @@ canvas {
   font-style: italic;
   font-size: 0.5em;
   top: 1em;
-  position: relative;
   padding-top: 0.5em;
   border-top: solid 1px $pcyan;
   a {
@@ -207,7 +210,7 @@ width: 1em;
 }
 
 #mailbody {
-  width: 65%;
+  width: 66%;
   border-left: solid 1px $cyan;
   float: left;
   min-height: 19em;
@@ -215,6 +218,6 @@ width: 1em;
   padding-left: 1em;
   .btn {
     float: right;
-    margin: 1em -1.5em;
+    margin: 1em 0;
   }
 }

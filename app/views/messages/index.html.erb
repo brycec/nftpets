@@ -11,7 +11,7 @@
 </div>
 
 <div id="mailbody">
-  <div class="btn">
+  <span class="btn">
   <% if @fmessage %>
     <%=link_to 'reply', controller: 'messages', action: 'new',
       to: @fmessage.from,
@@ -19,7 +19,7 @@
         body: @fmessage.from + ' sent a message with subject ' + @fmessage.subject + ' on ' + (space_time @fmessage.created_at.to_datetime) +'. It said: '+@fmessage.body %>
    <% end %>
   <%=link_to 'new message', '/messages/new' %>
-  </div>
+  </span>
 
   <% if @fmessage %>
   <h2><%=@fmessage.subject%></h2>

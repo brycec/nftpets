@@ -106,7 +106,7 @@
             coin.rotation.z=0;
             coin.rotation.x=-coin.rotation.x/4.0;
 
-            scene.position.x+=(cat.position.x-scene.position.x)/4.0;
+            scene.position.x+=(0.5+cat.position.x-scene.position.x)/4.0;
             scene.position.y+=(cat.position.y-scene.position.y-1.9)/4.0;
             scene.position.z+=(cat.position.z-scene.position.z-2.75)/4.0;
           } else if (renderer.flyTo=="stray") {
@@ -131,7 +131,7 @@
           scene.rotation.y=-0.4 ;
           hand.rotation.z=1;
           hand.rotation.x=-1.3;
-          hand.rotation.y=0.9;
+          hand.rotation.y=1;
             hand.position.y+=(1.38+Math.cos(Date.now()/5e2)/6-hand.position.y)/4.0;
             hand.position.x+=(0.43+Math.cos(Date.now()/5e2)/8-hand.position.x)/4.0;
             hand.position.z+=(0.4+Math.sin(Date.now()/5e2)/2-hand.position.z)/4.0;

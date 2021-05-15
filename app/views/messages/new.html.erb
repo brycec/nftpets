@@ -1,10 +1,16 @@
 <h2>Write a Message</h2>
+<div id="newmessage">
 <%= form_for @message do |f| %>
   <%= f.label :to%><br>
-  <%= f.text_field :to%><br>
+  <%= f.text_field :to%><br><br>
   <%= f.label :subject%><br>
-  <%= f.text_field :subject%><br>
+  <%= f.text_field :subject%><br><br>
   <%= f.label :body%><br>
-  <%= f.text_area :body, size: "40x12" %><br>
+  <%= f.text_area :body, size: "40x12" %><br><br>
+  <%= f.label :token_id, "Attach a token" %><br>
+  <%= f.select :token_id, [['No',nil]].concat(
+   current_user.tokens.map { |t| ['#'+t.id.to_s+' Value: '+t.vibes.to_s+'N',t.id] }) %>
+   <br><br>
   <%= f.submit 'Send Message' %>
 <%end%>
+</div>
