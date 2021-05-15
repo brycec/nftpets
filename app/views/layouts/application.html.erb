@@ -33,7 +33,7 @@
       const phong = new THREE.MeshPhongMaterial( {
         color: 0x73F8ED,
         shininess: 100,
-        emissive: 0x001515,
+        emissive: 0x001515
       } );
 
       const rand = THREE.MathUtils.randFloatSpread;
@@ -69,7 +69,7 @@
         let catgeo = gltf.scene.children[0].geometry;
         const cat = new THREE.Mesh(catgeo, boxMaterial);
         let catmesh = new THREE.Mesh( catgeo, phong );
-        catmesh.scale.x=.995;
+        catmesh.scale.x=.98;
         cat.add(catmesh);
         scene.add(cat);
 
@@ -83,7 +83,7 @@
         let handgeo = gltf.scene.children[2].geometry;
         const hand = new THREE.Mesh(handgeo, boxMaterial);
         let handmesh = new THREE.Mesh( handgeo, phong );
-        handmesh.scale.y=.99;
+        handmesh.scale.y=.98;
         hand.add(handmesh);
         scene.add(hand);
         hand.scale.x=.4;

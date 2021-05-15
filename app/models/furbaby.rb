@@ -135,5 +135,4 @@ class Furbaby < ApplicationRecord
       e[1].split(',')[e[0]]
     }.join
   end
-  # test it: pheno_from_dna limit_rare_dna rand_dna,0
 end
