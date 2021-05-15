@@ -3,7 +3,7 @@
 <table>
   <tr><th>users/<%=@user.id %>:</th><td><%=@user.name%></td></tr>
   <tr><th>joined:</th><td> <%=space_time @user.created_at.to_datetime%> </td></tr>
- <tr><th>networth:</th><td>$9999</td></tr>
+ <tr><th>networth:</th><td><%=@networth%><s>N</s></td></tr>
 </table>
 
 <h2><%=@user.name%>'s tokens</h2>
@@ -30,6 +30,6 @@
  <%= form_with model: Token do |f|%>
    <%= f.submit "mint token" %>
  <%end%>
- 
+
 <h5><i>This is your page.</i></h5>
 <% end %>

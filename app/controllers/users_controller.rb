@@ -30,5 +30,7 @@ class UsersController < ApplicationController
     @tokens = Token.where(user_id: params[:id])
 
     @token = Token.new
+
+    @networth = @tokens.inject(0) do |a,b| a+b.vibes end
   end
 end
