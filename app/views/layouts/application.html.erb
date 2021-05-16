@@ -10,7 +10,9 @@
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
   <script type="module">
-    import * as THREE from '<%=javascript_url 'three.module' %>';
+    //import * as THREE from '<%=javascript_url 'three.module' %>';
+    import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
+
     import { GLTFLoader } from '<%=javascript_url 'GLTFLoader' %>';
 
 
