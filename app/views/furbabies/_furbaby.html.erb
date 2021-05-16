@@ -1,5 +1,10 @@
 
 <table>
+  <% if @furbaby.name %>
+    <tr><th>name</th><td>
+      <%=@furbaby.full_name %>
+    </td></tr>
+  <% end %>
   <tr><th>symbol</th><td>
     <%=@furbaby.pheno.last %> <%=@furbaby.trade_symbol.upcase %>
   </td></tr>
@@ -11,6 +16,8 @@
  </td></tr>
   <tr><th>phenotype</th><td><%=@furbaby.pheno %></td></tr>
   <tr><th>description</th><td><%=@furbaby.description %></td></tr>
-  <tr><th>genotype</th><td><%=@furbaby.dna %></td></tr>
+  <tr><th>genotype</th>
+    <td>
+      <%=@furbaby.dna.split(/(....)/).filter{|e|e[0]}.join('-') %></td></tr>
 
 </table>

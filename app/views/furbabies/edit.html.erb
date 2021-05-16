@@ -1,0 +1,35 @@
+
+<h2>Bestow a name upon this furbaby</h2>
+<%= form_with url: '/furbabies/'+@furbaby.id.to_s, method: :patch do |f| %>
+<table>
+  <tr>
+    <th>
+<%= f.label :first, "First name" %>
+</th>
+<th>
+<%= f.label :middle, "Middle name" %>
+</th>
+<th>
+<%= f.label :last, "Last name" %>
+</th>
+</tr>
+<tr>
+  <td>
+<%= f.select :first, @furbaby.vocab %>
+</td>
+<td>
+<%= f.select :middle, @furbaby.vocab %>
+</td>
+<td>
+<%= f.select :last, @furbaby.vocab %>
+</td>
+</tr>
+</table>
+<%= f.submit 'Make it Official' %>
+<% end %>
+<br>
+<%= render @furbaby %>
+
+<script type="module">
+  renderer.flyTo="cat";
+  </script>

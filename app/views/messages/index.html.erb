@@ -1,5 +1,6 @@
 <% content_for :path do %><%='messages/' %>
 <% end %>
+<div id="mailbox">
 <div id="mails">
   <% @messages.each do |message| %>
     <div class="maili">
@@ -24,6 +25,7 @@
   <% if @fmessage %>
   <h2><%=@fmessage.subject%></h2>
   <h3>from: <%=@fmessage.from%></h3>
+  <h3>date: <%=space_time @fmessage.created_at.to_datetime%></h3>
   <p><% @fmessage.body.split("\n").map do |e| %>
       <%=e %>  <br/>
       <% end %>
@@ -37,3 +39,7 @@
   <% end %>
 
 </div>
+</div>
+<script type="module">
+renderer.flyTo="moon";
+</script>

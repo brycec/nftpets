@@ -37,4 +37,5 @@ class TokensController < ApplicationController
   def index
     redirect_to '/users/'+current_user.id.to_s
   end
+
 end

@@ -44,28 +44,30 @@ canvas {
 #win {
   opacity: 0.9;
   max-width: 575px;
-  padding: 4px;
-  margin-top: 1em;
-  margin-left: 1em;
+  padding: 5px;
+  margin-top: 2em;
+  margin-left: 0.5em;
   margin-bottom: 1000px;
-  h1 {
-    font-size: 1.6em;
-    font-style: italic;
-    text-align: left;
-    padding: 0.3em 0.6em;
+  #bar {
     background: $hhcyan;
-    color: $dcyan;
-    margin: 0;
     border-radius: 0.4em 0.4em 0 0;
-  }
-  .login {
-    float: right;
-    margin: 0.3em 0.5em;
-    font-weight: bold;
-    color: $pcyan;
-  }
-  .login a:hover {
-    color: $bcyan;
+    h1 {
+      font-size: 1.5em;
+      font-style: italic;
+      text-align: left;
+      padding: 0.3em 0.6em;
+      color: $dcyan;
+      margin: 0;
+    }
+    .login {
+      float: right;
+      margin: 0.3em 0.5em;
+      font-weight: bold;
+      color: $pcyan;
+    }
+    .login a:hover {
+      color: $bcyan;
+    }
   }
   div {
     overflow: scroll;
@@ -88,23 +90,27 @@ canvas {
 #win, input, .btn a, textarea, select {
   font-family: monospace;
   font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   color: $cyan !important;
   border: solid 1px $cyan;
-  border-radius: 0.9em;
+  border-radius: 0.7em;
 }
 #winb {
-  margin: 0.5em;
+  margin: 0.4em 0 0 0;
   #splash {
     font-size: 0.9em;
     font-weight: bold;
     text-shadow: 0 1px $cyan;
+    margin: 0;
   }
   a {
     color: $bcyan;
   }
   a:hover {
     color: $pcyan;
+  }
+  h2, h3 {
+    margin: 0.25em 0;
   }
   h3 {
     color: $lcyan;
@@ -121,7 +127,6 @@ canvas {
       border-bottom: solid 1px $cyan;
     }
     td {
-      word-break: break-all;
       color: $acyan;
       background: $vdcyan;
     }
@@ -140,19 +145,6 @@ canvas {
   color: $magenta;
   margin-bottom: 0.5em;
 }
-#foot {
-  clear: both;
-  text-align: right;
-  font-style: italic;
-  font-size: 0.5em;
-  top: 1em;
-  padding-top: 0.5em;
-  border-top: solid 1px $pcyan;
-  a {
-    color: $pcyan;
-  }
-}
-
 
 #win .emoji {
 filter: hue-rotate(130deg) brightness(.1);
@@ -184,12 +176,13 @@ width: 1em;
     filter: hue-rotate(125deg); background: #887D03;}
 }
 
+#mailbox {
+  min-width: 420px;
+}
+
 #mails {
   float: left;
-  margin-left: -1.2em;
-  padding: 0.25em;
-  width: 30%;
-  height: 100%;
+  width: 25%;
 }
 
 #mails .maili {
@@ -200,7 +193,7 @@ width: 1em;
     display: block;
   }
   span {
-    color: $pcyan;
+    color: $lcyan;
   }
 }
 
@@ -210,15 +203,26 @@ width: 1em;
 }
 
 #mailbody {
-  width: 66%;
+  width: 70%;
   height: 100%;
   border-left: solid 1px $cyan;
   float: left;
   min-height: 19em;
-  margin-left: 1em;
-  padding-left: 1em;
+  margin-left: 0.4em;
+  padding-left: 0.5em;
   .btn {
     float: right;
     margin: 1em 0;
+  }
+}
+
+#foot {
+  clear: both;
+  font-style: italic;
+  font-size: 0.5em;
+  padding-top: 0.5em;
+  border-top: solid 1px $pcyan;
+  a {
+    color: $pcyan;
   }
 }

@@ -5,10 +5,13 @@
  <tr><th>vibes</th><td><%=@token.vibes%><s>N</s></td></tr>
  <tr><th>furbaby#</th><td><%=@token.furbaby_id or 'none'%></td></tr>
 </table>
+<br>
 <% if @furbaby %>
-<h2>This token's furbaby:</h2>
 <%=button_to '👋 Pet this furbaby', '/tokens/'+@token.id.to_s, method: :patch%>
-<%=link_to 'Name this furbaby', '/tokens/'+@token.id.to_s+'/edit'%>
+<% if current_user.id==@token.user_id and !@furbaby.name %>
+<%=button_to '📝 Name this furbaby', '/furbabies/'+@furbaby.id.to_s+'/edit', method: :get%>
+<% end %>
+<h2>This token's furbaby:</h2>
 <%= render @furbaby %>
 <% end %>
 

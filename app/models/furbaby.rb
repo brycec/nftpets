@@ -118,7 +118,6 @@ class Furbaby < ApplicationRecord
 
   def combo_dna_with(b)
     a = self.dna
-    p = rand(2)>0
     a.split('').zip(b.split('')).map{|g| g[rand(2)]}.join
   end
 
@@ -134,5 +133,19 @@ class Furbaby < ApplicationRecord
     self.numerical_pheno.zip(SYMBOLS).map{|e|
       e[1].split(',')[e[0]]
     }.join
+  end
+
+  def vocab
+    self.numerical_pheno.zip(WORDS).map{|e|
+      e[1].split(', ')[e[0]].capitalize
+    }
+  end
+
+  def full_name
+    if self.name
+      self.name.split(',').map{|e|
+        self.vocab[e.to_i]
+      }.join(' ')
+    end
   end
 end

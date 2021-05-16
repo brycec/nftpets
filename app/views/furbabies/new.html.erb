@@ -6,11 +6,11 @@
 <%=f.submit 'Adopt this stray with token #'+@token.id.to_s %>
  <% end %>
 
-<%= render @furbaby %>
+ <p class="btn">
+ &nbsp;or <%=link_to 'look again', ''%>
+ </p>
 
-<p class="btn">
-<%=link_to 'look again', ''%>
-</p>
+<%= render @furbaby %>
 
 <script type="module">
 setTimeout(function(){
