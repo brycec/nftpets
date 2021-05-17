@@ -9,7 +9,7 @@
 <h2><%=@user.name%>'s tokens:</h2>
 <table>
   <tr>
-    <th>id</th><th>furbaby</th><th>vibes</th>
+    <th>id</th><th>furbaby</th><th>rarity</th><th>vibes</th>
   </tr>
   <%@tokens.each do |t|%>
    <tr class="maili">
@@ -18,10 +18,16 @@
     </td>
     <td>
       <%if t.furbaby_id %>
-       <%=t.furbaby.pheno%>
+       <%=t.furbaby.dname%>
       <%else%>
        None. <%=link_to 'Find one', '/tokens/'+t.id.to_s %>
       <%end%></td>
+    <td>
+      <%if t.furbaby_id %>
+        <%= t.furbaby.rarity %>
+
+      <% end %>
+    </td>
     <td><%=t.vibes.to_s%><s>N</s></td>
    </tr>
   <%end%>

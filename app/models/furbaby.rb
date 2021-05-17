@@ -132,13 +132,9 @@ class Furbaby < ApplicationRecord
   end
 
   def pheno
-    if self.egg?
-      "🥚 egg"
-    else
-      self.numerical_pheno.zip(SYMBOLS).map{|e|
-        e[1].split(',')[e[0]]
-      }.join
-    end
+    self.numerical_pheno.zip(SYMBOLS).map{|e|
+      e[1].split(',')[e[0]]
+    }.join
   end
 
   def vocab
@@ -152,6 +148,22 @@ class Furbaby < ApplicationRecord
       self.name.split(',').map{|e|
         self.vocab[e.to_i]
       }.join(' ')
+    end
+  end
+
+  def rarity
+    return "⭐️"*self.count_rare_dna
+  end
+
+  def dname
+    if self.egg?
+      "🥚 egg"
+    else
+      n = self.full_name
+      if !n
+        n = sprintf("%s a %s",self.vocab[0],self.vocab[2])
+      end
+        self.pheno.last + ' ' + n
     end
   end
 

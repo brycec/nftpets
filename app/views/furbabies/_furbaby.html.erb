@@ -9,10 +9,7 @@
     <%=@furbaby.pheno.last %> <%=@furbaby.trade_symbol.upcase %>
   </td></tr>
   <tr><th>rarity</th><td>
-     <% @furbaby.count_rare_dna.times do %>
-     ⭐️
-   <% end %>
-
+     <%=@furbaby.rarity %>
  </td></tr>
   <tr><th>phenotype</th><td><%=@furbaby.pheno %></td></tr>
   <tr><th>description</th><td><%=@furbaby.description %></td></tr>
