@@ -11,10 +11,15 @@
 <% if current_user.id==@token.user_id and !@furbaby.name %>
 <%=button_to '📝 Name this furbaby', '/furbabies/'+@furbaby.id.to_s+'/edit', method: :get%>
 <% end %>
+<% if current_user.id==@token.user_id and @furbaby.heat? and current_user.empty_token %>
+<%=button_to "🥚 Egg!", '/tokens/'+current_user.empty_token.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
+<% end %>
 <h2>This token's furbaby:</h2>
 <%= render @furbaby %>
 <% end %>
-
+<% if @egg %>
+<h2>This is an egg.</h2>
+<% end %>
 <% if current_user and current_user.id==@token.user_id and !@token.furbaby_id %>
  <h2>Adopt a Furbaby!</h2>
  <p>You can use this unoccupied token to adopt a stray a furbaby and save it
@@ -35,6 +40,8 @@
 <script type="module">
 <% if @furbaby %>
 renderer.flyTo="cat";
+<% elsif @egg %>
+renderer.flyTo="egg";
 <% else %>
   renderer.flyTo="coin";
 <% end %>

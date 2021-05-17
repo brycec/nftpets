@@ -91,9 +91,19 @@
         hand.scale.x=.4;
         hand.scale.y=.4;
         hand.scale.z=.4;
+
+        let egggeo = gltf.scene.children[3].geometry;
+        const egg = new THREE.Mesh(egggeo, boxMaterial);
+        let eggmesh = new THREE.Mesh( egggeo, phong );
+        eggmesh.scale.y=.98;
+        eggmesh.scale.z=.98;
+        egg.add(eggmesh);
+        scene.add(egg);
+
         const updateModels = function(){
           requestAnimationFrame(updateModels);
           coin.rotation.z += 0.01;
+            egg.position.y=999;
           if(renderer.flyTo=="coin") {
             scene.position.x+=(coin.position.x-scene.position.x)/4.0;
             scene.position.y+=(coin.position.y-scene.position.y)/4.0;
@@ -118,6 +128,14 @@
             scene.position.x+=(-cat.position.x-scene.position.x)/4.0;
             scene.position.y+=(-cat.position.y-scene.position.y+2)/4.0;
             scene.position.z+=(-cat.position.z-scene.position.z-8)/4.0;
+          } else if (renderer.flyTo=="egg") {
+            egg.position.y=0.59;
+            cat.position.y=999;
+            coin.rotation.z=0;
+            coin.rotation.x=Math.PI
+            scene.position.x+=(-egg.position.x-scene.position.x)/4.0;
+            scene.position.y+=(-egg.position.y-scene.position.y-.1)/4.0;
+            scene.position.z+=(-egg.position.z-scene.position.z-2.5)/4.0;
           } else {
             cat.position.y+=(4.25-cat.position.y)/3.0;
             cat.scale.x+=(1-cat.scale.x)/4.0;
@@ -125,7 +143,7 @@
             cat.scale.z+=(1-cat.scale.z)/4.0;
             cat.rotation.z=0;
             cat.rotation.x=0;
-            coin.rotation.x+=(-1.7-coin.rotation.x)/4.0;
+            coin.rotation.x+=(-Math.PI/2-coin.rotation.x)/4.0;
           }
           if (renderer.flyTo=="hand") {
           cat.rotation.y=0;

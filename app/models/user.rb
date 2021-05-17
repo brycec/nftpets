@@ -6,4 +6,8 @@ class User < ApplicationRecord
     message: "can only be: _, a-z, A-Z, or 0-9"}
   validates :name, uniqueness: true
   has_secure_password
+
+  def empty_token
+    self.tokens.filter {|t|!t.furbaby}.first
+  end
 end

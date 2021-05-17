@@ -2,9 +2,10 @@ class Furbaby < ApplicationRecord
   has_one :token
   validates :dna, presence: true
 
-  SYMBOLS = ["S,M,L,s,v,l",
+  SYMBOLS = [
+  "🚺,🚹,🚼,⚧,🚻,🚮",
+  "S,M,L,s,v,l",
  "🐈‍⬛,🐈,🐕,🐅,🐆,🐩",
- "🚺,🚹,🚼,⚧,🚻,🚮",
  "🟡,🟢,🔵,🟠,🟣,🔴",
  "😻,😾,😹,🙈,👽,😈",
  "💪,🧠,🫀,🦵,👁,🫁",
@@ -15,7 +16,7 @@ class Furbaby < ApplicationRecord
  "🍬,🍰,🍫,🍭,🍦,🍩",
  "🌼,🌸,🌺,🌻,🌷,🌹",
  "🔮,🧹,👻,✨,🍄,👾",
- "🪨,📄,✂,💣,🛸,☂",
+ "🪨,📄,✂️,💣,🛸,☂",
  "📼,💿,💾,📁,🗄,🗑",
  "🌳,🏔,🏜,🏝,🌋,🖼",
  "💭,💬,🗯,❔,🌀,💤",
@@ -30,9 +31,10 @@ class Furbaby < ApplicationRecord
    terra: [SYMBOLS.length-1,2],
   }
 
-  WORDS = ["smol, reg, chonk, micro, smooshy, chungus",
-    "demon, tabbrs, doge, tigger, togger, pewds",
+  WORDS = [
     "she, he, they, it, both'm, neither'm",
+    "smol, reg, chonk, micro, smooshy, chungus",
+    "demon, tabbrs, doge, tigger, togger, pewds",
     "yellow, green, blue, orange, magenta, red",
     "sweet, grumpy, silly, shy, weird, evil",
     "strong, smart, brave, fast, aware, efficient",
@@ -61,8 +63,8 @@ class Furbaby < ApplicationRecord
      e.split(', ').filter{|s| s.length>0} }).map {|e|
       e[1][e[0]]
     }
-   sprintf(%{a %s %s.
-     %s has %s eyes and acts %s,
+   sprintf(%{%s is a %s %s.
+     with %s eyes and acts %s,
      naturally %s and shaped like a %s,
      eats %s %s like a %s with %s,
      likes the smell of %s,
@@ -130,9 +132,13 @@ class Furbaby < ApplicationRecord
   end
 
   def pheno
-    self.numerical_pheno.zip(SYMBOLS).map{|e|
-      e[1].split(',')[e[0]]
-    }.join
+    if self.egg?
+      "🥚 egg"
+    else
+      self.numerical_pheno.zip(SYMBOLS).map{|e|
+        e[1].split(',')[e[0]]
+      }.join
+    end
   end
 
   def vocab
@@ -148,4 +154,21 @@ class Furbaby < ApplicationRecord
       }.join(' ')
     end
   end
+
+  def heat?
+    self.name and self.numerical_pheno[0]==0
+  end
+
+  def egg?
+    self.created_at==DateTime.new
+  end
+end
+
+def Furbaby.new_egg(dna)
+  f=Furbaby.new
+  f.dna=dna
+  f.save
+  f.created_at=DateTime.new
+  f.save
+  f
 end

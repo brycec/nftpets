@@ -11,6 +11,10 @@ class TokensController < ApplicationController
     @token = Token.find(params[:id])
     if @token.furbaby_id
       @furbaby = Furbaby.find(@token.furbaby_id)
+      if @furbaby.egg?
+        @egg=@furbaby
+        @furbaby=nil
+      end
     end
   end
 
@@ -31,6 +35,20 @@ class TokensController < ApplicationController
       @token.save
       flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
       redirect_to '/tokens/'+@token.id.to_s+'?pet=true'
+    elsif @token.id==current_user.empty_token.id
+      @furbaby=Furbaby.find(params[:furbaby])
+      if @furbaby.heat?
+        @egg=Furbaby.new_egg @furbaby.dna
+        @token.furbaby_id=@egg.id
+        @token.save
+        if @egg.valid? and @token.valid?
+          flash.notice="Laid an egg! 🥚"
+          redirect_to '/tokens/'+@token.id.to_s
+        else
+          flash.notice="oops "+@egg.errors.all_messages+@token.errors.all_messages
+          redirect_to '/'
+        end
+      end
     end
   end
 
