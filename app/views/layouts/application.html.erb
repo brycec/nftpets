@@ -53,9 +53,9 @@
       scene.add( starsMesh );
       const moons = [];
       for ( let i = 0; i < 12; i ++ ) {
-        const moonGeo = new THREE.SphereGeometry(2+rand(4),
-        5+Math.round(rand(5)),
-        5+Math.round(rand(5)));
+        const moonGeo = new THREE.SphereGeometry(3+rand(4),
+        4+Math.round(rand(5)),
+        4+Math.round(rand(5)));
         const moon = new THREE.Mesh( moonGeo, boxMaterial );
         moons.push(moon);
         scene.add( moon );
@@ -102,10 +102,22 @@
         egg.add(eggmesh);
         scene.add(egg);
 
+        let satgeo = gltf.scene.children[4].geometry;
+        const sat = new THREE.Mesh(satgeo, boxMaterial);
+        let satmesh = new THREE.Mesh( satgeo, phong );
+        satmesh.scale.y=.98;
+        satmesh.scale.z=.98;
+        sat.add(satmesh);
+        scene.add(sat);
+        sat.rotation.x=-0.6;
+        sat.rotation.z=.9;
+
         const updateModels = function(){
           requestAnimationFrame(updateModels);
           coin.rotation.z += 0.01;
-            egg.position.y=999;
+          egg.position.y=999;
+          sat.position.x=moons[1].position.x+10;
+          sat.position.z=moons[1].position.z;
             camera.lookAt(coin.position);
           if(renderer.flyTo=="coin") {
             scene.position.x+=(coin.position.x-scene.position.x)/4.0;
@@ -139,6 +151,10 @@
             scene.position.x+=(-egg.position.x-scene.position.x)/4.0;
             scene.position.y+=(-egg.position.y-scene.position.y-.1)/4.0;
             scene.position.z+=(-egg.position.z-scene.position.z-2.5)/4.0;
+          } else if (renderer.flyTo=="moon") {
+            camera.position.x+=(sat.position.x-camera.position.x)/3.0;
+            camera.position.z+=(sat.position.z-camera.position.z-10)/3.0;
+            camera.lookAt(sat.position);
           } else {
             cat.position.y+=(4.25-cat.position.y)/3.0;
             cat.scale.x+=(1-cat.scale.x)/4.0;
@@ -169,25 +185,21 @@
       const animate = function () {
         requestAnimationFrame( animate );
         moons.forEach((moon,i) => {
-          const r = moon.geometry.parameters.radius;
+          const r = moon.geometry.parameters.radius+2;
           moon.position.z = Math.sin(r*Date.now()/1e5)*2*(r*10);
           moon.position.x = Math.cos(r*Date.now()/1e5)*3*(r*10);
         });
 
-        scene.rotation.z = -.01+Math.cos(Date.now()/3e4)/20;
-        scene.rotation.y = -.6+Math.sin(Date.now()/9e4);
+        scene.rotation.z = +Math.cos(Date.now()/3e4)/20;
+        scene.rotation.y = +Math.sin(Date.now()/9e4)/10;
 
         if(renderer.flyTo=="origin") {
           scene.position.x+=(2.0-scene.position.x)/2.0;
           scene.position.y+=(-2.0-scene.position.y)/2.0;
           scene.position.z+=(-7.0-scene.position.z)/2.0;
-            camera.rotation.y=0
-        } else if (renderer.flyTo=="moon") {
-          scene.position.x+=(-moons[1].position.x-scene.position.x)/3.0;
-          scene.position.y+=(-moons[1].position.y-scene.position.y)/3.0;
-          scene.position.z+=(-moons[1].position.z-scene.position.z-15)/3.0;
-          camera.lookAt(scene.position);
-        } else {
+          camera.rotation.y=0
+          camera.position.x=0;
+          camera.position.z=0;
         }
         renderer.render( scene, camera );
       };

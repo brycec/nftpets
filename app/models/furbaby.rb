@@ -1,4 +1,5 @@
 class Furbaby < ApplicationRecord
+  # TODO mom and dad fields
   has_one :token
   validates :dna, presence: true
 
