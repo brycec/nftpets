@@ -11,7 +11,7 @@
   <tr><th>rarity</th><td>
      <%=@furbaby.rarity %>
  </td></tr>
-  <tr><th>birthday</th><td><%=space_time @furbaby.created_at.to_datetime %></td></tr>
+  <tr><th>birthday</th><td><%=space_time @furbaby.created_at.to_datetime %> <%= @furbaby.astro %></td></tr>
   <tr><th>phenotype</th><td><%=@furbaby.pheno %></td></tr>
   <tr><th>description</th><td><%=@furbaby.description %></td></tr>
   <tr><th>genotype</th>

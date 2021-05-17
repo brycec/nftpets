@@ -51,32 +51,37 @@ class Furbaby < ApplicationRecord
     "thinking, talking, screaming, confused, rambling, dreaming",
     "buy, sell, diversify, hodl, paperhands, diamondhands",
     "nature, fire, water, rainbow, lightning, radiation",
-    "sun, moon, terra, star, saturn, rocket"
-  ]
+    "sun, moon, terra, star, saturn, rocket"]
   GENES = ['A','B'] # .last gene is rare
   RARE_G = 2.times.map{GENES.last.downcase}.join # the rare gene 'bb'
   NUM_GENES = 20 # (x2 chars/chromosome = dna string length)
 
-  ASTRO = %{
-    capricorn ♑️ 22 dec
-    aquarius ♒️ 20 jan
-    pisces ♓️ 19 feb
-    aries ♈️ 21 march
-    taurus ♉️ 20 april
-    gemini ♊️ 21 may
-    cancer ♋️ 21 june
-    leo ♌️ 23 july
-    virgo ♍️ 23 august
-    libra ♎️ 23 sept
-    scorpio ♏️ 22 oct
-    sagittarius ♐️ 22 nov
-
-  }
+  ASTRO = [[20,'♑️ capricorn'],
+    [19,'♒️ aquarius',],
+    [21,'♓️ pisces'],
+    [20,'♈️ aries'],
+    [21,'♉️ taurus'],
+    [21,'♊️ gemini'],
+    [23,'♋️ cancer'],
+    [23,'♌️ leo'],
+    [23,'♍️ virgo'],
+    [23,'♎️ libra'],
+    [22,'♏️ scorpio'],
+    [22,'♐️ sagittarius']]
 
   def vocab
     self.numerical_pheno.zip(WORDS).map{|e|
       e[1].split(', ')[e[0]]
     }
+  end
+
+  def astro
+    c=self.created_at
+    a=ASTRO[c.month-1]
+    if a[0]<c.day
+      a=ASTRO[c.month] or ASTRO[0]
+    end
+    a[1]
   end
 
   def description
