@@ -42,6 +42,10 @@ This stud can hatch an egg on your other token.
  </p>
 <% end %>
 
+<% if @furbaby and current_user.id==@token.user_id %>
+<%=button_to "😿 Release", '/tokens/'+@token.id.to_s, method: :delete%>
+<% end %>
+
 <script type="module">
 <% if @furbaby %>
 renderer.flyTo="cat";

@@ -76,4 +76,15 @@ class TokensController < ApplicationController
     redirect_to '/users/'+current_user.id.to_s
   end
 
+  def destroy
+    @token=Token.find(params[:id])
+    if @token and @token.user_id==current_user.id
+      f=@token.furbaby
+      @token.furbaby_id=nil
+      @token.save
+      f.destroy
+      flash.notice="Goodbye, "+ f.vocab[4] +" furbaby . . . 🥺"
+      redirect_to '/tokens/'+@token.id.to_s
+    end
+  end
 end

@@ -31,7 +31,7 @@ class FurbabiesController < ApplicationController
   def show
     @token = Token.where(furbaby_id: params[:id]).first
     if @token
-      redirect_to '/tokens/'+token.id.to_s
+      redirect_to '/tokens/'+@token.id.to_s
     else
       redirect_to '/'
     end
