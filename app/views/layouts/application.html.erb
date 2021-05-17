@@ -104,6 +104,7 @@
           requestAnimationFrame(updateModels);
           coin.rotation.z += 0.01;
             egg.position.y=999;
+            camera.lookAt(coin.position);
           if(renderer.flyTo=="coin") {
             scene.position.x+=(coin.position.x-scene.position.x)/4.0;
             scene.position.y+=(coin.position.y-scene.position.y)/4.0;

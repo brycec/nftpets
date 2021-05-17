@@ -57,12 +57,15 @@ class Furbaby < ApplicationRecord
   RARE_G = 2.times.map{GENES.last.downcase}.join # the rare gene 'bb'
   NUM_GENES = 20 # (x2 chars/chromosome = dna string length)
 
+  def vocab
+    self.numerical_pheno.zip(WORDS).map{|e|
+      e[1].split(', ')[e[0]]
+    }
+  end
+
   def description
 
-    a = self.numerical_pheno().zip(WORDS.map{|e|
-     e.split(', ').filter{|s| s.length>0} }).map {|e|
-      e[1][e[0]]
-    }
+   a = self.vocab
    sprintf(%{%s is a %s %s
      with %s eyes and acts %s,
      naturally %s and shaped like a %s,
@@ -137,16 +140,10 @@ class Furbaby < ApplicationRecord
     }.join
   end
 
-  def vocab
-    self.numerical_pheno.zip(WORDS).map{|e|
-      e[1].split(', ')[e[0]].capitalize
-    }
-  end
-
   def full_name
     if self.name
       self.name.split(',').map{|e|
-        self.vocab[e.to_i]
+        self.vocab[e.to_i].capitalize
       }.join(' ')
     end
   end
@@ -161,9 +158,11 @@ class Furbaby < ApplicationRecord
     else
       n = self.full_name
       if !n
-        n = sprintf("%s a %s",self.vocab[0],self.vocab[2])
+        v = self.vocab
+        n = sprintf("%s a %s",v[0],v[2])
       end
-        self.pheno.last + ' ' + n
+        p=self.pheno
+        p[0]+p[2]+p.last + ' ' + n
     end
   end
 

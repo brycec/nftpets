@@ -15,13 +15,14 @@
 </tr>
 <tr>
   <td>
-<%= f.select :first, @furbaby.vocab %>
+    <%v=@furbaby.vocab.map {|e|e.capitalize}%>
+<%= f.select :first, v %>
 </td>
 <td>
-<%= f.select :middle, @furbaby.vocab %>
+<%= f.select :middle, v %>
 </td>
 <td>
-<%= f.select :last, @furbaby.vocab %>
+<%= f.select :last, v %>
 </td>
 </tr>
 </table>

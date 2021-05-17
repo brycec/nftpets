@@ -23,7 +23,7 @@
        None. <%=link_to 'Find one', '/tokens/'+t.id.to_s %>
       <%end%></td>
     <td>
-      <%if t.furbaby_id %>
+      <%if t.furbaby_id and !t.furbaby.egg? %>
         <%= t.furbaby.rarity %>
 
       <% end %>
