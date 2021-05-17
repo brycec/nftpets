@@ -63,7 +63,7 @@ class Furbaby < ApplicationRecord
      e.split(', ').filter{|s| s.length>0} }).map {|e|
       e[1][e[0]]
     }
-   sprintf(%{%s is a %s %s.
+   sprintf(%{%s is a %s %s
      with %s eyes and acts %s,
      naturally %s and shaped like a %s,
      eats %s %s like a %s with %s,
@@ -119,8 +119,8 @@ class Furbaby < ApplicationRecord
   end
 
   def combo_dna_with(b)
-    a = self.dna
-    a.split('').zip(b.split('')).map{|g| g[rand(2)]}.join
+    self.dna=self.dna.split('').zip(b.split('')).map{|g|
+      g[rand(2)]}.join
   end
 
   def numerical_pheno()
@@ -156,11 +156,22 @@ class Furbaby < ApplicationRecord
   end
 
   def heat?
-    self.name and self.numerical_pheno[0]==0
+    self.name and self.numerical_pheno[0]==0 and self.token.vibes>0
+  end
+
+  def stud?
+    self.name and self.numerical_pheno[0]==1 and self.token.vibes>0
   end
 
   def egg?
     self.created_at==DateTime.new
+  end
+
+  def hatch a
+    if self.egg?
+      self.combo_dna_with a
+      self.created_at=DateTime.now
+    end
   end
 end
 

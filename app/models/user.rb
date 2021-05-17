@@ -10,4 +10,12 @@ class User < ApplicationRecord
   def empty_token
     self.tokens.filter {|t|!t.furbaby}.first
   end
+
+  def egg
+    self.tokens.filter {|t|t.furbaby and t.furbaby.egg?}.first
+  end
+
+  def egg?
+    !!self.egg
+  end
 end

@@ -30,22 +30,42 @@ class TokensController < ApplicationController
 
       flash.notice='Claimed a token!'
       redirect_to '/tokens/'+@token.id.to_s
-    elsif @token.furbaby_id
+    elsif @token.furbaby_id and !@token.furbaby.egg?
       @token.vibes+=1
       @token.save
       flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
       redirect_to '/tokens/'+@token.id.to_s+'?pet=true'
-    elsif @token.id==current_user.empty_token.id
-      @furbaby=Furbaby.find(params[:furbaby])
-      if @furbaby.heat?
-        @egg=Furbaby.new_egg @furbaby.dna
+    elsif current_user.empty_token and @token.id==current_user.empty_token.id
+      @mom=Furbaby.find(params[:furbaby])
+      if @mom.heat?
+        @egg=Furbaby.new_egg @mom.dna
         @token.furbaby_id=@egg.id
+        @token.vibes=@mom.token.vibes
         @token.save
+        @mom.token.vibes=0
+        @mom.token.save
         if @egg.valid? and @token.valid?
           flash.notice="Laid an egg! 🥚"
           redirect_to '/tokens/'+@token.id.to_s
         else
           flash.notice="oops "+@egg.errors.all_messages+@token.errors.all_messages
+          redirect_to '/'
+        end
+      end
+    elsif @token.furbaby.egg?
+      @stud=Furbaby.find(params[:furbaby])
+      if @stud.stud?
+        @token.furbaby.hatch @stud.dna
+        @token.furbaby.save
+        @token.vibes+=@stud.token.vibes
+        @token.save
+        @stud.token.vibes=0
+        @stud.token.save
+        if @token.furbaby.valid? and @token.valid?
+          flash.notice="Hatched an egg! 🐣"
+          redirect_to '/tokens/'+@token.id.to_s
+        else
+          flash.notice="oops "+@token.furbaby.errors.all_messages+@token.errors.all_messages
           redirect_to '/'
         end
       end

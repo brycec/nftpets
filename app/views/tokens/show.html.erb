@@ -13,6 +13,11 @@
 <% end %>
 <% if current_user.id==@token.user_id and @furbaby.heat? and current_user.empty_token %>
 <%=button_to "🥚 Egg!", '/tokens/'+current_user.empty_token.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
+This queen can lay an egg on one of your onoccupied tokens.
+<% end %>
+<% if current_user.id==@token.user_id and @furbaby.stud? and current_user.egg? %>
+<%=button_to "🐣 Hatch!", '/tokens/'+current_user.egg.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
+This stud can hatch an egg on your other token.
 <% end %>
 <h2>This token's furbaby:</h2>
 <%= render @furbaby %>
