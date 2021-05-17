@@ -7,6 +7,10 @@ class User < ApplicationRecord
   validates :name, uniqueness: true
   has_secure_password
 
+  def networth
+    self.tokens.inject(0) do |a,b| a+b.vibes end
+  end
+
   def empty_token
     self.tokens.filter {|t|!t.furbaby}.first
   end

@@ -1,11 +1,22 @@
 <% content_for :path do %><%='users/' %>
 <% end %>
-<h2>users</h2>
+<h2>Most Valuable Users</h2>
 <table>
+ <tr>
+  <th>#</th>
+  <th>name</th>
+   <th>networth</th>
+ </tr>
+ <tr>
   <% @users.each do |user| %>
-   <tr>
+     <td>
+     <%= link_to user.id.to_s, '/users/' + user.id.to_s %>
+     </td>
      <td>
      <%= link_to user.name, '/users/' + user.id.to_s %>
+     </td>
+     <td>
+     <%= user.networth %><s>N</s>
      </td>
    </tr>
   <% end %>

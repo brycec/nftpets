@@ -57,6 +57,22 @@ class Furbaby < ApplicationRecord
   RARE_G = 2.times.map{GENES.last.downcase}.join # the rare gene 'bb'
   NUM_GENES = 20 # (x2 chars/chromosome = dna string length)
 
+  ASTRO = %{
+    capricorn ♑️ 22 dec
+    aquarius ♒️ 20 jan
+    pisces ♓️ 19 feb
+    aries ♈️ 21 march
+    taurus ♉️ 20 april
+    gemini ♊️ 21 may
+    cancer ♋️ 21 june
+    leo ♌️ 23 july
+    virgo ♍️ 23 august
+    libra ♎️ 23 sept
+    scorpio ♏️ 22 oct
+    sagittarius ♐️ 22 nov
+
+  }
+
   def vocab
     self.numerical_pheno.zip(WORDS).map{|e|
       e[1].split(', ')[e[0]]

@@ -6,6 +6,7 @@ class FurbabiesController < ApplicationController
       @furbaby = Furbaby.new
       @furbaby.rand_dna
       @furbaby.ensure_symbol(params[:symbol])
+      @furbaby.created_at = DateTime.now - rand(365)*rand
       @furbaby.limit_rare_dna(2)
     else
       redirect_to '/'
@@ -14,15 +15,16 @@ class FurbabiesController < ApplicationController
 
   def create
     furbaby = Furbaby.create dna: params[:dna]
+    token = Token.find(params[:token_id])
+    furbaby.created_at -= rand(365)
+    furbaby.save
+    token.furbaby_id = furbaby.id
+    token.save
     if furbaby.valid?
-      token = Token.find(params[:token_id])
-      furbaby.save
-      token.furbaby_id = furbaby.id
-      token.save
       flash.notice = 'Adopted a furbaby!'
       redirect_to '/tokens/'+token.id.to_s
     else
-      flash.notice = furbaby.errors.full_messages.join(' ')
+      flash.notice = furbaby.errors.full_messages.join(' ') + token.errors.full_messages.join(' ')
       redirect_to '/'
     end
 

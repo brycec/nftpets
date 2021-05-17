@@ -3,7 +3,7 @@
 <table>
   <tr><th>users/<%=@user.id %>:</th><td><%=@user.name%></td></tr>
   <tr><th>joined:</th><td> <%=space_time @user.created_at.to_datetime%> </td></tr>
- <tr><th>networth:</th><td><%=@networth%><s>N</s></td></tr>
+ <tr><th>networth:</th><td><%=@user.networth%><s>N</s></td></tr>
 </table>
 
 <h2><%=@user.name%>'s tokens:</h2>
@@ -20,7 +20,10 @@
       <%if t.furbaby_id %>
        <%=t.furbaby.dname%>
       <%else%>
-       None. <%=link_to 'Find one', '/tokens/'+t.id.to_s %>
+       None.
+       <% if current_user and current_user.id==t.user_id %>
+        <%=link_to 'Find one', '/tokens/'+t.id.to_s %>
+       <% end %>
       <%end%></td>
     <td>
       <%if t.furbaby_id and !t.furbaby.egg? %>

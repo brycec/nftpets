@@ -71,7 +71,9 @@
         let catgeo = gltf.scene.children[0].geometry;
         const cat = new THREE.Mesh(catgeo, boxMaterial);
         let catmesh = new THREE.Mesh( catgeo, phong );
-        catmesh.scale.x=.98;
+        catmesh.scale.x=.999;
+        catmesh.scale.y=.999;
+        catmesh.scale.z=.999;
         cat.add(catmesh);
         scene.add(cat);
 

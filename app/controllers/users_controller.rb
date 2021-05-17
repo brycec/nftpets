@@ -21,16 +21,12 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.all.sort {|a|-a.networth}
   end
 
   def show
     @user = User.find_by(id: params[:id])
-
-    @tokens = Token.where(user_id: params[:id])
-
+    @tokens = @user.tokens
     @token = Token.new
-
-    @networth = @tokens.inject(0) do |a,b| a+b.vibes end
   end
 end
