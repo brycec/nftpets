@@ -19,7 +19,7 @@
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x001110);
     scene.fog = new THREE.FogExp2( 0x001110, 0.0011 );
-    const light = new THREE.PointLight( 0x73F8ED, 0.6, );
+    const light = new THREE.PointLight( 0x73F8ED, 0.9, );
     light.position.x=-10;
     light.position.y=1;
     scene.add( light );
@@ -71,9 +71,7 @@
         let catgeo = gltf.scene.children[0].geometry;
         const cat = new THREE.Mesh(catgeo, boxMaterial);
         let catmesh = new THREE.Mesh( catgeo, phong );
-        catmesh.scale.x=.999;
-        catmesh.scale.y=.999;
-        catmesh.scale.z=.999;
+        catmesh.scale.setScalar(.999);
         cat.add(catmesh);
         scene.add(cat);
 
@@ -90,9 +88,7 @@
         handmesh.scale.y=.98;
         hand.add(handmesh);
         scene.add(hand);
-        hand.scale.x=.4;
-        hand.scale.y=.4;
-        hand.scale.z=.4;
+        hand.scale.setScalar(.4);
 
         let egggeo = gltf.scene.children[3].geometry;
         const egg = new THREE.Mesh(egggeo, boxMaterial);
@@ -105,24 +101,22 @@
         let satgeo = gltf.scene.children[4].geometry;
         const sat = new THREE.Mesh(satgeo, boxMaterial);
         let satmesh = new THREE.Mesh( satgeo, phong );
-        satmesh.scale.y=.98;
-        satmesh.scale.z=.98;
+        satmesh.scale.setScalar(.998);
         sat.add(satmesh);
         scene.add(sat);
-        sat.rotation.x=-0.6;
-        sat.rotation.z=.9;
+        sat.rotation.set(rand(Math.PI),rand(Math.PI),rand(Math.PI));
 
         const updateModels = function(){
           requestAnimationFrame(updateModels);
           coin.rotation.z += 0.01;
           egg.position.y=999;
-          sat.position.x=moons[1].position.x+10;
-          sat.position.z=moons[1].position.z;
+          sat.position.x=45;
             camera.lookAt(coin.position);
           if(renderer.flyTo=="coin") {
-            scene.position.x+=(coin.position.x-scene.position.x)/4.0;
-            scene.position.y+=(coin.position.y-scene.position.y)/4.0;
-            scene.position.z+=(coin.position.z-scene.position.z-2)/4.0;
+            scene.position.set(
+             scene.position.add(
+              (coin.position.sub(scene.position)).divideScalar(2)));
+             camera.lookAt(coin);
           }
           if(renderer.flyTo=="cat" || renderer.flyTo=="hand") {
             cat.position.y+=(1.02-cat.position.y)/4.0;
@@ -151,10 +145,6 @@
             scene.position.x+=(-egg.position.x-scene.position.x)/4.0;
             scene.position.y+=(-egg.position.y-scene.position.y-.1)/4.0;
             scene.position.z+=(-egg.position.z-scene.position.z-2.5)/4.0;
-          } else if (renderer.flyTo=="moon") {
-            camera.position.x+=(sat.position.x-camera.position.x)/3.0;
-            camera.position.z+=(sat.position.z-camera.position.z-10)/3.0;
-            camera.lookAt(sat.position);
           } else {
             cat.position.y+=(4.25-cat.position.y)/3.0;
             cat.scale.x+=(1-cat.scale.x)/4.0;
@@ -163,6 +153,11 @@
             cat.rotation.z=0;
             cat.rotation.x=0;
             coin.rotation.x+=(-Math.PI/2-coin.rotation.x)/4.0;
+          }
+          if (renderer.flyTo=="moon") {
+            camera.position.y+=(sat.position.y-camera.position.y+3)/3.0;
+            camera.position.x+=(sat.position.x-camera.position.x+6)/3.0;
+            camera.lookAt(sat.position);
           }
           if (renderer.flyTo=="hand") {
           cat.rotation.y=0;
@@ -191,7 +186,7 @@
         });
 
         scene.rotation.z = +Math.cos(Date.now()/3e4)/20;
-        scene.rotation.y = +Math.sin(Date.now()/9e4)/10;
+        scene.rotation.y = +Math.sin(Date.now()/1e4)/10;
 
         if(renderer.flyTo=="origin") {
           scene.position.x+=(2.0-scene.position.x)/2.0;
@@ -223,7 +218,7 @@
         <div class="login">
           <% if logged_in? %>
           <%= link_to current_user.id.to_s+':)'+current_user.name, '/users/'+current_user.id.to_s %>
-          | <%= link_to "mail", '/messages/'%>
+          | <%= link_to "mail", '/messages/'%>:<%=current_user.messages.length.to_s%>
           | <%= link_to "logout", '/logout'%>
           <% else %>
           <%= link_to "login", '/login' %> /

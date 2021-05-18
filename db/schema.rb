@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_16_024559) do
+ActiveRecord::Schema.define(version: 2021_05_18_212838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,11 @@ ActiveRecord::Schema.define(version: 2021_05_16_024559) do
     t.string "from"
     t.bigint "token_id"
     t.index ["token_id"], name: "index_messages_on_token_id"
+  end
+
+  create_table "messages_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "message_id", null: false
   end
 
   create_table "tokens", force: :cascade do |t|

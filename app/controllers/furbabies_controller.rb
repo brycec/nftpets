@@ -53,9 +53,9 @@ class FurbabiesController < ApplicationController
 
   def update
     token_or_redirect
-    @furbaby.name = [@furbaby.vocab.index(params[:first].downcase),
-        @furbaby.vocab.index(params[:middle].downcase),
-        @furbaby.vocab.index(params[:last].downcase)].join(',')
+    @furbaby.name = [@furbaby.vocab.index(params[:first]),
+        @furbaby.vocab.index(params[:middle]),
+        @furbaby.vocab.index(params[:last])].join(',')
     @furbaby.save
     if @furbaby.invalid?
       flash.notice = @furbaby.errors.all_messages.join(' ')

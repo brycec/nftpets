@@ -1,5 +1,11 @@
 class Message < ApplicationRecord
 
+  after_create do
+    user=User.where(name: to).first
+    if user
+      user.messages<< self
+    end
+  end
 end
 
 def Message.new_welcome(u)

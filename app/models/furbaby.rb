@@ -51,7 +51,7 @@ class Furbaby < ApplicationRecord
     "forest, mountains, desert, islands, volcano, windows",
     "thinking, talking, screaming, confused, rambling, dreaming",
     "buy, sell, diversify, hodl, paperhands, diamondhands",
-    "nature, fire, water, rainbow, lightning, radiation",
+      "nature, fire, water, rainbow, lightning, radiation",
     "sun, moon, terra, star, saturn, rocket"]
   GENES = ['A','B'] # .last gene is rare
   RARE_G = 2.times.map{GENES.last.downcase}.join # the rare gene 'bb'
@@ -77,10 +77,13 @@ class Furbaby < ApplicationRecord
   end
 
   def astro
-    c=self.created_at
+    c=self.created_at.to_datetime
     a=ASTRO[c.month-1]
     if a[0]<c.day
-      a=ASTRO[c.month] or ASTRO[0]
+      a=ASTRO[c.month]
+      if !a
+        a=ASTRO.first
+      end
     end
     a[1]
   end

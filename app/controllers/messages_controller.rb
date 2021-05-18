@@ -1,6 +1,18 @@
 class MessagesController < ApplicationController
+  def is_to_The?
+    /\A(The [A-Z][a-z]+)/.match params[:to]
+  end
+
   def my_messages
-     Message.where(to: current_user.name).reverse
+    if is_to_The?
+      Message.where(to: params[:to])
+    elsif current_user.name==params[:to]
+      Message.where(to: current_user.name).reverse.without current_user.messages
+    elsif current_user
+      current_user.messages
+    else
+      []
+    end
   end
 
   def new
@@ -31,22 +43,29 @@ class MessagesController < ApplicationController
 
   def show
     @fmessage = Message.find(params[:id])
-    if params[:cult]
-      @messages = Message.where(to: "The "+params[:cult])
+    @messages = my_messages
+    if current_user and
+      !is_to_The? and
+      @fmessage.to != current_user.name
+      @fmessage = @messages.first
     else
-      @messages = my_messages
-      if @fmessage.to != current_user.name
-        @fmessage = @messages.first
-      end
+
     end
     render  "index"
   end
 
   def index
     @messages = my_messages
-    @fmessage = @messages.first
+    @fmessage = @messages ? @messages.first : nil
   end
 
-  def delete
+  def update
+    message = Message.find(params[:id])
+    if current_user.messages.include? message
+      current_user.messages.delete message
+    elsif current_user.name==message.to
+      current_user.messages<< message
+    end
+    redirect_to '/messages'
   end
 end

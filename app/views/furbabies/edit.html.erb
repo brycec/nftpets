@@ -15,7 +15,7 @@
 </tr>
 <tr>
   <td>
-    <%v=@furbaby.vocab.map {|e|e.capitalize}%>
+    <%v=@furbaby.vocab.map {|e|[e.capitalize,e]}%>
 <%= f.select :first, v %>
 </td>
 <td>

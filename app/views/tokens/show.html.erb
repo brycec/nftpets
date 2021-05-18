@@ -1,25 +1,32 @@
 <% content_for :path do %><%=link_to 'tokens/','/tokens'%><%=@token.id.to_s%><% end %>
 <table>
-  <tr><th>operator</th><td>
-   <%=link_to @token.user.name, '/users/'+@token.user_id.to_s%></td></tr>
- <tr><th>vibes</th><td><%=@token.vibes%><s>N</s></td></tr>
- <tr><th>furbaby#</th><td><%=@token.furbaby_id or 'none'%></td></tr>
+  <tr>
+  <th>furbaby#</th>
+  <th>operator</th>
+   <th>vibes</th></tr>
+  <tr>
+  <td><%=@token.furbaby_id or 'none'%></td>
+  <td>
+  <%=link_to @token.user.name, '/users/'+@token.user_id.to_s%></td>
+  <td><%=@token.vibes%><s>N</s></td></tr>
 </table>
 <br>
 <% if @furbaby %>
-<%=button_to '👋 Pet this furbaby', '/tokens/'+@token.id.to_s, method: :patch%>
+<span class="btn">
+<%=button_to '👋 Pet', '/tokens/'+@token.id.to_s, method: :patch%>
 <% if current_user.id==@token.user_id and !@furbaby.name %>
-<%=button_to '📝 Name this furbaby', '/furbabies/'+@furbaby.id.to_s+'/edit', method: :get%>
+<%=button_to '📝 Name', '/furbabies/'+@furbaby.id.to_s+'/edit', method: :get%>
 <% end %>
 <% if current_user.id==@token.user_id and @furbaby.heat? and current_user.empty_token %>
 <%=button_to "🥚 Egg!", '/tokens/'+current_user.empty_token.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
-This queen can lay an egg on one of your onoccupied tokens.
+<%=@furbaby.vocab[0]%> will lay an egg on one of your onoccupied tokens.
 <% end %>
 <% if current_user.id==@token.user_id and @furbaby.stud? and current_user.egg? %>
-<%=button_to "🐣 Hatch!", '/tokens/'+current_user.egg.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
-This stud can hatch an egg on your other token.
+<%=button_to "🐣 Hatch", '/tokens/'+current_user.egg.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
+<%=@furbaby.vocab[0]%> will hatch an egg on your other token.
 <% end %>
-<h2>This token's furbaby:</h2>
+</span>
+<h3>This token's furbaby:</h3>
 <%= render @furbaby %>
 <% end %>
 <% if @egg %>

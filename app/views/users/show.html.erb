@@ -1,9 +1,12 @@
 <% content_for :path do %><%='users/'+@user.id.to_s%>
 <% end %>
 <table>
-  <tr><th>users/<%=@user.id %>:</th><td><%=@user.name%></td></tr>
-  <tr><th>joined:</th><td> <%=space_time @user.created_at.to_datetime%> </td></tr>
- <tr><th>networth:</th><td><%=@user.networth%><s>N</s></td></tr>
+  <tr><th>operator</th><th>since</th><th>networth</th></tr>
+  <tr>
+    <td><%=@user.name%></td>
+    <td> <%=space_time @user.created_at.to_datetime %> </td>
+    <td><%=@user.networth%><s>N</s></td>
+  </tr>
 </table>
 
 <h2><%=@user.name%>'s tokens:</h2>

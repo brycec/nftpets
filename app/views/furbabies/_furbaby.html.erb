@@ -1,21 +1,24 @@
 
-<table>
-  <% if @furbaby.name %>
-    <tr><th>name</th><td>
-      <%=@furbaby.full_name %>
-    </td></tr>
-  <% end %>
-  <tr><th>symbol</th><td>
-    <%=@furbaby.pheno.last %> <%=@furbaby.trade_symbol.upcase %>
-  </td></tr>
-  <tr><th>rarity</th><td>
-     <%=@furbaby.rarity %>
- </td></tr>
-  <tr><th>birthday</th><td><%=space_time @furbaby.created_at.to_datetime %> <%= @furbaby.astro %></td></tr>
-  <tr><th>phenotype</th><td><%=@furbaby.pheno %></td></tr>
-  <tr><th>description</th><td><%=@furbaby.description %></td></tr>
-  <tr><th>genotype</th>
-    <td>
-      <%=@furbaby.dna.split(/(....)/).filter{|e|e[0]}.join('-') %></td></tr>
 
+<table>
+  <thead> 
+      <tr><th colspan=6><h2><%=@furbaby.dname %></h2></th></tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td rowspan=5><%=@furbaby.description %><br>
+      <sub><%=@furbaby.dna.split(/(....)/).filter{|e|e[0]}.join('-') %></sub></td>
+    <tr>
+     <th>rarity</th>
+     <td><%= @furbaby.rarity %></td>
+     </tr>
+    <tr>
+     <th>pheno</th>
+     <td><%=@furbaby.pheno %></td>
+    </tr>
+    <tr>
+     <th>birthday</th>
+     <td><%=space_time @furbaby.created_at.to_datetime %><br><%= @furbaby.astro %></td>
+     </tr>
+</tbody>
 </table>
