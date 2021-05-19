@@ -60,7 +60,7 @@ class FurbabiesController < ApplicationController
     if @furbaby.invalid?
       flash.notice = @furbaby.errors.all_messages.join(' ')
     else
-      flash.notice = "Nice to meet you, "+@furbaby.name
+      flash.notice = "Nice to meet you, "+@furbaby.full_name+" 😸"
     end
     redirect_to '/tokens/'+@token.id.to_s
   end

@@ -76,6 +76,18 @@
         o.start(0);
       }
     };
+    window.wompy = function() {
+      window.clicky();
+      for (var i=0;i<3;i++) {
+        const o = ac.createOscillator();
+        o.type='square';
+        o.frequency.setValueCurveAtTime([120+i*66,20],ac.currentTime+0.1,0.9);
+        const sound = new THREE.Audio(listener);
+        sound.gain.gain.setValueCurveAtTime([0.01,0.03,0.01,0],ac.currentTime,0.9);
+        o.start(0);
+        sound.setNodeSource(o);
+      }
+    };
     const renderer = new THREE.WebGLRenderer({antialias: true});
 
     const boxGeometry = new THREE.SphereGeometry(3,9,8);
@@ -275,7 +287,7 @@
       document.body.appendChild( window.renderer.domElement );
 
       var a = document.getElementsByTagName("a");
-      for (i=0;i<a.length;i++) {
+      for (var i=0;i<a.length;i++) {
         a[i].addEventListener('click',window.clicky);
       }
       a = document.getElementById("notice");
@@ -312,6 +324,9 @@
       </div>
 
       <div id="winb">
+        <% if flash.alert %>
+        <div id="alert"><%=flash.alert %></div>
+        <% end %>
         <% if flash.notice %>
         <div id="notice"><%=flash.notice %></div>
         <% end %>
@@ -333,9 +348,9 @@
       //twemoji.parse(document.getElementById('winb'));
     </script>
 
-    <script>
-      mi=document.getElementsByClassName('maili');
-      for (i=0; i<mi.length; i++) {
+    <script type="module">
+      var mi=document.getElementsByClassName('maili');
+      for (var i=0; i<mi.length; i++) {
         mi[i].onclick = (function(e){
           e=this.children[0];
           while(e!==undefined){
@@ -345,7 +360,27 @@
         });
       }
 
-
+      <% if current_user %>
+      var init = <%=(current_user.how_hot * 155.0).to_s %>;
+      var damage = function(){
+        document.body.style="filter:hue-rotate("+init+"deg)";
+        if (init > 0) {
+          init-=1.2;
+          setTimeout(damage,100);
+        }
+      };damage();
+      if (document.getElementById('alert')) {
+        window.wompy();
+        var shakes = 0;
+        var shake = function(){
+          document.body.style="padding:"+Math.random()*30+"px "+Math.random()*30+"px";
+          if (shakes<15) {
+            shakes+=1;
+            setTimeout(shake,30);
+          }
+        };shake();
+      }
+      <% end %>
     </script>
 
   </body>

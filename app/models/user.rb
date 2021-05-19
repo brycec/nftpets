@@ -39,11 +39,21 @@ class User < ApplicationRecord
     self.damage or 0
   end
 
+  def took_damage?
+    self.cooldown==DateTime.new.utc
+  end
+
+  MAX_HEAT = 9
   def heat
     self.cooldown = self.cooldown? + 3
-    if self.cooldown > DateTime.now.utc + 9
+    if self.cooldown > DateTime.now.utc + MAX_HEAT
       self.damage=self.damage?+1
+      self.cooldown=DateTime.new.utc
     end
     self.save
+  end
+
+  def how_hot # , gatdam, call the police and the fireman
+    (self.cooldown? - DateTime.now.utc) / MAX_HEAT
   end
 end

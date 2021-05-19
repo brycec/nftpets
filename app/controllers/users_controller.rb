@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
      Message.new_welcome @user
 
-     flash.notice = "Created new user: " + @user.name + " (it's case senstive)."
+     flash.notice = "Created new user: <b>" + @user.name + "</b>"
      redirect_to '/messages'
    else
      flash.notice = "Failed to create user. " +
