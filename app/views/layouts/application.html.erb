@@ -17,13 +17,8 @@
 
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x001110);
+    scene.background = new THREE.Color(0x000201);
     scene.fog = new THREE.FogExp2( 0x001110, 0.0011 );
-    const light = new THREE.PointLight( 0x73F8ED, 0.9, );
-    light.position.x=-10;
-    light.position.z=-7;
-    light.position.y=1;
-    scene.add( light );
 
     const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -65,6 +60,16 @@
 
       const planet = new THREE.Mesh( boxGeometry, boxMaterial );
       scene.add( planet );
+
+      const light = new THREE.PointLight( 0x73F8ED, 0.8, );
+      light.position.x=-10;
+      light.position.z=2;
+      light.position.y=10;
+      scene.add( light );
+      const mlight = new THREE.DirectionalLight( 0xff224D, 0.45 );
+      mlight.position.set(555,-999,-99);
+      mlight.target = planet;
+      scene.add(mlight);
 
       const loader = new GLTFLoader();
       loader.load('<%=image_url 'nftpets.gltf' %>', function ( gltf ) {
@@ -126,11 +131,11 @@
             coin.rotation.x=Math.PI
 
             camera.position.copy(
-              cat.position.clone().setZ(cat.position.z+12)
-              .setY(cat.position.y+8)
-              .setX(cat.position.x+4)
+              cat.position.clone().setZ(cat.position.z+10)
+              .setY(cat.position.y+6)
+              .setX(cat.position.x+5)
               .sub(camera.position).divideScalar(4));
-            camera.lookAt(cat.position);
+            camera.lookAt(cat.position.clone().setZ(cat.position.z+.7));
           } else if (renderer.flyTo=="stray") {
             cat.position.y+=(20-cat.position.y)/4.0;
             cat.rotation.set(Math.sin(Date.now()/3e4)*2,
@@ -139,8 +144,8 @@
 
             camera.position.copy(
               cat.position.clone().setX(cat.position.x+25)
-              .setY(cat.position.y+90)
-              .sub(camera.position).divideScalar(4));
+              .setY(cat.position.y+30)
+              .sub(camera.position).divideScalar(2));
             camera.lookAt(cat.position.clone().setY(cat.position.y-1));
           } else if (renderer.flyTo=="egg") {
             egg.position.y=0.59;
