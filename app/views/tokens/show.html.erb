@@ -25,6 +25,10 @@
 <%=button_to "🐣 Hatch", '/tokens/'+current_user.egg.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
 <%=@furbaby.vocab[0]%> will hatch an egg on your other token.
 <% end %>
+<% if current_user.id==@token.user_id and @furbaby.mutant? and current_user.egg? %>
+<%=button_to "🧬 Inject", '/tokens/'+current_user.egg.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
+<%=@furbaby.vocab[0]%> will inject dna into an egg on your other token.
+<% end %>
 </span>
 <h3>This token's furbaby:</h3>
 <%= render @furbaby %>

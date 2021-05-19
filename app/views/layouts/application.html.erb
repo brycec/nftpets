@@ -62,12 +62,10 @@
       scene.add( planet );
 
       const light = new THREE.PointLight( 0x73F8ED, 0.8, );
-      light.position.x=-10;
-      light.position.z=2;
-      light.position.y=10;
+      light.position.set(-222,777,333);
       scene.add( light );
-      const mlight = new THREE.DirectionalLight( 0xff224D, 0.45 );
-      mlight.position.set(555,-999,-99);
+      const mlight = new THREE.DirectionalLight( 0xff224D, 0.6 );
+      mlight.position.set(222,-999,-222);
       mlight.target = planet;
       scene.add(mlight);
 

@@ -9,7 +9,9 @@
   <%= f.text_area :body, size: "40x12" %><br><br>
   <%= f.label :token_id, "Attach a token" %><br>
   <%= f.select :token_id, [['No',nil]].concat(
-   current_user.tokens.map { |t| ['#'+t.id.to_s+' Value: '+t.vibes.to_s+'N',t.id] }) %>
+   current_user.tokens.map { |t|
+     [t.vibes.to_s+'N '+ (t.furbaby ? t.furbaby.dname : ''),t.id]
+   }) %>
    <br><br>
   <%= f.submit 'Send Message' %>
 <%end%>

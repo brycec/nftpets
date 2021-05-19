@@ -1,5 +1,8 @@
 class Furbaby < ApplicationRecord
-  # TODO mom and dad fields
+  has_and_belongs_to_many :parents, class_name: "Furbaby",
+    foreign_key: "furbaby_id",
+    association_foreign_key: "parent_id",
+    join_table: "furbabies_parents"
   has_one :token
   validates :dna, presence: true
 
@@ -35,7 +38,7 @@ class Furbaby < ApplicationRecord
   WORDS = [
     "she, he, they, it, both'm, neither'm",
     "smol, reg, chonk, micro, smooshy, chungus",
-    "demon, tabbrs, doge, tigger, togger, pewds",
+    "demon, tabbrs, doge, tigger, kitty, pewds",
     "yellow, green, blue, orange, magenta, red",
     "sweet, grumpy, silly, shy, weird, evil",
     "strong, smart, brave, fast, aware, efficient",
@@ -101,7 +104,7 @@ class Furbaby < ApplicationRecord
      keeps memories stored in a %s,
      usually found in the %s
      %s about '%s %s stonks' and
-     trades under the %s symbol.}, *a)
+     trades under the %s symbol.}, *a).capitalize
   end
 
   def trade_symbol
@@ -191,12 +194,20 @@ class Furbaby < ApplicationRecord
     end
   end
 
+  def mature?
+    self.name and self.token.vibes>0
+  end
+
   def heat?
-    self.name and self.numerical_pheno[0]==0 and self.token.vibes>0
+    self.mature? and self.numerical_pheno[0]==0
   end
 
   def stud?
-    self.name and self.numerical_pheno[0]==1 and self.token.vibes>0
+    self.mature? and self.numerical_pheno[0]==1
+  end
+
+  def mutant?
+    self.mature? and self.numerical_pheno[0]==2
   end
 
   def egg?
@@ -205,16 +216,23 @@ class Furbaby < ApplicationRecord
 
   def hatch a
     if self.egg?
-      self.combo_dna_with a
+      self.combo_dna_with a.dna
       self.created_at=DateTime.now
+      self.parents<< a
     end
+  end
+  def inject_dna_with(b)
+    r = Furbaby.new.rand_dna
+    self.dna=self.combo_dna_with(b.combo_dna_with(r))
+    self.parents<< b
   end
 end
 
-def Furbaby.new_egg(dna)
+def Furbaby.new_egg(mom)
   f=Furbaby.new
-  f.dna=dna
+  f.dna=mom.dna
   f.save
+  f.parents<< mom
   f.created_at=DateTime.new
   f.save
   f

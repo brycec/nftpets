@@ -16,13 +16,13 @@
 <tr>
   <td>
     <%v=@furbaby.vocab.map {|e|[e.capitalize,e]}%>
-<%= f.select :first, v %>
+<%= f.select :first, v.shuffle %>
 </td>
 <td>
-<%= f.select :middle, v %>
+<%= f.select :middle, v.shuffle %>
 </td>
 <td>
-<%= f.select :last, v %>
+<%= f.select :last, v.shuffle %>
 </td>
 </tr>
 </table>

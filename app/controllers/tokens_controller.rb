@@ -38,7 +38,7 @@ class TokensController < ApplicationController
     elsif current_user.empty_token and @token.id==current_user.empty_token.id
       @mom=Furbaby.find(params[:furbaby])
       if @mom.heat?
-        @egg=Furbaby.new_egg @mom.dna
+        @egg=Furbaby.new_egg @mom
         @token.furbaby_id=@egg.id
         @token.vibes=@mom.token.vibes
         @token.save
@@ -54,15 +54,21 @@ class TokensController < ApplicationController
       end
     elsif @token.furbaby.egg?
       @stud=Furbaby.find(params[:furbaby])
-      if @stud.stud?
-        @token.furbaby.hatch @stud.dna
-        @token.furbaby.save
+      if @stud.stud? or @stud.mutant?
+        if @stud.stud?
+          @token.furbaby.hatch @stud
+          @token.furbaby.save
+          flash.notice="Hatched an egg! 🐣"
+        elsif @stud.mutant?
+          @token.furbaby.inject_dna_with @stud
+          @token.furbaby.save
+          flash.notice="Injected dna into egg! 🧬"
+        end
         @token.vibes+=@stud.token.vibes
         @token.save
         @stud.token.vibes=0
         @stud.token.save
         if @token.furbaby.valid? and @token.valid?
-          flash.notice="Hatched an egg! 🐣"
           redirect_to '/tokens/'+@token.id.to_s
         else
           flash.notice="oops "+@token.furbaby.errors.all_messages+@token.errors.all_messages
