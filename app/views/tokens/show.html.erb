@@ -11,7 +11,7 @@
   <td><%=@token.vibes%><s>N</s></td></tr>
 </table>
 <br>
-<% if @furbaby %>
+<% if current_user and @furbaby %>
 <span class="btn">
 <%=button_to '👋 Pet', '/tokens/'+@token.id.to_s, method: :patch%>
 <% if current_user.id==@token.user_id and !@furbaby.name %>
@@ -19,17 +19,21 @@
 <% end %>
 <% if current_user.id==@token.user_id and @furbaby.heat? and current_user.empty_token %>
 <%=button_to "🥚 Egg!", '/tokens/'+current_user.empty_token.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
-<%=@furbaby.vocab[0]%> will lay an egg on one of your onoccupied tokens.
+<small>
+  <%=@furbaby.vocab[0]%> will lay an egg on one of your onoccupied tokens.</small>
 <% end %>
 <% if current_user.id==@token.user_id and @furbaby.stud? and current_user.egg? %>
 <%=button_to "🐣 Hatch", '/tokens/'+current_user.egg.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
-<%=@furbaby.vocab[0]%> will hatch an egg on your other token.
+<small><%=@furbaby.vocab[0]%> will hatch an egg on your other token.</small>
 <% end %>
 <% if current_user.id==@token.user_id and @furbaby.mutant? and current_user.egg? %>
 <%=button_to "🧬 Inject", '/tokens/'+current_user.egg.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
-<%=@furbaby.vocab[0]%> will inject dna into an egg on your other token.
+<small><%=@furbaby.vocab[0]%> will inject dna into an egg on your other token.</small>
 <% end %>
 </span>
+<% end %>
+
+<% if @furbaby %>
 <h3>This token's furbaby:</h3>
 <%= render @furbaby %>
 <% end %>
@@ -53,7 +57,7 @@
  </p>
 <% end %>
 
-<% if @furbaby and current_user.id==@token.user_id %>
+<% if current_user and @furbaby and current_user.id==@token.user_id %>
 <%=button_to "😿 Release", '/tokens/'+@token.id.to_s, method: :delete%>
 <% end %>
 

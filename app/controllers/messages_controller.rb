@@ -5,9 +5,9 @@ class MessagesController < ApplicationController
 
   def my_messages
     if is_to_The?
-      Message.where(to: params[:to])
+      Message.where(to: params[:to]).sort.reverse
     elsif current_user.name==params[:to]
-      Message.where(to: current_user.name).reverse.without current_user.messages
+      Message.where(to: current_user.name).sort.reverse.without current_user.messages
     elsif current_user
       current_user.messages
     else
