@@ -38,6 +38,7 @@ class MessagesController < ApplicationController
       end
     end
     @message.save
+    flash.notice = 'Message sent!'
     redirect_to '/messages'
   end
 
