@@ -22,6 +22,45 @@
 
     const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
+    const listener = new THREE.AudioListener();
+    const ac = listener.context;
+    camera.add(listener);
+
+    const gain = listener.getInput();
+    const oscs = [];
+    var starts = 0;
+    const startAudio = function(e) {
+      if (starts>2) return;
+      for (var i=0;i<3;i++) {
+        const o = ac.createOscillator();
+        o.type='triangle';
+        o.frequency.setValueAtTime((5*6^i)+Math.cos(Date.now()^-i), ac.currentTime);
+
+        const sound = new THREE.Audio(listener);
+        sound.setNodeSource(o);
+        o.start(0);
+        oscs.push(o);
+        sound.gain.gain.setValueAtTime(0,ac.currentTime);
+        sound.gain.gain.linearRampToValueAtTime(0.1,ac.currentTime+3);
+      }
+
+      starts+=1;
+    }
+    startAudio();
+    window.addEventListener('touchstart', startAudio);
+    document.addEventListener('click', startAudio);
+
+    window.clicky = function() {
+      for (var i=0;i<3;i++) {
+        const o = ac.createOscillator();
+        o.type='triangle';
+        o.frequency.setValueAtTime(60.01*(4+i), ac.currentTime);
+        const sound = new THREE.Audio(listener);
+        sound.gain.gain.setValueCurveAtTime([0,0.06,0],ac.currentTime,0.19);
+        sound.setNodeSource(o);
+        o.start(0);
+      }
+    }
     const renderer = new THREE.WebGLRenderer({antialias: true});
 
     const boxGeometry = new THREE.SphereGeometry(3,9,8);
@@ -56,7 +95,6 @@
         moons.push(moon);
         scene.add( moon );
       }
-
 
       const planet = new THREE.Mesh( boxGeometry, boxMaterial );
       scene.add( planet );
@@ -212,6 +250,7 @@
       animate();
 
       window.renderer = renderer;
+
     </script>
   </head>
   <body>
@@ -237,6 +276,13 @@
           <%=
           space_time DateTime.now #magic time
           %>
+        </div>
+        <div class="login">
+          <% if logged_in? %>
+           <% current_user.damage?.times do |e| %>
+            ❌
+           <% end %>
+          <% end %>
         </div>
         <h1><%= link_to "nftpets/", '/' %><%= yield :path %></h1>
       </div>
@@ -274,6 +320,12 @@
           }
         });
       }
+      var a = document.getElementsByTagName("a");
+      for (i=0;i<a.length;i++) {
+        a[i].addEventListener('click',window.clicky);
+      }
+
     </script>
+
   </body>
   </html>

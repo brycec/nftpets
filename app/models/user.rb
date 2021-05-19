@@ -23,4 +23,27 @@ class User < ApplicationRecord
   def egg?
     !!self.egg
   end
+
+  def dead?
+    self.damage >= 3
+  end
+
+  def cooldown?
+    if !self.cooldown or self.cooldown < DateTime.now.utc
+      self.cooldown = DateTime.now.utc
+    end
+    self.cooldown.utc
+  end
+
+  def damage?
+    self.damage or 0
+  end
+
+  def heat
+    self.cooldown = self.cooldown? + 3
+    if self.cooldown > DateTime.now.utc + 9
+      self.damage=self.damage?+1
+    end
+    self.save
+  end
 end
