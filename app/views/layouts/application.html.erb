@@ -17,7 +17,7 @@
 
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000503);
+    scene.background = new THREE.Color(0x000706);
     scene.fog = new THREE.FogExp2( 0x001110, 0.0011 );
 
     const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -75,7 +75,7 @@
         let catgeo = gltf.scene.children[0].geometry;
         const cat = new THREE.Mesh(catgeo, boxMaterial);
         let catmesh = new THREE.Mesh( catgeo, phong );
-        catmesh.scale.setScalar(.999);
+        catmesh.scale.setScalar(.998);
         cat.add(catmesh);
         scene.add(cat);
 
@@ -89,7 +89,7 @@
         let handgeo = gltf.scene.children[2].geometry;
         const hand = new THREE.Mesh(handgeo, boxMaterial);
         let handmesh = new THREE.Mesh( handgeo, phong );
-        handmesh.scale.y=.98;
+        handmesh.scale.setScalar(.99);
         hand.add(handmesh);
         scene.add(hand);
         hand.scale.setScalar(.4);
@@ -114,7 +114,7 @@
           requestAnimationFrame(updateModels);
           coin.rotation.z += 0.01;
           egg.position.y=999;
-          sat.position.x=45;
+          sat.position.x=-45;
           if(renderer.flyTo=="coin") {
             camera.position.copy(
               planet.position.clone().setX(coin.position.x+10)
@@ -165,7 +165,7 @@
           }
           if (renderer.flyTo=="moon") {
             camera.position.copy(
-              sat.position.clone().setX(sat.position.x+120)
+              sat.position.clone().setX(sat.position.x-120)
               .sub(camera.position).divideScalar(2));
 
             camera.lookAt(sat.position);
@@ -197,9 +197,11 @@
         //scene.rotation.z = +Math.cos(Date.now()/3e4)/10;
 
         if(renderer.flyTo=="origin") {
-          const p = planet.position.clone().setY(planet.position.y+3).setX(planet.position.x-1);
+          const p = planet.position.clone().setY(planet.position.y+2).setX(planet.position.x-1);
           camera.position.copy(
-            p.clone().setZ(planet.position.z+35)
+            p.clone().setZ(planet.position.z+28)
+            .setX(planet.position.x+20)
+            .setY(planet.position.y+20)
             .sub(camera.position).divideScalar(4));
           camera.lookAt(p);
         }
