@@ -38,7 +38,7 @@ class Furbaby < ApplicationRecord
   WORDS = [
     "she, he, they, it, both'm, neither'm",
     "smol, reg, chonk, micro, smooshy, chungus",
-    "demon, tabbrs, doge, tigger, kitty, pewds",
+    "felid, tab, doge, tigger, kitty, pewds",
     "yellow, green, blue, orange, magenta, red",
     "sweet, grumpy, silly, shy, weird, evil",
     "strong, smart, brave, fast, aware, efficient",
@@ -54,7 +54,7 @@ class Furbaby < ApplicationRecord
     "forest, mountains, desert, islands, volcano, windows",
     "thinking, talking, screaming, confused, rambling, dreaming",
     "buy, sell, diversify, hodl, paperhands, diamondhands",
-      "nature, fire, water, rainbow, lightning, radiation",
+    "nature, fire, water, rainbow, lightning, radiation",
     "sun, moon, terra, star, saturn, rocket"]
   GENES = ['A','B'] # .last gene is rare
   RARE_G = 2.times.map{GENES.last.downcase}.join # the rare gene 'bb'

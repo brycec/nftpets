@@ -5,7 +5,7 @@ class FurbabiesController < ApplicationController
     if current_user and current_user.id==@token.user_id and !@token.furbaby_id
       strays = Furbaby.where.not(id:
         Token.where.not(furbaby_id: nil).map{|t|t.furbaby_id})
-      if strays and rand()>0.666
+      if strays and rand()>0.333
         @furbaby = strays.sample
       else
         @furbaby = Furbaby.new

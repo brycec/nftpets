@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_053339) do
+ActiveRecord::Schema.define(version: 2021_05_20_174743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "events", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "key"
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_events_on_key"
+    t.index ["user_id"], name: "index_events_on_user_id"
+  end
 
   create_table "furbabies", force: :cascade do |t|
     t.string "dna"
@@ -25,6 +35,8 @@ ActiveRecord::Schema.define(version: 2021_05_19_053339) do
   create_table "furbabies_parents", id: false, force: :cascade do |t|
     t.bigint "furbaby_id", null: false
     t.bigint "parent_id", null: false
+    t.index ["furbaby_id"], name: "index_furbabies_parents_on_furbaby_id"
+    t.index ["parent_id"], name: "index_furbabies_parents_on_parent_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -35,12 +47,13 @@ ActiveRecord::Schema.define(version: 2021_05_19_053339) do
     t.string "to"
     t.string "from"
     t.bigint "token_id"
-    t.index ["token_id"], name: "index_messages_on_token_id"
+    t.index ["to"], name: "index_messages_on_to"
   end
 
   create_table "messages_users", id: false, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "message_id", null: false
+    t.index ["user_id"], name: "index_messages_users_on_user_id"
   end
 
   create_table "tokens", force: :cascade do |t|
