@@ -3,8 +3,16 @@ class Furbaby < ApplicationRecord
     foreign_key: "furbaby_id",
     association_foreign_key: "parent_id",
     join_table: "furbabies_parents"
+  has_and_belongs_to_many :children, class_name: "Furbaby",
+    foreign_key: "parent_id",
+    association_foreign_key: "furbaby_id",
+    join_table: "furbabies_parents"
   has_one :token
   validates :dna, presence: true
+
+#  def children
+#    Furbaby.joins(parents).where(parent_id: self.id)
+#  end
 
   SYMBOLS = [
   "🚺,🚹,🚼,⚧,🚻,🚮",

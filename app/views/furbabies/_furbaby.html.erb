@@ -7,9 +7,14 @@
   <tbody>
   <tr>
     <td rowspan=5>
-      <% if @furbaby.parents.length>0 %>
+    <% if @furbaby.parents.length>0 %>
       Child of <%@furbaby.parents.map{|e|%>
-      <%=link_to e.full_name, '/furbabies/'+e.id.to_s %>,
+      <%=link_to e.dname, '/furbabies/'+e.id.to_s %>,
+    <%}%><br>
+    <% end %>
+    <% if @furbaby.children.length>0 %>
+      Parent of <%@furbaby.children.map{|e|%>
+      <%=link_to e.dname, '/furbabies/'+e.id.to_s %>,
     <%}%><br>
     <% end %>
          <%=@furbaby.description %><br>

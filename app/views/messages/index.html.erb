@@ -5,12 +5,14 @@
 <div id="mailbox">
 <div id="mails">
   <div class="mtabs">
-    <div class="mtabgap">&nbsp;</div>
-    <%=link_to 'new', '/messages', class: a.length==0?'active':''%>
+    <% if logged_in? %>
       <div class="mtabgap">&nbsp;</div>
-    <%=link_to 'old', '/messages/?to='+current_user.name, class: a.length>0 && current_user.name==params[:to] ? 'active':'' %>
-      <div class="mtabgap">&nbsp;</div>
-    <%=link_to 'chat', '/messages/?to=The Chat', class: a.length>0 && current_user.name!=params[:to] ?'active':'' %>
+      <%=link_to 'new', '/messages', class: a.length==0?'active':''%>
+        <div class="mtabgap">&nbsp;</div>
+      <%=link_to 'old', '/messages/?to='+current_user.name, class: a.length>0 && current_user.name==params[:to] ? 'active':'' %>
+    <% end %>
+        <div class="mtabgap">&nbsp;</div>
+    <%=link_to 'chat', '/messages/?to=The Chat', class: a.length>0 && logged_in? && current_user.name!=params[:to] ? 'active':'' %>
       <div class="mtabgap">&nbsp;</div>
   </div>
   <% @messages.each do |message| %>
@@ -53,14 +55,17 @@ subject: %s
       <%=e %>  <br/>
       <% end %>
     </p>
-    <% if @fmessage.token_id %>
-      <%=button_to "claim attached token", '/tokens/'+@fmessage.token_id.to_s,
-       method: :patch  %>
-    <%end%>
-    <% if a.length==0 %>
-      <%= button_to 'mark old', '/messages/'+@fmessage.id.to_s, method: :patch %>
-    <% elsif current_user.name==params[:to]%>
-      <%= button_to 'mark new', '/messages/'+@fmessage.id.to_s, method: :patch %>
+
+    <% if logged_in? %>
+      <% if @fmessage.token_id %>
+        <%=button_to "claim attached token", '/tokens/'+@fmessage.token_id.to_s,
+         method: :patch  %>
+      <%end%>
+      <% if a.length==0 %>
+        <%= button_to 'mark old', '/messages/'+@fmessage.id.to_s, method: :patch %>
+      <% elsif current_user.name==params[:to]%>
+        <%= button_to 'mark new', '/messages/'+@fmessage.id.to_s, method: :patch %>
+      <% end %>
     <% end %>
   <% else %>
   <h2>no messages</h2>

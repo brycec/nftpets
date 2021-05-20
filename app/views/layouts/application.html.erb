@@ -298,7 +298,9 @@
       <div id="bar">
         <div class="login">
           <% if logged_in? %>
-          <%= link_to current_user.id.to_s+':)'+current_user.name, '/users/'+current_user.id.to_s %>
+           <% if !current_user.dead? %>
+            <%=link_to current_user.name, '/users/'+current_user.id.to_s %>:<%=current_user.networth.to_s %><s>N</s>
+            <% end %>
           | <%= link_to "mail", '/messages/'%>:<%=current_user.messages.length.to_s%>
           | <%= link_to "logout", '/logout'%>
           <% else %>
@@ -306,16 +308,12 @@
           <%= link_to "sign up", '/users/new' %>
           <%end%>
           <br>
-          <%=
-          space_time DateTime.now #magic time
-          %>
-        </div>
-        <div class="login">
-          <% if logged_in? %>
-           <% current_user.damage?.times do |e| %>
-            ❌
-           <% end %>
-          <% end %>
+            <% if logged_in? %>
+             <% current_user.damage?.times do |e| %>
+              ❌
+             <% end %>
+            <% end %>
+          <%=space_time DateTime.now %>
         </div>
         <h1><%= link_to "nftpets/", '/' %><%= yield :path %></h1>
       </div>
@@ -363,6 +361,7 @@
       clearTimeout(document.damage);
       var damage = function(){
         document.body.style.filter="hue-rotate("+init+"deg)";
+        document.getElementById('win').style.filter="blur("+(init/80.)+"px)";
         if (init>=0) {
           init-=1.2;
           document.damage=setTimeout(damage,100);

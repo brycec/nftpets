@@ -5,8 +5,17 @@ class FurbabiesController < ApplicationController
     if current_user and current_user.id==@token.user_id and !@token.furbaby_id
       strays = Furbaby.where.not(id:
         Token.where.not(furbaby_id: nil).map{|t|t.furbaby_id})
-      if strays and rand()>0.333
+      if strays.length>0 and rand()>0.333
         @furbaby = strays.sample
+        if @furbaby.egg? # stray egg gets fertilized by random stray tom cat
+          tom = Furbaby.new
+          tom.rand_dna
+          tom.created_at = DateTime.now - rand(365)*rand*2
+          tom.limit_rare_dna(3) # 3 star tom cat?!?! :O
+          tom.save
+          @furbaby.hatch tom
+          @furbaby.save
+        end
       else
         @furbaby = Furbaby.new
         @furbaby.rand_dna
@@ -70,7 +79,7 @@ class FurbabiesController < ApplicationController
     if @furbaby.invalid?
       flash.notice = @furbaby.errors.all_messages.join(' ')
     else
-      flash.notice = "Nice to meet you, "+@furbaby.full_name+" 😸"
+      flash.notice = "Nice to meet you, "+@furbaby.full_name+" 😸🤝😸"
     end
     redirect_to '/tokens/'+@token.id.to_s
   end

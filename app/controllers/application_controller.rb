@@ -15,7 +15,8 @@ class ApplicationController < ActionController::Base
       if @current_user.dead? and
         path[:action] != 'dead' and
         !path[:controller].in? ['messages','sessions']
-        flash.alert = nil
+        2.times do current_user.heat end
+        flash.notice = nil
         redirect_to '/dead'
       elsif @current_user.took_damage?
         flash.alert = "🛑 SHTAHP! ✋ Your terminal overheated and the cpu took damage! 🔥📺🔥 That's cringe, you're going to loose tokens if you don't slow down."

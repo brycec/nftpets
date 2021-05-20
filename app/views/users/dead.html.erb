@@ -14,13 +14,14 @@
   ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝
 </pre>
 <h2>
-  Your terminal's cpu took too much damage and fried.
+  The terminal assigned to <%= current_user.name %> overheated.
+  The cpu took too much damage and fried.
 </h2>
 <p>
   <%= form_for Message.new, method: :post do |f| %>
-    You can salvage a token
-    <%=f.select :token_id, current_user.tokens_map %>
-  but you must
+    You can salvage a token<br>
+    <%=f.select :token_id, current_user.tokens_map %><br>
+    but you must <br>
     <%=f.submit 'reset the account' %>
     <% end %>
   or

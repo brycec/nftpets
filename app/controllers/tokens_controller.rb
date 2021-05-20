@@ -5,8 +5,7 @@ class TokensController < ApplicationController
     end
     if @token.valid?
       flash.notice='Minted a token!'
-      current_user.heat
-      current_user.heat
+      2.times do current_user.heat end
       redirect_to '/tokens/'+@token.id.to_s
     end
   end
@@ -51,6 +50,7 @@ class TokensController < ApplicationController
         @mom.token.save
         if @egg.valid? and @token.valid?
           flash.notice="Laid an egg! 🥚"
+          current_user.heat
           redirect_to '/tokens/'+@token.id.to_s
         else
           flash.notice="oops "+@egg.errors.all_messages+@token.errors.all_messages
@@ -64,10 +64,12 @@ class TokensController < ApplicationController
           @token.furbaby.hatch @stud
           @token.furbaby.save
           flash.notice="Hatched an egg! 🐣"
+          current_user.heat
         elsif @stud.mutant?
           @token.furbaby.inject_dna_with @stud
           @token.furbaby.save
           flash.notice="Injected dna into egg! 🧬"
+          current_user.heat
         end
         @token.vibes+=@stud.token.vibes
         @token.save
@@ -94,6 +96,7 @@ class TokensController < ApplicationController
       @token.furbaby_id=nil
       @token.save
       flash.notice="Goodbye, "+ f.vocab[4] +" furbaby . . . 🥺"
+      current_user.heat
       redirect_to '/tokens/'+@token.id.to_s
     end
   end
