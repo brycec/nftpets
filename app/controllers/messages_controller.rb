@@ -42,10 +42,10 @@ class MessagesController < ApplicationController
           @message.from = "The Commissioner"
           @message.subject = "Token Recovery"
           @message.body = %{Operator,
-            
+
 Your token and it's furbaby are safe. May Neptune watch over those that were lost.
 
-Littering Neptune's orbit with fried terminals is the price we pay to save them but we're not proud of it. Go easy on the new CPU.}
+Littering Neptune's orbit with fried terminals is the price we pay to save them but we're not proud of it. Go easy on the new cpu.}
         end
       end
     end
