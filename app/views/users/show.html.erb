@@ -1,10 +1,11 @@
 <% content_for :path do %><%='users/'+@user.id.to_s%>
 <% end %>
 <table>
-  <tr><th>operator</th><th>since</th><th>networth</th></tr>
+  <tr><th>operator</th><th>since</th><th>cpu status</th><th>networth</th></tr>
   <tr>
     <td><%=@user.name%></td>
     <td> <%=space_time @user.created_at.to_datetime %> </td>
+    <td> <%=["New","Dented","Smoking","Fried"][@user.damage?] %> </td>
     <td><%=@user.networth%><s>N</s></td>
   </tr>
 </table>

@@ -29,4 +29,7 @@ class UsersController < ApplicationController
     @tokens = @user.tokens
     @token = Token.new
   end
+
+  def dead
+  end
 end

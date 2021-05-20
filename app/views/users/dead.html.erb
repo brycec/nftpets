@@ -1,0 +1,39 @@
+<pre id="splash">
+  ██████╗  █████╗ ███╗   ███╗███████╗
+ ██╔════╝ ██╔══██╗████╗ ████║██╔════╝
+ ██║  ███╗███████║██╔████╔██║█████╗
+ ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝
+ ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗
+  ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝
+
+  ██████╗ ██╗   ██╗███████╗██████╗
+ ██╔═══██╗██║   ██║██╔════╝██╔══██╗
+ ██║   ██║██║   ██║█████╗  ██████╔╝
+ ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
+ ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
+  ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝
+</pre>
+<h2>
+  Your terminal's cpu took too much damage and fried.
+</h2>
+<p>
+  <%= form_with url: '/messages/create', method: :post do |f| %>
+    You can salvage a token
+    <%=f.select :token_id, ['token'] %>
+  but you must
+    <%=button_to 'reset the account' %>
+    <% end %>
+  or
+  <span class="btn">
+  <%=link_to 'use the mail', '/messages' %></span>
+  as a complementary service.
+
+</p>
+
+
+<script type="module">
+  window.wompy();
+setTimeout(function(){
+renderer.flyTo="stray";
+},50);
+</script>

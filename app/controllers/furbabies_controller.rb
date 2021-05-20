@@ -3,21 +3,31 @@ class FurbabiesController < ApplicationController
   def new
     @token = Token.find(params[:token_id])
     if current_user and current_user.id==@token.user_id and !@token.furbaby_id
-      @furbaby = Furbaby.new
-      @furbaby.rand_dna
+      strays = Furbaby.where.not(id:
+        Token.where.not(furbaby_id: nil).map{|t|t.furbaby_id})
+      if strays and rand()>0.666
+        @furbaby = strays.sample
+      else
+        @furbaby = Furbaby.new
+        @furbaby.rand_dna
+        @furbaby.created_at = DateTime.now - rand(365)*rand
+        @furbaby.limit_rare_dna(2)
+      end
       @furbaby.ensure_symbol(params[:symbol])
-      @furbaby.created_at = DateTime.now - rand(365)*rand
-      @furbaby.limit_rare_dna(2)
+      current_user.heat
     else
       redirect_to '/'
     end
   end
 
   def create
-    furbaby = Furbaby.create dna: params[:dna]
+    furbaby = Furbaby.find_by(id: params[:furbaby_id])
+    if !furbaby
+      furbaby = Furbaby.create dna: params[:dna]
+      furbaby.created_at = params[:created_at]
+      furbaby.save
+    end
     token = Token.find(params[:token_id])
-    furbaby.created_at -= rand(365)
-    furbaby.save
     token.furbaby_id = furbaby.id
     token.save
     if furbaby.valid?

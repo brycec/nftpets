@@ -44,6 +44,13 @@ canvas {
   left: 0;
   z-index: -1;
 }
+form {
+  margin-bottom: 0.4em;
+}
+#box {
+  height: 100vh;
+  overflow: scroll;
+}
 #win {
   opacity: 0.95;
   max-width: 575px;
@@ -82,11 +89,12 @@ canvas {
   }
 }
 
-#win input, .btn a, textarea {
+#win input, .btn a, textarea, select {
   padding: 0.8em 1em;
 }
 #win input:hover, .btn a:hover {
   cursor: pointer;
+  color: $cyan;
   background-color: $hcyan;
 }
 #win input:active, .btn a:active {
@@ -99,10 +107,11 @@ canvas {
   font-family: monospace;
   font-size: 1em;
   background-color: rgba(0, 0, 0, 0.7);
-  color: $cyan;
+  color: $acyan;
   border: solid 1px $cyan;
   border-radius: 0.7em;
 }
+#win { color: $cyan; }
 #winb {
   margin: 0.4em 0 0 0;
   #splash {
@@ -168,8 +177,7 @@ canvas {
   padding: 0.5em 1em;
   color: red;
   margin-bottom: 0.5em;
-  font-size: 1.5em;
-  font-weight: bold;
+  font-size: 1.25em;
 }
 
 #notice {

@@ -25,7 +25,7 @@ class User < ApplicationRecord
   end
 
   def dead?
-    self.damage >= 3
+    self.damage? >= 3
   end
 
   def cooldown?

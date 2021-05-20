@@ -1,7 +1,9 @@
 <h2>You've located a stray furbaby</h2>
 
 <%= form_with url: '/furbabies', method: :post do |f| %>
-   <%= f.hidden_field :dna, value: @furbaby.dna %>
+  <%= f.hidden_field :dna, value: @furbaby.dna %>
+  <%= f.hidden_field :created_at, value: @furbaby.created_at %>
+  <%= f.hidden_field :furbaby_id, value: @furbaby.id %>
   <%= f.hidden_field :token_id, value: @token.id %>
 <%=f.submit 'Adopt this stray with token #'+@token.id.to_s %>
  <span class="btn">

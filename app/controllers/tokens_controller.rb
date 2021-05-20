@@ -3,8 +3,12 @@ class TokensController < ApplicationController
     if logged_in?
       @token = Token.create(user_id:current_user.id)
     end
-    flash.notice='Minted a token!'
-    redirect_to '/tokens/'+@token.id.to_s
+    if @token.valid?
+      flash.notice='Minted a token!'
+      current_user.heat
+      current_user.heat
+      redirect_to '/tokens/'+@token.id.to_s
+    end
   end
 
   def show
@@ -89,7 +93,6 @@ class TokensController < ApplicationController
       f=@token.furbaby
       @token.furbaby_id=nil
       @token.save
-      f.destroy
       flash.notice="Goodbye, "+ f.vocab[4] +" furbaby . . . 🥺"
       redirect_to '/tokens/'+@token.id.to_s
     end

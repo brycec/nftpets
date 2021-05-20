@@ -293,7 +293,7 @@
       }
     </script>
 
-
+<div id="box">
     <div id="win">
       <div id="bar">
         <div class="login">
@@ -338,6 +338,7 @@
         </div>
       </div>
     </div>
+  </div>
     <%# javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js"
     %>
     <script>
@@ -359,13 +360,14 @@
 
       <% if current_user %>
       var init = <%=(current_user.how_hot * 155.0).to_s %>;
+      clearTimeout(document.damage);
       var damage = function(){
-        document.body.style="filter:hue-rotate("+init+"deg)";
-        if (init > 0) {
+        document.body.style.filter="hue-rotate("+init+"deg)";
+        if (init>=0) {
           init-=1.2;
-          setTimeout(damage,100);
+          document.damage=setTimeout(damage,100);
         }
-      };damage();
+      }; damage();
       if (document.getElementById('alert')) {
         window.wompy();
         var shakes = 0;

@@ -4,5 +4,7 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   get 'logout', to: 'sessions#destroy'
 
+  get 'dead', to: 'users#dead'
+
   resources :users, :messages, :furbabies, :tokens
 end
