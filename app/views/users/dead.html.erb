@@ -17,11 +17,11 @@
   Your terminal's cpu took too much damage and fried.
 </h2>
 <p>
-  <%= form_with url: '/messages/create', method: :post do |f| %>
+  <%= form_for Message.new, method: :post do |f| %>
     You can salvage a token
-    <%=f.select :token_id, ['token'] %>
+    <%=f.select :token_id, current_user.tokens_map %>
   but you must
-    <%=button_to 'reset the account' %>
+    <%=f.submit 'reset the account' %>
     <% end %>
   or
   <span class="btn">

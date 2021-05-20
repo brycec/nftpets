@@ -35,6 +35,18 @@ class MessagesController < ApplicationController
       if token then
         token.user_id = 1
         token.save
+        if current_user.dead?
+          current_user.damage=0
+          current_user.tokens.map{|t|t.destroy}
+          @message.to = current_user.name
+          @message.from = "The Commissioner"
+          @message.subject = "Token Recovery"
+          @message.body = %{Operator,
+            
+Your token and it's furbaby are safe. May Neptune watch over those that were lost.
+
+Littering Neptune's orbit with fried terminals is the price we pay to save them but we're not proud of it. Go easy on the new CPU.}
+        end
       end
     end
     @message.save
