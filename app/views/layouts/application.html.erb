@@ -11,10 +11,7 @@
 
   <script type="module">
     import * as THREE from '<%=javascript_url 'three.module' %>';
-    //import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
-
-    import { GLTFLoader } from '<%=javascript_url 'GLTFLoader' %>';
-
+    const GLTFLoader = THREE.GLTFLoader;
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000706);
