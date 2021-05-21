@@ -10,7 +10,7 @@ class Token < ApplicationRecord
   end
 end
 def Token.symbol_id(s)
-  Furbaby.with_symbol(s).filter{|f| f.token }.map{|f|
+  Furbaby.with_symbol(s).joins(:token).map{|f|
       f.token
     }
 end
