@@ -245,9 +245,11 @@ class Furbaby < ApplicationRecord
     end
   end
   def inject_dna_with(b)
-    r = Furbaby.new.rand_dna
-    self.dna=self.combo_dna_with(b.combo_dna_with(r))
-    self.parents<< b
+    self.combo_dna_with(Furbaby.new.rand_dna)
+    self.combo_dna_with(b.dna)
+    if !self.parents.include? b
+      self.parents<< b
+    end
   end
 end
 
