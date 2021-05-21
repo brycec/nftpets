@@ -172,6 +172,21 @@
         scene.add(sat);
         sat.rotation.set(rand(Math.PI),rand(Math.PI),rand(Math.PI));
 
+        let heartgeo = gltf.scene.children[5].geometry;
+        const heart = new THREE.Mesh(heartgeo,  new THREE.MeshBasicMaterial( { color: 0xf8429D,
+          wireframe: true, opacity: 0.8, transparent: true  }) );
+        let heartmesh = new THREE.Mesh( heartgeo, new THREE.MeshPhongMaterial( {
+          color: 0xf8429D,
+          shininess: 100,
+          emissive: 0x100005
+        } ) );
+        heartmesh.scale.setScalar(.998);
+        heart.add(heartmesh);
+        scene.add(heart);
+        heart.scale.setScalar(0.3);
+        heart.position.z=0.4;
+        heart.rotation.y=0.25;
+
         const updateModels = function(){
           requestAnimationFrame(updateModels);
           coin.rotation.z += 0.01;
@@ -237,8 +252,10 @@
           hand.position.set(0.43+Math.cos(Date.now()/5e2)/6,
             1.35+Math.cos(Date.now()/5e2)/8,
             0.4+Math.sin(Date.now()/5e2)/2);
+            heart.position.y=(6+2*(Math.cos(Date.now()/2e2)/20)-heart.position.y)/2.0;
           } else {
             hand.position.y+=(999-hand.position.y)/4.0;
+            heart.position.y=(-999-heart.position.y)/2.0;
           }
         };updateModels();
 

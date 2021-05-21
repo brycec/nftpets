@@ -112,7 +112,7 @@ b.bad { color: red; }
 .btn a {
   margin: 0 0 0.5em 0.5em;
 }
-#win, input, .btn a, textarea, select, .outline {
+#win, input, .btn a, textarea, select {
   font-family: monospace;
   font-size: 1em;
   background-color: rgba(0, 0, 0, 0.7);
@@ -120,7 +120,6 @@ b.bad { color: red; }
   border: solid 1px $cyan;
   border-radius: 0.7em;
   min-width: 1em;
-  padding: 0.4em;
 }
 #win {
   color: $cyan;
