@@ -20,8 +20,12 @@
     <td colspan=5>
       <%s = @user.holdings.inject(0){|a,b|a+b[1]}%>
       <%@user.holdings.each do |h| %>
-      <%((h[1].to_f/s)*65.0).to_i.times do%><%='-'%><%end %><%=h[0]%>/<% end %>
+      <div class="outline" style="text-align:center; display:inline-block; width:<%=((h[1].to_f/s)*91.5).to_s%>%">
+        <%=h[0]%>
+        </div>
+      <% end %>
       </td>
+  </tr>
 </table>
 
 <h2><%=@user.name%>'s tokens:</h2>
