@@ -19,11 +19,22 @@
   <tr>
     <td colspan=5>
       <%s = @user.holdings.inject(0){|a,b|a+b[1]}%>
+      <table>
+        <tr>
       <%@user.holdings.each do |h| %>
-      <div class="outline" style="text-align:center; display:inline-block; width:<%=((h[1].to_f/s)*91.5).to_s%>%">
-        <%=h[0]%>
-        </div>
+      <th style="text-align:center; width:<%=((h[1].to_f/s)*100).to_s%>%">
+        <%=((h[1].to_f/s)*100).round(1).to_s%>%
+        </th>
       <% end %>
+      </tr>
+        <tr>
+      <%@user.holdings.each do |h| %>
+      <td style="text-align:center; width:<%=((h[1].to_f/s)*100).to_s%>%">
+        <%=h[0]%>
+        </td>
+      <% end %>
+      </tr>
+      </table>
       </td>
   </tr>
 </table>
@@ -33,14 +44,14 @@
   <tr>
     <th>id</th><th>furbaby</th><th>rarity</th><th>vibes</th>
   </tr>
-  <%@tokens.each do |t|%>
+  <%@tokens.each do |t| f=t.furbaby%>
    <tr class="maili">
     <td>
      <%=link_to t.id.to_s, '/tokens/'+t.id.to_s %>
     </td>
     <td>
-      <%if t.furbaby_id %>
-       <%=t.furbaby.dname%>
+      <%if f %>
+       <%=f.dname%>
       <%else%>
        None.
        <% if current_user and current_user.id==t.user_id %>
@@ -48,12 +59,12 @@
        <% end %>
       <%end%></td>
     <td>
-      <%if t.furbaby_id and !t.furbaby.egg? %>
-        <%= t.furbaby.rarity %>
+      <%if f and !f.egg? %>
+        <%= f.rarity %>
 
       <% end %>
     </td>
-    <td><%=t.vibes.to_s%><s>N</s></td>
+    <td><%if f and f.egg? then %>???<% else %><%=t.vibes.to_s%><s>N</s><% end %></td>
    </tr>
   <%end%>
 </table>

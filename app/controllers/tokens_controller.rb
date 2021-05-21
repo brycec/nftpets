@@ -53,6 +53,7 @@ class TokensController < ApplicationController
         if @egg.valid? and @token.valid?
           flash.notice="Laid an egg! 🥚"
           current_user.heat
+          Event.create(user_id: current_user_id, key: "egg", value: @token.id)
           redirect_to '/tokens/'+@token.id.to_s
         else
           flash.notice="oops "+@egg.errors.all_messages+@token.errors.all_messages
@@ -73,6 +74,7 @@ class TokensController < ApplicationController
           @token.furbaby.save
           flash.notice="Injected dna into egg! 🧬"
           current_user.heat
+          Event.create(user_id: current_user_id, key: "inject", value: @token.id)
         end
         @token.vibes+=@stud.token.vibes
         @token.save

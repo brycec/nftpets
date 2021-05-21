@@ -12,6 +12,9 @@ class Furbaby < ApplicationRecord
   scope :with_symbol, ->(s) {
     where("dna ~ ?", QUERYS[s])
   }
+  scope :not_egg, -> {
+    where.not(created_at: DateTime.new)
+  }
 
   EMOJI = [
  %w(🚺 🚹 🚼 ⚧ 🚻 🚮),

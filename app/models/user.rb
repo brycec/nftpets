@@ -13,14 +13,14 @@ class User < ApplicationRecord
   end
 
   def holding(s)
-    self.furbabies.with_symbol(s).inject(0){|a,b|
+    self.furbabies.not_egg.with_symbol(s).inject(0){|a,b|
         a+b.token.vibes
       }
   end
 
   def holdings
-    Furbaby::TRADE_SYMS.entries.each_with_index.inject([]) do |a,(e,i)|
-      a.push [e[1],self.holding(i)]
+    Token.trade_data.map do |m|
+      [m[:emoji],self.holding(m[:sym])]
     end
   end
 

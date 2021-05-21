@@ -11,16 +11,20 @@ class Token < ApplicationRecord
 
   def vibing?
     s=self.furbaby.trade_s
-    Furbaby::TRADE_SYMS.entries.each_with_index.inject([]) { |a,(e,i)|
-      a.push([i,Token.symbol_total(i)])
-    }.min{|a,b|a[1]<=>b[1]}[0] == s
+    Token.trade_data.min{|a,b|a[:total]<=>b[:total]}[0] == s
   end
 end
 def Token.symbol_id(s)
-  Furbaby.with_symbol(s).joins(:token).map{|f|
+  Furbaby.not_egg.with_symbol(s).joins(:token).map{|f|
       f.token
     }
 end
 def Token.symbol_total(s)
   Token.symbol_id(s).inject(0) {|a,t| a+t.vibes}
+end
+def Token.trade_data
+  Furbaby::TRADE_SYMS.entries.each_with_index.inject([]) do |a,(e,i)|
+    a.push({word: e[0], emoji: e[1], total: Token.symbol_total(i), sym: i})
+    # sym coords would be [Furbaby::WORDS.length,i]
+  end
 end

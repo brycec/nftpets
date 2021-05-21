@@ -1,6 +1,4 @@
-<% syms = Furbaby::TRADE_SYMS.entries.each_with_index.inject([]) do |a,(e,i)|
-  a.push({word: e[0], emoji: e[1], total: Token.symbol_total(i)})
- end %>
+<% syms = Token.trade_data %>
 <pre id="splash">
 CONNECTING...
 -========================================================================-
@@ -63,7 +61,7 @@ Neptune is currently vibing with <%= vibing %>.
 Petting a <%=vibing%> baby will generate double vibes.
 
   HISTORICAL DATA
-<% Event.where(user_id:1,key:'total_sample').reverse.first(100).each do |e|
+<% Event.where(user_id:1,key:'total_sample').order(created_at:'desc').first(100).each do |e|
 n=e.value.split(',').map{|v|v.to_f}
 p=n.map{|v| v / n.inject(0){|a,b|a+b}}# pp * max_spaces
 %>
@@ -73,10 +71,7 @@ p=n.map{|v| v / n.inject(0){|a,b|a+b}}# pp * max_spaces
 
                    THE RECENT OPERATOR ACTIVITY FEED
 -=====================================================================-
-<% Event.where.not(user_id:1).reverse.first(100).each do |e| %>
+<% Event.where.not(user_id:1).order(created_at:'desc').first(100).each do |e| %>
 <%=space_time e.created_at.to_datetime%> <%=e.user.name%> did '<%=e.key%>' to '<%=e.value%>'
 <% end %>
 </pre>
-<small>
-<%=%x(top -n 1).first 5000%>
-</small>

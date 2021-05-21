@@ -68,6 +68,7 @@ b.bad { color: red; }
   #bar {
     position: sticky;
     top: 0;
+    left: 0;
     background: $hhcyan;
     border-radius: 0.4em 0.4em 0 0;
     h1 {
@@ -119,6 +120,7 @@ b.bad { color: red; }
   border: solid 1px $cyan;
   border-radius: 0.7em;
   min-width: 1em;
+  padding: 0.4em;
 }
 #win {
   color: $cyan;
@@ -128,6 +130,7 @@ b.bad { color: red; }
 }
 #winb {
   margin: 0.4em 0 0 0;
+  min-width: 40em;
   #splash {
     font-size: 0.9em;
     font-weight: bold;
@@ -235,7 +238,8 @@ b.bad { color: red; }
 #mails {
   float: left;
   width: 25%;
-  max-height: 40em
+  min-width: 10.5em;
+  max-height: 40em;
 }
 
 #mails .maili {
@@ -258,7 +262,7 @@ b.bad { color: red; }
 }
 
 #mailbody {
-  width: 72%;
+  width: 71%;
   min-height: 12em;
   border-left: solid 1px $pcyan;
   float: right;

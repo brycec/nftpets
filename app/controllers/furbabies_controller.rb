@@ -41,6 +41,7 @@ class FurbabiesController < ApplicationController
     token.save
     if furbaby.valid?
       flash.notice = 'Adopted a furbaby!'
+      Event.create(user_id: current_user_id, key: "adopt", value: token.id)
       redirect_to '/tokens/'+token.id.to_s
     else
       flash.notice = furbaby.errors.full_messages.join(' ') + token.errors.full_messages.join(' ')
