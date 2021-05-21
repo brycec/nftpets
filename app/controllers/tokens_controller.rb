@@ -6,6 +6,7 @@ class TokensController < ApplicationController
     if @token.valid?
       flash.notice='Minted a token!'
       2.times do current_user.heat end
+      Event.create(user_id: current_user_id, key: "mint", value: @token.id)
       redirect_to '/tokens/'+@token.id.to_s
     end
   end
@@ -66,6 +67,7 @@ class TokensController < ApplicationController
           @token.furbaby.save
           flash.notice="Hatched an egg! 🐣"
           current_user.heat
+          Event.create(user_id: current_user_id, key: "hatch", value: @token.id)
         elsif @stud.mutant?
           @token.furbaby.inject_dna_with @stud
           @token.furbaby.save
@@ -98,6 +100,7 @@ class TokensController < ApplicationController
       @token.save
       flash.notice="Goodbye, "+ f.vocab[4] +" furbaby . . . 🥺"
       current_user.heat
+      Event.create(user_id: current_user_id, key: "release", value: @token.id)
       redirect_to '/tokens/'+@token.id.to_s
     end
   end

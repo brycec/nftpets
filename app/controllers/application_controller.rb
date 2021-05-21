@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
         flash.alert = "🛑 SHTAHP! ✋ Your terminal overheated and the cpu took damage! 🔥📺🔥 That's cringe and you're going to loose tokens if you don't slow down."
         @current_user.cooldown?
         @current_user.save
+        Event.create(user_id: current_user_id, key: "overheat", value: @current_user.damage?)
         redirect_to '/users/'+@current_user.id.to_s
       end
     end

@@ -10,12 +10,18 @@
       '<b class="warn">Smoking</b>',
       '<b class="bad">Fried</b>' ][@user.damage?] %> </td>
       <td>
-        <% Furbaby::TRADE_SYMS.entries.each_with_index do |e,i| %>
-        <%=e[1]%><%=@user.holding(i)%><s>N</s> 
+        <% @user.holdings.each do |h| %>
+        <%=h[0]%><%=h[1]%><s>N</s>
         <% end %>
       </td>
     <td><%=@user.networth%><s>N</s></td>
   </tr>
+  <tr>
+    <td colspan=5>
+      <%s = @user.holdings.inject(0){|a,b|a+b[1]}%>
+      <%@user.holdings.each do |h| %>
+      <%((h[1].to_f/s)*65.0).to_i.times do%><%='-'%><%end %><%=h[0]%>/<% end %>
+      </td>
 </table>
 
 <h2><%=@user.name%>'s tokens:</h2>

@@ -5,6 +5,9 @@ class Message < ApplicationRecord
     if user
       user.messages<< self
     end
+    if self.to=="The Chat"
+      Event.create(user_id: current_user_id, key: "chat", value: self.id)
+    end
   end
 end
 
@@ -20,4 +23,5 @@ def Message.new_welcome(u)
       Attached is a new token as a gift. Use it to adopt a Furbaby and begin investing.
       }
     })
+  Event.create(user_id: u.id, key: "welcome", value: @token.id)
 end

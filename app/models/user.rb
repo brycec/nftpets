@@ -18,6 +18,12 @@ class User < ApplicationRecord
       }
   end
 
+  def holdings
+    Furbaby::TRADE_SYMS.entries.each_with_index.inject([]) do |a,(e,i)|
+      a.push [e[1],self.holding(i)]
+    end
+  end
+
   def empty_token
     self.tokens.filter {|t|!t.furbaby}.first
   end

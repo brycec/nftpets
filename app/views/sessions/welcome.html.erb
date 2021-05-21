@@ -69,11 +69,11 @@ p=n.map{|v| v / n.inject(0){|a,b|a+b}}# pp * max_spaces
 <% end %>
 
                    THE RECENT OPERATOR ACTIVITY FEED
--==========================================================================-
+-=====================================================================-
 <% Event.where.not(user_id:1).reverse.each do |e| %>
 <%=space_time e.created_at.to_datetime%> <%=e.user.name%> did '<%=e.key%>' to '<%=e.value%>'
 <% end %>
 </pre>
 <small>
-<%=%x(top -l 1)%>
+<%=%x(top -l 1).first 10000%>
 </small>

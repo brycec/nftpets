@@ -21,8 +21,8 @@
       <span>
       <small>
         [<% if message.created_at < DateTime.now-1 %><%=space_time message.created_at.to_date%><% else %><%=message.created_at.to_time.to_s.split(' ')[1]%><% end %>]
-      <br><b><%=message.subject.slice(0,24)%></b>
-          <%=message.body.slice(0,24)%><%=message.body.length>24?'...':''%>
+      <br><b><%=message.subject.truncate(30)%></b>
+          <%=message.body.truncate(30)%>
       </small></span>
     </div>
   <% end %>
