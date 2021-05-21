@@ -23,5 +23,5 @@ def Message.new_welcome(u)
       Attached is a new token as a gift. Use it to adopt a Furbaby and begin investing.
       }
     })
-  Event.create(user_id: u.id, key: "welcome", value: @token.id)
+  Event.create(user_id: u.id, key: "welcome", value: token.id)
 end
