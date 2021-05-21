@@ -48,7 +48,7 @@
 <p>
  <span class="btn">
    <%
-{sun:'🌞', moon:'🌛', terra: '🌏'}.entries.each do |k,v|
+Furbaby::TRADE_SYMS.entries.each do |k,v|
    %>
  <%= link_to v+k.to_s, controller: 'furbabies', action: 'new',
     token_id: @token.id, symbol: k %>

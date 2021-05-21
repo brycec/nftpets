@@ -36,11 +36,11 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
 
 CURRENT VIBE MARKET CAPITALIZATION
 ==================================
-Symbol   | Total Vibe Cap (N)
+  Symbol   | Total Vibe Cap (N)
 ----------------------------------
-🌞 SUN   | <%=Token.symbol_total(0)%>
-🌛 MOON  | <%=Token.symbol_total(1)%>
-🌏 TERRA | <%=Token.symbol_total(2)%>
+<% Furbaby::TRADE_SYMS.entries.each_with_index do |e,i| %>
+<%=e[1]%> <%=e[0].upcase%><%(8-e[0].length).times { %> <% } %>|  <%=Token.symbol_total(i)%>
+<% end %>
 
 </pre>
 

@@ -10,7 +10,9 @@ class Token < ApplicationRecord
   end
 end
 def Token.symbol_id(s)
-  Token.where.not(furbaby_id:nil).filter{|t| t.furbaby.numerical_pheno.last == s}
+  Furbaby.with_symbol(s).filter{|f| f.token }.map{|f|
+      f.token
+    }
 end
 def Token.symbol_total(s)
   Token.symbol_id(s).inject(0) {|a,t| a+t.vibes}

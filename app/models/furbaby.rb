@@ -9,64 +9,75 @@ class Furbaby < ApplicationRecord
     join_table: "furbabies_parents"
   has_one :token
   validates :dna, presence: true
-
-#  def children
-#    Furbaby.joins(parents).where(parent_id: self.id)
-#  end
-
-  SYMBOLS = [
-  "🚺,🚹,🚼,⚧,🚻,🚮",
-  "S,M,L,s,v,l",
- "🐈‍⬛,🐈,🐕,🐅,🐆,🐩",
- "🟡,🟢,🔵,🟠,🟣,🔴",
- "😻,😾,😹,🙈,👽,😈",
- "💪,🧠,🫀,🦵,👁,🫁",
- "🍐,🍎,🍑,🍍,🍓,🍌",
- "🌽,🥕,🍅,🥦,🧅,🥔",
- "🍞,🥖,🥯,🥨,🥐,🥞",
- "🌭,🥪,🌮,🍕,🍔,🌯",
- "🍬,🍰,🍫,🍭,🍦,🍩",
- "🌼,🌸,🌺,🌻,🌷,🌹",
- "🔮,🧹,👻,✨,🍄,👾",
- "🪨,📄,✂️,💣,🛸,☂",
- "📼,💿,💾,📁,🗄,🗑",
- "🌳,🏔,🏜,🏝,🌋,🖼",
- "💭,💬,🗯,❔,🌀,💤",
- "📈,📉,📊,👊,️🤲,💎",
- "🌿,🔥,💧,🌈,⚡,️☢",
- "🌞,️🌛,🌏,💫,️🪐,🚀"]
-
-  # forbidden magicks
-  SYM_COORDS = {
-   sun: [SYMBOLS.length-1,0],
-   moon: [SYMBOLS.length-1,1],
-   terra: [SYMBOLS.length-1,2],
+  scope :with_symbol, ->(s) {
+    where("dna ~ ?", QUERYS[s])
   }
 
-  WORDS = [
-    "she, he, they, it, both'm, neither'm",
-    "smol, reg, chonk, micro, smooshy, chungus",
-    "felid, tab, doge, tigger, kitty, pewds",
-    "yellow, green, blue, orange, magenta, red",
-    "sweet, grumpy, silly, shy, weird, evil",
-    "strong, smart, brave, fast, aware, efficient",
-    "pear, apple, peach, pineapple, strawberry, banana",
-    "corn, carrot, tomato, broccoli, onion, potato",
-    "loafs, baguettes, bagels, pretzels, croissants, pancakes",
-    "hotdog, sandwich, taco, pizza, burger, burrito",
-    "candy, cake, chocolate, suckers, ice cream, donuts",
-    "cosmos, blossoms, hibiscus, sunflowers, tulips, roses",
-    "clairvoyant, telekinetic, telepathic, dusty, trippy, glitchy",
-    "rock, paper, scissor, bomb, ufo, bumpershoot",
-    "VHS, CD, floppy, folder, zipdrive, trashcan",
-    "forest, mountains, desert, islands, volcano, windows",
-    "thinking, talking, screaming, confused, rambling, dreaming",
-    "buy, sell, diversify, hodl, paperhands, diamondhands",
-    "nature, fire, water, rainbow, lightning, radiation",
-    "sun, moon, terra, star, saturn, rocket"]
+  EMOJI = [
+ %w(🚺 🚹 🚼 ⚧ 🚻 🚮),
+ %w(S M L s v l),
+%w(🐈‍⬛ 🐈 🐕 🐅 🐆 🐩),
+%w(🟡 🟢 🔵 🟠 🟣 🔴),
+%w(😻 😾 😹 🙈 👽 😈),
+%w(💪 🧠 🫀 🦵 👁 🫁),
+%w(🍐 🍎 🍑 🍍 🍓 🍌),
+%w(🌽 🥕 🍅 🥦 🧅 🥔),
+%w(🍞 🥖 🥯 🥨 🥐 🥞),
+%w(🌭 🥪 🌮 🍕 🍔 🌯),
+%w(🍬 🍰 🍫 🍭 🍦 🍩),
+%w(🌼 🌸 🌺 🌻 🌷 🌹),
+%w(🔮 🧹 👻 ✨ 🍄 👾),
+%w(🪨 📄 ✂️ 💣 🛸 ☂),
+%w(📼 💿 💾 📁 🗄 🗑),
+%w(🌳 🏔 🏜 🏝 🌋 🖼),
+%w(💭 💬 🗯 ❔ 🌀 💤),
+%w(📈 📉 📊 👊 ️🤲 💎),
+%w(🌿 🔥 💧 🌈 ⚡ ️☢),
+%w(🌞 🌛 🌏 💫 ️🪐 🚀)]
+
+ WORDS = [
+  %w(she he they it both'm neither'm),
+  %w(smol reg chonk micro smooshy chungus),
+  %w(felid tab doge tigger kitty pewds),
+  %w(yellow green blue orange magenta red),
+  %w(sweet grumpy silly shy weird evil),
+  %w(strong smart brave fast aware efficient),
+  %w(pear apple peach pineapple strawberry banana),
+  %w(corn carrot tomato broccoli onion potato),
+  %w(loafs baguettes bagels pretzels croissants pancakes),
+  %w(hotdog sandwich taco pizza burger burrito),
+  %w(candy cake chocolate suckers ice cream donuts),
+  %w(cosmos blossoms hibiscus sunflowers tulips roses),
+  %w(clairvoyant telekinetic telepathic dusty trippy glitchy),
+  %w(rock paper scissor bomb ufo bumpershoot),
+  %w(VHS CD floppy folder zipdrive trashcan),
+  %w(forest mountains desert islands volcano windows),
+  %w(thinking talking screaming confused rambling dreaming),
+  %w(buy sell diversify hodl paperhands diamondhands),
+  %w(nature fire water rainbow lightning radiation),
+  %w(sun moon terra star saturn rocket)]
+
+  # forbidden magicks
+  EMOJI_COORDS = WORDS.zip(EMOJI).each_with_index.inject({}) do |m, (e, i)|
+    e[0].each_with_index do |w,j|
+      m[w.to_sym]=[i,j]
+    end
+    m
+  end
+
+  TRADE_SYMS = WORDS.last.zip(EMOJI.last).take(3).inject({}) do |m, e|
+    m[e[0].to_sym]=e[1]
+    m
+  end
+
   GENES = ['A','B'] # .last gene is rare
   RARE_G = 2.times.map{GENES.last.downcase}.join # the rare gene 'bb'
-  NUM_GENES = 20 # (x2 chars/chromosome = dna string length)
+  NUM_GENES = EMOJI.length # (20x4 chars/chromosome = dna string length)
+
+  # TO DO
+  QUERYS = ["AA","(Aa|aA)","aa"].map do |e|
+    ("^"+"."*((NUM_GENES-1)*GENES.length*2))+e+".."
+  end
 
   ASTRO = [[20,'♑️ capricorn'],
     [19,'♒️ aquarius',],
@@ -83,7 +94,7 @@ class Furbaby < ApplicationRecord
 
   def vocab
     self.numerical_pheno.zip(WORDS).map{|e|
-      e[1].split(', ')[e[0]]
+      e[1][e[0]]
     }
   end
 
@@ -116,7 +127,7 @@ class Furbaby < ApplicationRecord
   end
 
   def trade_symbol
-    WORDS.last.split(', ')[self.numerical_pheno.last]
+    WORDS.last[self.numerical_pheno.last]
   end
 
   def rand_dna
@@ -139,7 +150,7 @@ class Furbaby < ApplicationRecord
   end
 
   def gene_from_sym(s)
-    v=SYM_COORDS[s][1]
+    v=EMOJI_COORDS[s][1]
     a=2.times.map{|i|
       g=GENES[0]
       (i<v) ? g.downcase : g}.join
@@ -152,7 +163,7 @@ class Furbaby < ApplicationRecord
 
   def ensure_symbol(s)
     s=s.to_sym
-    i = SYM_COORDS[s][0] * GENES.length * 2
+    i = EMOJI_COORDS[s][0] * GENES.length * 2
     g = gene_from_sym(s)
     self.dna = self.dna.slice(0,i)+g+self.dna.slice(i+4,self.dna.length)
   end
@@ -171,8 +182,8 @@ class Furbaby < ApplicationRecord
   end
 
   def pheno
-    self.numerical_pheno.zip(SYMBOLS).map{|e|
-      e[1].split(',')[e[0]]
+    self.numerical_pheno.zip(EMOJI).map{|e|
+      e[1][e[0]]
     }.join
   end
 

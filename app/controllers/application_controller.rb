@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
         flash.notice = nil
         redirect_to '/dead'
       elsif @current_user.took_damage?
-        flash.alert = "🛑 SHTAHP! ✋ Your terminal overheated and the cpu took damage! 🔥📺🔥 That's cringe, you're going to loose tokens if you don't slow down."
+        flash.alert = "🛑 SHTAHP! ✋ Your terminal overheated and the cpu took damage! 🔥📺🔥 That's cringe and you're going to loose tokens if you don't slow down."
         @current_user.cooldown?
         @current_user.save
         redirect_to '/users/'+@current_user.id.to_s

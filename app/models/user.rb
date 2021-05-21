@@ -12,6 +12,12 @@ class User < ApplicationRecord
     self.tokens.inject(0) do |a,b| a+b.vibes end
   end
 
+  def holding(s)
+    self.furbabies.with_symbol(s).inject(0){|a,b|
+        a+b.token.vibes
+      }
+  end
+
   def empty_token
     self.tokens.filter {|t|!t.furbaby}.first
   end

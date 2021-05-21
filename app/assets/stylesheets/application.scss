@@ -91,7 +91,6 @@ b.bad { color: red; }
   }
   .btn form, .btn a {
     display: inline-block;
-    margin-bottom: 0.4em;
   }
 }
 
@@ -117,7 +116,12 @@ b.bad { color: red; }
   border: solid 1px $cyan;
   border-radius: 0.7em;
 }
-#win { color: $cyan; }
+#win {
+  color: $cyan;
+  input, .btn a, textarea, select {
+    margin-bottom: 0.4em;
+  }
+}
 #winb {
   margin: 0.4em 0 0 0;
   #splash {

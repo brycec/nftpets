@@ -298,9 +298,7 @@
       <div id="bar">
         <div class="login">
           <% if logged_in? %>
-           <% if !current_user.dead? %>
             <%=link_to current_user.name, '/users/'+current_user.id.to_s %>:<%=current_user.networth.to_s %><s>N</s>
-            <% end %>
           | <%= link_to "mail", '/messages/'%>:<%=current_user.messages.length.to_s%>
           | <%= link_to "logout", '/logout'%>
           <% else %>
@@ -357,14 +355,17 @@
       }
 
       <% if current_user %>
-      var init = <%=(current_user.how_hot * 155.0).to_s %>;
+      var init = <%=current_user.how_hot.to_s %>;
       clearTimeout(document.damage);
       var damage = function(){
-        document.body.style.filter="hue-rotate("+init+"deg)";
-        document.getElementById('win').style.filter="blur("+(init/80.)+"px)";
+        document.body.style.filter="hue-rotate("+init*155.+"deg)";
+        document.getElementById('win').style.filter="blur("+init*10.+"px)";
         if (init>=0) {
-          init-=1.2;
-          document.damage=setTimeout(damage,100);
+          init-=0.01;
+          document.damage=setTimeout(damage,50);
+        } else {
+          document.body.style.filter="";
+          document.getElementById('win').style.filter="";
         }
       }; damage();
       if (document.getElementById('alert')) {
