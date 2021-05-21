@@ -58,7 +58,10 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
 -===================================================================-
   Symbol                 ||     <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%>   /    <%}%>
   Total Vibe Cap (N)     ||      <% syms.each{|e| %><%=e[:total]%>    /      <%}%>
----------------------------------------------------------------------
+---------------------------------------------------------------------<%vibing=syms.min{|a,b|a[:total]<=>b[:total]}[:word].upcase%>
+Neptune is currently vibing with <%= vibing %>.
+Petting a <%=vibing%> baby will generate double vibes.
+
   HISTORICAL DATA
 <% Event.where(user_id:1,key:'total_sample').reverse.first(100).each do |e|
 n=e.value.split(',').map{|v|v.to_f}

@@ -35,7 +35,7 @@ class TokensController < ApplicationController
       flash.notice='Claimed a token!'
       redirect_to '/tokens/'+@token.id.to_s
     elsif @token.furbaby_id and !@token.furbaby.egg?
-      @token.vibes+=1
+      @token.vibes+=1 + (@token.vibing? ? 1 : 0)
       @token.save
       flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
       current_user.heat

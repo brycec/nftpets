@@ -66,6 +66,8 @@ b.bad { color: red; }
   margin-bottom: 1000px;
   overflow: scroll;
   #bar {
+    position: sticky;
+    top: 0;
     background: $hhcyan;
     border-radius: 0.4em 0.4em 0 0;
     h1 {

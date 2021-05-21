@@ -12,6 +12,7 @@
 </table>
 <br>
 <% if current_user and @furbaby %>
+<% if @token.vibing? %> <b class="warn">Vibing! Pets worth 2<s>N</s>!</b><br><% end %>
 <span class="btn">
 <%=button_to '👋 Pet', '/tokens/'+@token.id.to_s, method: :patch%>
 <% if current_user.id==@token.user_id and !@furbaby.name %>

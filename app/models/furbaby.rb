@@ -126,8 +126,12 @@ class Furbaby < ApplicationRecord
      trades under the %s symbol.}, *a).capitalize
   end
 
+  def trade_s
+    self.numerical_pheno.last
+  end
+
   def trade_symbol
-    WORDS.last[self.numerical_pheno.last]
+    WORDS.last[self.trade_s]
   end
 
   def rand_dna
