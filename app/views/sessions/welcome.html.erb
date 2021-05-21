@@ -60,7 +60,7 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
   Total Vibe Cap (N)     ||      <% syms.each{|e| %><%=e[:total]%>    /      <%}%>
 ---------------------------------------------------------------------
   HISTORICAL DATA
-<% Event.where(user_id:1,key:'total_sample').reverse.each do |e|
+<% Event.where(user_id:1,key:'total_sample').reverse.first(100).each do |e|
 n=e.value.split(',').map{|v|v.to_f}
 p=n.map{|v| v / n.inject(0){|a,b|a+b}}# pp * max_spaces
 %>
@@ -70,7 +70,7 @@ p=n.map{|v| v / n.inject(0){|a,b|a+b}}# pp * max_spaces
 
                    THE RECENT OPERATOR ACTIVITY FEED
 -=====================================================================-
-<% Event.where.not(user_id:1).reverse.each do |e| %>
+<% Event.where.not(user_id:1).reverse.first(100).each do |e| %>
 <%=space_time e.created_at.to_datetime%> <%=e.user.name%> did '<%=e.key%>' to '<%=e.value%>'
 <% end %>
 </pre>
