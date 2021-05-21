@@ -8,7 +8,7 @@
   <td><%=@token.furbaby_id or 'none'%></td>
   <td>
   <%=link_to @token.user.name, '/users/'+@token.user_id.to_s%></td>
-  <td><%=@token.vibes%><s>N</s></td></tr>
+  <td><%=@token.vibes?%><s>N</s></td></tr>
 </table>
 <br>
 <% if current_user and @furbaby %>

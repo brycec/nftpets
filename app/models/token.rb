@@ -9,6 +9,14 @@ class Token < ApplicationRecord
     end
   end
 
+  def vibes?
+    if self.furbaby and self.furbaby.egg?
+      '?'
+    else
+      self.vibes
+    end
+  end
+
   def vibing?
     s=self.furbaby.trade_s
     Token.trade_data.min{|a,b|a[:total]<=>b[:total]}[0] == s
