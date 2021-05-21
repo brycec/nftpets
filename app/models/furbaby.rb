@@ -208,8 +208,8 @@ class Furbaby < ApplicationRecord
         v = self.vocab
         n = sprintf("%s a %s",v[0],v[2])
       end
-        p=self.pheno
-        p[0]+p[2]+p.last + ' ' + n
+        p=self.numerical_pheno
+        EMOJI[0][p[0]]+EMOJI[2][p[2]]+EMOJI.last[p.last] + ' ' + n
     end
   end
 

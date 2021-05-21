@@ -1,3 +1,6 @@
+<% syms = Furbaby::TRADE_SYMS.entries.each_with_index.inject([]) do |a,(e,i)|
+  a.push({word: e[0], emoji: e[1], total: Token.symbol_total(i)})
+ end %>
 <pre id="splash">
 CONNECTING...
 -========================================================================-
@@ -30,18 +33,9 @@ CONNECTING...
 |   |   |   |___  |   |    _____| | |   |  _____| | |   | |   |___| ||_|| |
 |___|   |_______| |___|   |_______| |___| |_______| |___| |_______|_|   |_|
 
--===============================- ONLINE -=================================-
+-==============================- ONLINE -=================================-
 v0.0.1 - (C)opyleft 3000 and Never. No rights reserved. All works stolen.
 SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.now).rfc822 %>
-
-CURRENT VIBE MARKET CAPITALIZATION
-==================================
-  Symbol   | Total Vibe Cap (N)
-----------------------------------
-<% Furbaby::TRADE_SYMS.entries.each_with_index do |e,i| %>
-<%=e[1]%> <%=e[0].upcase%><%(8-e[0].length).times { %> <% } %>|  <%=Token.symbol_total(i)%>
-<% end %>
-
 </pre>
 
 <span class="btn">
@@ -57,3 +51,29 @@ CURRENT VIBE MARKET CAPITALIZATION
   </p>
 
 </span>
+
+
+<pre>
+                CURRENT VIBE MARKET CAPITALIZATION
+-===================================================================-
+  Symbol                 ||     <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%>   /    <%}%>
+  Total Vibe Cap (N)     ||      <% syms.each{|e| %><%=e[:total]%>    /      <%}%>
+---------------------------------------------------------------------
+  HISTORICAL DATA
+<% Event.where(user_id:1,key:'total_sample').reverse.each do |e|
+n=e.value.split(',').map{|v|v.to_f}
+p=n.map{|v| v / n.inject(0){|a,b|a+b}}# pp * max_spaces
+%>
+<%=space_time e.created_at.to_datetime %> /// <%=e.value%>
+<%p.each_with_index do |pp,i| %><%(pp*65.0).to_i.times do%><%='-'%><%end %><%=syms[i][:emoji]%>/<% end %>
+<% end %>
+
+                   THE RECENT OPERATOR ACTIVITY FEED
+-==========================================================================-
+<% Event.where.not(user_id:1).reverse.each do |e| %>
+<%=space_time e.created_at.to_datetime%> <%=e.user.name%> did '<%=e.key%>' to '<%=e.value%>'
+<% end %>
+</pre>
+<small>
+<%=%x(top -l 1)%>
+</small>

@@ -58,12 +58,13 @@ b.bad { color: red; }
 }
 #win {
   opacity: 0.95;
-  max-width: 575px;
+  max-width: 600px;
   max-height: 1000px;
   padding: 5px;
   margin-top: 2em;
   margin-left: 0.5em;
   margin-bottom: 1000px;
+  overflow: scroll;
   #bar {
     background: $hhcyan;
     border-radius: 0.4em 0.4em 0 0;

@@ -38,6 +38,7 @@ class TokensController < ApplicationController
       @token.save
       flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
       current_user.heat
+      Event.create(user_id: current_user_id, key: "pet", value: @token.id)
       redirect_to '/tokens/'+@token.id.to_s+'?pet=true'
     elsif current_user.empty_token and @token.id==current_user.empty_token.id
       @mom=Furbaby.find(params[:furbaby])
