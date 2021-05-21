@@ -201,35 +201,8 @@ b.bad { color: red; }
   color: $magenta;
   margin-bottom: 0.5em;
 }
-
-#win .emoji {
-filter: hue-rotate(130deg) brightness(.1);
-position: relative;
-top: 2px;
-height: 1em;
-width: 1em;
-}
-#winb .emoji {
-  height: 2em;
-  width: 2em;
-  filter: hue-rotate(130deg);
-  //animation-name: colors;
-  animation-duration: 0.088s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  position:relative;
-}
-@keyframes colors {
-  0% {
-    top: 0; left: 1px; background: none;
-  filter: hue-rotate(125deg);}
-  90% {
-    top: 0;
-  filter: hue-rotate(125deg);}
-    96% { top: 1px; left: 0px;
-      filter: hue-rotate(185deg); background: none;}
-  100% { top: 0; left: 2px;
-    filter: hue-rotate(125deg); background: #887D03;}
+.emoji {
+  height: 1em;
 }
 .mtabs .mtab {
   padding: 1em;

@@ -312,6 +312,11 @@
              <% end %>
             <% end %>
           <%=space_time DateTime.now %>
+          <% if !session[:e] %>
+            <%= link_to "emoji?", '?e=1' %>
+          <% else %>
+            <%= link_to "emoji!", '?e=0' %>
+          <% end %>
         </div>
         <h1><%= link_to "nftpets/", '/' %><%= yield :path %></h1>
       </div>
@@ -334,14 +339,16 @@
         </div>
       </div>
     </div>
-  </div>
-    <%# javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js"
-    %>
-    <script>
-      //twemoji.parse(document.getElementById('win'));
-      //twemoji.parse(document.getElementById('winb'));
-    </script>
+  </div>``
 
+  <% if params[:e]=="0" then session.delete(:e) end %>
+  <% if params[:e]=="1" or session[:e]=="1" %>
+      <% session[:e]="1" %>
+      <%=javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js"%>
+      <script>
+        twemoji.parse(document.body);
+        </script>
+  <% end %>
     <script type="module">
       var mi=document.getElementsByClassName('maili');
       for (var i=0; i<mi.length; i++) {
