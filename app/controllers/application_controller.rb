@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?, :space_time
+  after_action do
+    response.headers.except! 'X-Frame-Options'
+  end
   def current_user_id
     session[:user_id]
   end
