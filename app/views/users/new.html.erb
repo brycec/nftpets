@@ -6,5 +6,7 @@
   <%= f.text_field :name%><br>
   <%= f.label :password%><br>
   <%= f.password_field :password%><br>
+    <span class="btn"><%=link_to 'Anonymous',
+    'javascript:document.getElementById("user_password").value=Math.random();document.getElementById("user_name").value="anon"+(Math.random()+"").split(".")[1];' %></span><br>
   <%= f.submit %>
 <%end%>
