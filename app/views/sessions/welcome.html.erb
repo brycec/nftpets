@@ -34,19 +34,20 @@ CONNECTING...
 -==============================- ONLINE -=================================-
 v0.0.1 - (C)opyleft 3000 and Never. No rights reserved. All works stolen.
 SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.now).rfc822 %>
-<a href="/blog"> -&gt; The Blog &lt;- </a>
 </pre>
 
 <span class="btn">
   <p>
 
     <% if logged_in? %>
-      Currently logged in as <%=current_user.name%>
+      logged in as <b><%=current_user.name%></b>
       <%= link_to "go to mail", '/messages' %>
+      <%= link_to "go to tokens", '/users/'+current_user.id.to_s %>
     <% else %>
       <%= link_to "start new", '/users/new' %>
       <%= link_to "continue", '/login' %>
     <% end %>
+      <%= link_to "the blog", '/blog' %>
   </p>
 
 </span>
@@ -66,8 +67,9 @@ Petting a <%=vibing%> baby will generate double vibes.
 n=e.value.split(',').map{|v|v.to_f}
 p=n.map{|v| v / n.inject(0){|a,b|a+b}}# pp * max_spaces
 %>
-<%=space_time e.created_at.to_datetime %> /// <%=e.value%>
-<%p.each_with_index do |pp,i| %><%(pp*65.0).to_i.times do%><%='-'%><%end %><%=syms[i][:emoji]%>/<% end %>
+<%=space_time e.created_at.to_datetime %> /// <%=e.value%><%s=0%>
+<%p.each_with_index do |pp,i| ppp=(pp*60).round()
+s+=ppp %>[<%ppp.times do%><%='-'%><%end %><%= s<60 ? '-' : ''  %><%=syms[i][:emoji]%>]<% end %>
 <% end %>
 
                    THE RECENT OPERATOR ACTIVITY FEED

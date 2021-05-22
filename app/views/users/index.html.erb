@@ -7,8 +7,8 @@
   <th>name</th>
    <th>networth</th>
  </tr>
- <tr>
   <% @users.each do |user| %>
+  <tr class="maili">
      <td>
      <%= link_to user.id.to_s, '/users/' + user.id.to_s %>
      </td>

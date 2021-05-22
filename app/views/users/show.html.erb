@@ -1,4 +1,4 @@
-<% content_for :path do %><%='users/'+@user.id.to_s%>
+<% content_for :path do %><%=link_to 'users','/users' %>/ <%=@user.id.to_s%>
 <% end %>
 <table>
   <tr><th>operator</th><th>since</th><th>cpu</th><th>holdings</th><th>networth</th></tr>
@@ -38,7 +38,19 @@
       </td>
   </tr>
 </table>
+<% if current_user and @user.id != current_user.id %>
+<span class="btn">
+  <%=link_to 'send message', controller: 'messages', action: 'new',
+      to: @user.name,
+      subject: 'RE: Your Portfolio',
+      body: sprintf(%{Dear %s,
 
+I was just admiring your portfolio and thought I'd tell you about it. :)
+
+Your friend,
+%s}, @user.name, current_user.name) %>
+ <% end %>
+ </span>
 <h2><%=@user.name%>'s tokens:</h2>
 <table>
   <tr>

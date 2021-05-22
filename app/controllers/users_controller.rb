@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all.sort {|a|-a.networth}
+    @users = User.all.sort {|a,b|b.networth<=>a.networth}
   end
 
   def show
