@@ -1,6 +1,10 @@
 class MessagesController < ApplicationController
   def is_to_The?
-    /\A(The [A-Z][a-z]+)/.match params[:to]
+    m = /\A(The [A-Z][a-z]+)/.match params[:to]
+    if m and m[0] == "The Blog"
+      @blog = true
+    end
+    m
   end
 
   def my_messages
