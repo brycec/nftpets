@@ -21,6 +21,13 @@ class Token < ApplicationRecord
     s=self.furbaby.trade_s
     Token.trade_data.min{|a,b|a[:total]<=>b[:total]}[0] == s
   end
+
+  def pet
+    m=1 #multiplier
+    if self.vibing? then m+=1 end
+    self.vibes+=m*self.furbaby.count_rare_dna
+    self.save
+  end
 end
 def Token.symbol_id(s)
   Furbaby.not_egg.with_symbol(s).joins(:token).map{|f|
