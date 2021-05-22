@@ -49,7 +49,7 @@ class Furbaby < ApplicationRecord
   %w(corn carrot tomato broccoli onion potato),
   %w(loafs baguettes bagels pretzels croissants pancakes),
   %w(hotdog sandwich taco pizza burger burrito),
-  %w(candy cake chocolate suckers ice cream donuts),
+  %w(candy cake chocolate lolipop icecream donuts),
   %w(cosmos blossoms hibiscus sunflowers tulips roses),
   %w(clairvoyant telekinetic telepathic dusty trippy glitchy),
   %w(rock paper scissor bomb ufo bumpershoot),
