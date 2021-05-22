@@ -1,22 +1,28 @@
-
-
 <table>
   <thead>
-      <tr><th colspan=6><h2><%=@furbaby.dname %></h2></th></tr>
+      <tr><th colspan=3><h2><%=@furbaby.dname %></h2></th></tr>
   </thead>
   <tbody>
+  <% if @furbaby.children.length>0 or @furbaby.parents.length>0 %>
   <tr>
+    <td colspan=3>
+        <table><tr>
+        <% if @furbaby.parents.length>0 %><td style="text-align: right;"><small>
+          <%@furbaby.parents.each_with_index{|e,i| l=@furbaby.parents.length%>
+          ┄ <%=link_to e.dname, '/furbabies/'+e.id.to_s %> <%= i==0 ?  '─┐ ' : '─┴─' %>&nbsp;<br>
+        <%}%></small></td>
+        <% end %>
+            <th><h2><%=@furbaby.vocab[0]%></h2></th>
+        <% if @furbaby.children.length>0 %>
+        <td><small>─┬─<%@furbaby.children.each_with_index{|e,i| l=@furbaby.children.length%>
+      <%if i>0 and i<l-1 then %>&nbsp;├─<% elsif i!=0 %>&nbsp;└─ <% end %> <%=link_to e.dname, '/furbabies/'+e.id.to_s %><br>
+    <%}%>
+    </small></td>
+    <% end %></tr></table>
+    </td>
+  </tr>
+<% end %>
     <td rowspan=5>
-    <% if @furbaby.parents.length>0 %>
-      Child of <%@furbaby.parents.map{|e|%>
-      <%=link_to e.dname, '/furbabies/'+e.id.to_s %>,
-    <%}%><br>
-    <% end %>
-    <% if @furbaby.children.length>0 %>
-      Parent of <%@furbaby.children.map{|e|%>
-      <%=link_to e.dname, '/furbabies/'+e.id.to_s %>,
-    <%}%><br>
-    <% end %>
          <%=@furbaby.description %><br>
       <small><%=@furbaby.dna.split(/(....)/).filter{|e|e[0]}.join('-') %></small></td>
     <tr>

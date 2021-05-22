@@ -185,6 +185,10 @@ b.bad { color: red; }
     tr:hover td {
       background: $dcyan;
     }
+    table {
+      margin-bottom: 0;
+      overflow: hidden;
+    }
   }
 }
 #alert {
@@ -275,10 +279,13 @@ b.bad { color: red; }
 #foot {
   clear: both;
   font-style: italic;
-  font-size: 0.5em;
-  padding-top: 0.5em;
+  font-size: 0.7em;
+  padding-top: 0.4em;
   border-top: solid 1px $pcyan;
   a {
     color: $pcyan;
   }
+}
+small {
+  line-height: 1em;
 }
