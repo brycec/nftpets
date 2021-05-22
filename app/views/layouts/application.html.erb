@@ -330,9 +330,9 @@
             <% end %>
           <%=space_time DateTime.now %>
           <% if !session[:e] %>
-            <%= link_to "emoji?", '?e=1' %>
+            <%= link_to "emoji?", '?e=1', method: :get %>
           <% else %>
-            <%= link_to "emoji!", '?e=0' %>
+            <%= link_to "emoji!", '?e=0', method: :get %>
           <% end %>
         </div>
         <h1><%= link_to "nftpets/", '/' %><%= yield :path %></h1>
@@ -363,7 +363,8 @@
       <% session[:e]="1" %>
       <%=javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js"%>
       <script>
-        twemoji.parse(document.body);
+        window.addEventListener("load", function(){
+          twemoji.parse(document.body);});
         </script>
   <% end %>
     <script type="module">

@@ -82,4 +82,11 @@ Littering Neptune's orbit with fried terminals is the price we pay to save them 
     end
     redirect_to '/messages'
   end
+
+  def blog
+    params[:to] = "The Blog"
+    @messages = my_messages
+    @fmessage = params[:id] ? Message.find(params[:id]) : @messages.first
+    render 'index'
+  end
 end

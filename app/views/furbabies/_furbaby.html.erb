@@ -9,12 +9,12 @@
         <table><tr>
         <% if @furbaby.parents.length>0 %><td style="text-align: right;"><small>
           <%@furbaby.parents.each_with_index{|e,i| l=@furbaby.parents.length%>
-          ┄ <%=link_to e.dname, '/furbabies/'+e.id.to_s %> <%= i==0 ?  '─┐ ' : '─┴─' %>&nbsp;<br>
-        <%}%></small></td>
+          <%=link_to e.dname, '/furbabies/'+e.id.to_s %> <%= render inline: i==0 ?  '─┐&nbsp;' : i<l-1 ? '─┤&nbsp;' : '─┴─' %><br>
+          <%}%></small></td>
         <% end %>
             <th><h2><%=@furbaby.vocab[0]%></h2></th>
-        <% if @furbaby.children.length>0 %>
-        <td><small>─┬─<%@furbaby.children.each_with_index{|e,i| l=@furbaby.children.length%>
+        <% if @furbaby.children.length>0 then l=@furbaby.children.length%>
+        <td><small><%=l>1?'─┬─':'──'%><%@furbaby.children.each_with_index{|e,i| %>
       <%if i>0 and i<l-1 then %>&nbsp;├─<% elsif i!=0 %>&nbsp;└─ <% end %> <%=link_to e.dname, '/furbabies/'+e.id.to_s %><br>
     <%}%>
     </small></td>

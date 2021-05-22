@@ -6,5 +6,7 @@ Rails.application.routes.draw do
 
   get 'dead', to: 'users#dead'
 
+  get '/blog', to: 'messages#blog'
+
   resources :users, :messages, :furbabies, :tokens
 end
