@@ -35,15 +35,15 @@ class TokensController < ApplicationController
 
       flash.notice='Claimed a token!'
       redirect_to '/tokens/'+@token.id.to_s
-    elsif @token.user_id!=current_user.id
-      flash.notice='weird...'
-      redirect_to '/'
-    elsif@token.furbaby_id and !@token.furbaby.egg? and !@mom
+    elsif @token.furbaby_id and !@token.furbaby.egg? and !@mom
       @token.pet
       flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
       current_user.heat
       Event.create(user_id: current_user_id, key: "pet", value: @token.id)
       redirect_to '/tokens/'+@token.id.to_s+'?pet=true'
+    elsif @token.user_id!=current_user.id
+      flash.notice='weird...'
+      redirect_to '/'
     elsif current_user.empty_token and @token.id==current_user.empty_token.id and @mom
       if @mom.heat?
         @egg=@mom.new_egg @token
@@ -92,9 +92,9 @@ class TokensController < ApplicationController
         end
       end
     elsif @mom and @token.furbaby # dumper
-      current_user.tokens.each do |t|
-        if t.furbaby then @mom.mix t.furbaby end
+      current_user.tokens.without(@mom.token).each do |t|
         @mom.token.split_with t
+        if t.furbaby then @mom.mix t.furbaby end
       end
       @mom.rand_dna
       @mom.save

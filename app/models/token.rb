@@ -41,7 +41,7 @@ class Token < ApplicationRecord
   def split_with(t)
     if self != t
       v=(self.vibes.to_f)/2.0
-      t.vibes=v.ceil
+      t.vibes+=v.ceil
       t.save
       self.vibes=v.floor
       self.save
