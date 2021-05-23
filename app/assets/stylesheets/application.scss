@@ -72,7 +72,7 @@ b.bad { color: red; }
     background: $hhcyan;
     border-radius: 0.4em 0.4em 0 0;
     h1 {
-      font-size: 1em;
+      font-size: 1.2em;
       font-style: italic;
       text-align: left;
       padding: 0.3em 0.6em;
@@ -115,7 +115,7 @@ b.bad { color: red; }
 #win, input, .btn a, textarea, select {
   font-family: monospace;
   font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   color: $acyan;
   border: solid 1px $cyan;
   border-radius: 0.7em;
