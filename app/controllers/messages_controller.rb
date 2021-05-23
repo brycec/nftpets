@@ -53,6 +53,9 @@ Littering Neptune's orbit with fried terminals is the price we pay to save them 
         end
       end
     end
+    if @message.to=="The Chat"
+      Event.create(user_id: current_user.id, key: "chat", value: @message.id)
+    end
     @message.save
     current_user.heat
     flash.notice = 'Message sent!'

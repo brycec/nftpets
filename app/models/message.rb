@@ -5,9 +5,6 @@ class Message < ApplicationRecord
     if user
       user.messages<< self
     end
-    if self.to=="The Chat"
-      Event.create(user_id: current_user_id, key: "chat", value: self.id)
-    end
   end
 end
 
