@@ -28,6 +28,21 @@ class Token < ApplicationRecord
     self.vibes+=m*self.furbaby.count_rare_dna
     self.save
   end
+
+  def transfer(t)
+    t.vibes+=self.vibes
+    t.save
+    self.vibes=0
+    self.save
+  end
+
+  def split_with(t)
+    v=self.vibes
+    t.vibes=(v.to_f/2.0).ceil
+    t.save
+    self.vibes=(v.to_f/2.0).floor
+    self.save
+  end
 end
 def Token.symbol_id(s)
   Furbaby.not_egg.with_symbol(s).joins(:token).map{|f|

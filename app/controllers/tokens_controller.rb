@@ -43,16 +43,22 @@ class TokensController < ApplicationController
     elsif current_user.empty_token and @token.id==current_user.empty_token.id
       @mom=Furbaby.find(params[:furbaby])
       if @mom.heat?
-        @egg=Furbaby.new_egg @mom
-        @token.furbaby_id=@egg.id
-        @token.vibes=@mom.token.vibes
-        @token.save
-        @mom.token.vibes=0
-        @mom.token.save
+        @egg=@mom.new_egg @token
         if @egg.valid? and @token.valid?
           flash.notice="Laid an egg! 🥚"
           current_user.heat
           Event.create(user_id: current_user_id, key: "egg", value: @token.id)
+          redirect_to '/tokens/'+@token.id.to_s
+        else
+          flash.notice="oops "+@egg.errors.all_messages+@token.errors.all_messages
+          redirect_to '/'
+        end
+      elsif @mom.radiated?
+        split = @mom.split @token
+        if split.valid?
+          flash.notice="Split into two furbabies via fission! 💞"
+          current_user.heat
+          Event.create(user_id: current_user_id, key: "fission", value: @token.id)
           redirect_to '/tokens/'+@token.id.to_s
         else
           flash.notice="oops "+@egg.errors.all_messages+@token.errors.all_messages
@@ -75,10 +81,6 @@ class TokensController < ApplicationController
           current_user.heat
           Event.create(user_id: current_user_id, key: "inject", value: @token.id)
         end
-        @token.vibes+=@stud.token.vibes
-        @token.save
-        @stud.token.vibes=0
-        @stud.token.save
         if @token.furbaby.valid? and @token.valid?
           redirect_to '/tokens/'+@token.id.to_s
         else

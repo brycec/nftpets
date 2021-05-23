@@ -225,19 +225,48 @@ class Furbaby < ApplicationRecord
   end
 
   def heat?
-    self.mature? and self.numerical_pheno[0]==0
+    self.mature? and self.numerical_pheno[0].in? [0,4]
   end
 
   def stud?
-    self.mature? and self.numerical_pheno[0]==1
+    self.mature? and self.numerical_pheno[0].in? [1,4]
   end
 
   def mutant?
     self.mature? and self.numerical_pheno[0]==2
   end
 
+  def radiated?
+    self.mature? and self.numerical_pheno[0]==3
+  end
+
+  def pair?
+    self.mature? and self.numerical_pheno[0]==4
+  end
+
   def egg?
     self.created_at==DateTime.new
+  end
+
+  def token_transfer b
+    if self.pair?
+      self.token.split_with b.token
+    else
+      self.token.transfer b.token
+    end
+  end
+
+  def new_egg(t)
+    e=Furbaby.new
+    e.dna=self.dna
+    e.save
+    e.parents<< self
+    e.created_at=DateTime.new
+    e.save
+    t.furbaby_id=e.id
+    t.save
+    self.token_transfer e
+    e
   end
 
   def hatch a
@@ -245,23 +274,37 @@ class Furbaby < ApplicationRecord
       self.combo_dna_with a.dna
       self.created_at=DateTime.now
       self.parents<< a
+      a.token_transfer self
     end
   end
   def inject_dna_with(b)
-    self.combo_dna_with(Furbaby.new.rand_dna)
-    self.combo_dna_with(b.dna)
-    if !self.parents.include? b
-      self.parents<< b
+    if self.mutant?
+      self.combo_dna_with(Furbaby.new.rand_dna)
+      self.combo_dna_with(b.dna)
+      if !self.parents.include? b
+        self.parents<< b
+      end
+      b.token_transfer self
     end
   end
-end
-
-def Furbaby.new_egg(mom)
-  f=Furbaby.new
-  f.dna=mom.dna
-  f.save
-  f.parents<< mom
-  f.created_at=DateTime.new
-  f.save
-  f
+  def split(t)
+    if self.radiated?
+      f=Furbaby.new
+      f.rand_dna
+      f.dna.split('').each_with_index do |e,i|
+        if rand(2)>0
+          s=f.dna[i]
+          f.dna[i]=self.dna[i]
+          self.dna[i]=s
+        end
+      end
+      self.name=nil
+      self.save
+      f.save
+      f.token=t
+      t.split_with f.token
+      t.save
+      f
+    end
+  end
 end

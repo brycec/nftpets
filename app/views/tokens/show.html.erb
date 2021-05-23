@@ -31,6 +31,10 @@
 <%=button_to "🧬 Inject", '/tokens/'+current_user.egg.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
 <small><%=@furbaby.vocab[0]%> will inject dna into an egg on your other token.</small>
 <% end %>
+<% if current_user.id==@token.user_id and @furbaby.radiated? and current_user.empty_token %>
+<%=button_to "💞 Fission", '/tokens/'+current_user.empty_token.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
+<small><%=@furbaby.vocab[0]%> will split into two furbabies.</small>
+<% end %>
 </span>
 <% end %>
 
