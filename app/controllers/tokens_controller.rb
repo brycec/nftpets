@@ -65,23 +65,6 @@ class TokensController < ApplicationController
           redirect_to '/'
         end
       end
-    elsif @mom and @token.furbaby # dumper
-      current_user.furbabies.each do |f|
-        @mom.mix f
-        @mom.token.split_with f.token
-      end
-      @mom.rand_dna
-      @mom.save
-      @mom.token.transfer @token # leftovers
-      if @mom.valid?
-        flash.notice="Dumped dna! 🗑"
-        current_user.heat
-        Event.create(user_id: current_user_id, key: "dump", value: @mom.token.id)
-        redirect_to '/tokens/'+@token.id.to_s
-      else
-        flash.notice="oops "+@mom.errors.all_messages
-        redirect_to '/'
-      end
     elsif @token.furbaby.egg?
       @stud=Furbaby.find(params[:furbaby])
       if @stud.stud? or @stud.mutant?
@@ -104,6 +87,23 @@ class TokensController < ApplicationController
           flash.notice="oops "+@token.furbaby.errors.all_messages+@token.errors.all_messages
           redirect_to '/'
         end
+      end
+    elsif @mom and @token.furbaby # dumper
+      current_user.furbabies.each do |f|
+        @mom.mix f
+        @mom.token.split_with f.token
+      end
+      @mom.rand_dna
+      @mom.save
+      @mom.token.transfer @token # leftovers
+      if @mom.valid?
+        flash.notice="Dumped dna! 🗑"
+        current_user.heat
+        Event.create(user_id: current_user_id, key: "dump", value: @mom.token.id)
+        redirect_to '/tokens/'+@token.id.to_s
+      else
+        flash.notice="oops "+@mom.errors.all_messages
+        redirect_to '/'
       end
     end
   end
