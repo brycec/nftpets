@@ -70,8 +70,8 @@ n=e.value.split(',').map{|v|v.to_f}
 p=n.map{|v| v / n.inject(0){|a,b|a+b}}# pp * max_spaces
 %>
 <%=space_time e.created_at.to_datetime %> /// <%=e.value%><%s=0%>
-<%p.each_with_index do |pp,i| ppp=(pp*60).round()
-s+=ppp %>[<%ppp.times do%><%='-'%><%end %><%= s<60 ? '-' : ''  %><%=syms[i][:emoji]%>]<% end %>
+<%p.each_with_index do |pp,i| ppp=(pp*59).ceil()
+s+=ppp %>[<%ppp.times do%><%='-'%><%end %><%= s<=60 ? '-' : ''  %><%=syms[i][:emoji]%>]<% end %>
 <% end %>
 
                    THE RECENT OPERATOR ACTIVITY FEED
