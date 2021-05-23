@@ -1,4 +1,4 @@
-<% content_for :path do %><%='messages/' %>
+<% content_for :path do %><%=@blog ? 'blog/' : 'messages/' %>
 <% end %>
 <%if params[:to]
  a='?to='+params[:to] else a = '' end%>
