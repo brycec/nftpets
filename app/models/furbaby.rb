@@ -8,7 +8,8 @@ class Furbaby < ApplicationRecord
     association_foreign_key: "furbaby_id",
     join_table: "furbabies_parents"
   has_one :token
-  validates :dna, presence: true
+  validates :dna, presence: true, format: { with: /\A[AaBb]+\z/,
+    message: "not AaBbb" }
   scope :with_symbol, ->(s) {
     where("dna ~ ?", QUERYS[s])
   }
@@ -244,6 +245,10 @@ class Furbaby < ApplicationRecord
     self.mature? and self.numerical_pheno[0]==4
   end
 
+  def dump?
+    self.mature? and self.numerical_pheno[0]==5
+  end
+
   def egg?
     self.created_at==DateTime.new
   end
@@ -287,17 +292,23 @@ class Furbaby < ApplicationRecord
       b.token_transfer self
     end
   end
+  def mix(f)
+    f.dna.split('').each_with_index do |e,i|
+      if rand(2)>0
+        s=f.dna[i]
+        f.dna[i]=self.dna[i]
+        self.dna[i]=s
+      end
+    end
+    self.save
+    f.save
+    f
+  end
   def split(t)
     if self.radiated?
       f=Furbaby.new
       f.rand_dna
-      f.dna.split('').each_with_index do |e,i|
-        if rand(2)>0
-          s=f.dna[i]
-          f.dna[i]=self.dna[i]
-          self.dna[i]=s
-        end
-      end
+      self.mix f
       self.name=nil
       self.save
       f.save

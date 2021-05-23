@@ -24,6 +24,7 @@ class TokensController < ApplicationController
 
   def update
     @token = Token.find(params[:id])
+    @mom=Furbaby.find_by(id: params[:furbaby])
     if @token.user_id==1
       @message=Message.where(token_id: @token.id).first
       @message.token_id=nil
@@ -34,14 +35,13 @@ class TokensController < ApplicationController
 
       flash.notice='Claimed a token!'
       redirect_to '/tokens/'+@token.id.to_s
-    elsif @token.furbaby_id and !@token.furbaby.egg?
+    elsif @token.furbaby_id and !@token.furbaby.egg? and !@mom
       @token.pet
       flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
       current_user.heat
       Event.create(user_id: current_user_id, key: "pet", value: @token.id)
       redirect_to '/tokens/'+@token.id.to_s+'?pet=true'
-    elsif current_user.empty_token and @token.id==current_user.empty_token.id
-      @mom=Furbaby.find(params[:furbaby])
+    elsif current_user.empty_token and @token.id==current_user.empty_token.id and @mom
       if @mom.heat?
         @egg=@mom.new_egg @token
         if @egg.valid? and @token.valid?
@@ -61,9 +61,26 @@ class TokensController < ApplicationController
           Event.create(user_id: current_user_id, key: "fission", value: @token.id)
           redirect_to '/tokens/'+@token.id.to_s
         else
-          flash.notice="oops "+@egg.errors.all_messages+@token.errors.all_messages
+          flash.notice="oops "+split.errors.all_messages
           redirect_to '/'
         end
+      end
+    elsif @mom and @token.furbaby # dumper
+      current_user.furbabies.each do |f|
+        @mom.mix f
+        @mom.token.split_with f.token
+      end
+      @mom.rand_dna
+      @mom.save
+      @mom.token.transfer @token # leftovers
+      if @mom.valid?
+        flash.notice="Dumped dna! 🗑"
+        current_user.heat
+        Event.create(user_id: current_user_id, key: "dump", value: @mom.token.id)
+        redirect_to '/tokens/'+@token.id.to_s
+      else
+        flash.notice="oops "+@mom.errors.all_messages
+        redirect_to '/'
       end
     elsif @token.furbaby.egg?
       @stud=Furbaby.find(params[:furbaby])
