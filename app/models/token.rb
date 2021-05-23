@@ -30,18 +30,22 @@ class Token < ApplicationRecord
   end
 
   def transfer(t)
-    t.vibes+=self.vibes
-    t.save
-    self.vibes=0
-    self.save
+    if self != t
+      t.vibes+=self.vibes
+      t.save
+      self.vibes=0
+      self.save
+    end
   end
 
   def split_with(t)
-    v=self.vibes
-    t.vibes=(v.to_f/2.0).ceil
-    t.save
-    self.vibes=(v.to_f/2.0).floor
-    self.save
+    if self != t
+      v=(self.vibes.to_f)/2.0
+      t.vibes=v.ceil
+      t.save
+      self.vibes=v.floor
+      self.save
+    end
   end
 end
 def Token.symbol_id(s)

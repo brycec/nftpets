@@ -254,10 +254,12 @@ class Furbaby < ApplicationRecord
   end
 
   def token_transfer b
-    if self.pair?
-      self.token.split_with b.token
-    else
-      self.token.transfer b.token
+    if self.token and b.token
+      if self.pair?
+        self.token.split_with b.token
+      else
+        self.token.transfer b.token
+      end
     end
   end
 

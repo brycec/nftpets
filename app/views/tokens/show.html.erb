@@ -36,7 +36,7 @@
 <small><%=@furbaby.vocab[0]%> will split into two furbabies.</small>
 <% end %>
 <% if current_user.id==@token.user_id and @furbaby.dump? and current_user.furbabies.length>1 %>
-<%=button_to "🗑 Dump", '/tokens/'+current_user.furbabies.shuffle.first.token.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
+<%=button_to "🗑 Dump", '/tokens/'+current_user.furbabies.without(@furbaby).shuffle.first.token.id.to_s+'?furbaby='+@furbaby.id.to_s, method: :patch%>
 <small><%=@furbaby.vocab[0]%> will dump dna randomly and then mutate.</small>
 <% end %>
 </span>

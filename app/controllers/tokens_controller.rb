@@ -24,7 +24,7 @@ class TokensController < ApplicationController
 
   def update
     @token = Token.find(params[:id])
-    @mom=Furbaby.find_by(id: params[:furbaby])
+    @mom = Furbaby.find_by(id: params[:furbaby])
     if @token.user_id==1
       @message=Message.where(token_id: @token.id).first
       @message.token_id=nil
@@ -35,7 +35,10 @@ class TokensController < ApplicationController
 
       flash.notice='Claimed a token!'
       redirect_to '/tokens/'+@token.id.to_s
-    elsif @token.furbaby_id and !@token.furbaby.egg? and !@mom
+    elsif @token.user_id!=current_user.id
+      flash.notice='weird...'
+      redirect_to '/'
+    elsif@token.furbaby_id and !@token.furbaby.egg? and !@mom
       @token.pet
       flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
       current_user.heat
@@ -89,13 +92,12 @@ class TokensController < ApplicationController
         end
       end
     elsif @mom and @token.furbaby # dumper
-      current_user.furbabies.each do |f|
-        @mom.mix f
-        @mom.token.split_with f.token
+      current_user.tokens.each do |t|
+        if t.furbaby then @mom.mix t.furbaby end
+        @mom.token.split_with t
       end
       @mom.rand_dna
       @mom.save
-      @mom.token.transfer @token # leftovers
       if @mom.valid?
         flash.notice="Dumped dna! 🗑"
         current_user.heat
