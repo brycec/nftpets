@@ -76,6 +76,8 @@ subject: %s
 
 </div>
 </div>
-<script type="module">
+<% content_for :js do %>
+setTimeout(function(){
 renderer.flyTo="moon";
-</script>
+},30);
+<% end %>

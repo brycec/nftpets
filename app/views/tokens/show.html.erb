@@ -70,7 +70,7 @@ Furbaby::TRADE_SYMS.entries.each do |k,v|
 <%=button_to "😿 Release", '/tokens/'+@token.id.to_s, method: :delete%>
 <% end %>
 
-<script type="module">
+<% content_for :js do %>
 <% if @furbaby %>
 renderer.flyTo="cat";
 <% elsif @egg %>
@@ -81,4 +81,4 @@ renderer.flyTo="egg";
 <% if params[:pet]=="true" %>
  renderer.flyTo="hand";
 <%end %>
-</script>
+<% end %>

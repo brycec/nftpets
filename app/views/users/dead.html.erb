@@ -32,9 +32,9 @@
 </p>
 
 
-<script type="module">
+<% content_for :js do %>
   window.wompy();
 setTimeout(function(){
 renderer.flyTo="stray";
 },50);
-</script>
+<% end %>

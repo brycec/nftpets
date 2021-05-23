@@ -14,8 +14,8 @@
 
 <%= render @furbaby %>
 
-<script type="module">
+<% content_for :js do %>
 setTimeout(function(){
 renderer.flyTo="stray";
 },50);
-</script>
+<% end %>

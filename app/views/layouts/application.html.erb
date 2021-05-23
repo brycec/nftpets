@@ -134,6 +134,15 @@
           sound.setNodeSource(o);
         }
       };
+      var a = document.getElementsByTagName("a");
+      for (var i=0;i<a.length;i++) {
+        a[i].addEventListener('click',window.clicky);
+      }
+      a = document.getElementById("notice");
+      if (a) {
+        window.beepy();
+      }
+
       const renderer = new THREE.WebGLRenderer({antialias: true});
 
       const boxGeometry = new THREE.SphereGeometry(3,9,8);
@@ -341,21 +350,10 @@
 
         window.renderer = renderer;
 
-      </script>
-      
-  <script type="module">
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.flyTo="origin";
     document.body.appendChild( window.renderer.domElement );
-
-    var a = document.getElementsByTagName("a");
-    for (var i=0;i<a.length;i++) {
-      a[i].addEventListener('click',window.clicky);
-    }
-    a = document.getElementById("notice");
-    if (a) {
-      window.beepy();
-    }
+  <%= yield :js %>
   </script>
 
   <% if params[:e]=="0" then session.delete(:e) end %>
