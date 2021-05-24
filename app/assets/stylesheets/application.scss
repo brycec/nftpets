@@ -22,7 +22,7 @@ $dcyan: #0D2120;
 $vdcyan: #001110;
 $magenta: #f8429D;
 
-$hcyan: rgba(115, 248, 237, 0.2);
+$hcyan: rgba(115, 248, 237, 0.12);
 $hhcyan: rgba(115, 255, 247, 0.85);
 
 body {
@@ -47,7 +47,10 @@ canvas {
 form {
   margin-bottom: 0.4em;
 }
-b.good { color: $cyan; }
+hr {
+  border: 1px solid $hcyan;
+}
+  b.good { color: $cyan; }
 b.ok { color: $pcyan; }
 b.warn { color: $magenta; }
 b.bad { color: red; }
@@ -115,7 +118,7 @@ b.bad { color: red; }
 #win, input, .btn a, textarea, select {
   font-family: monospace;
   font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.65);
   color: $acyan;
   border: solid 1px $cyan;
   border-radius: 0.7em;
@@ -247,7 +250,7 @@ b.bad { color: red; }
 }
 
 #mails .maili {
-  border-bottom: solid 1px $pcyan;
+  border-bottom: solid 1px $hcyan;
   padding: 0.5em;
   a {
     color: $cyan;
@@ -268,7 +271,7 @@ b.bad { color: red; }
 #mailbody {
   width: 71%;
   min-height: 12em;
-  border-left: solid 1px $pcyan;
+  border-left: solid 1px $hcyan;
   float: right;
   margin-left: 0.4em;
   padding-left: 0.5em;

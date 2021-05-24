@@ -8,8 +8,23 @@
   <%= f.label :body%><br>
   <%= f.text_area :body, size: "40x12" %><br><br>
   <%= f.label :token_id, "Attach a token" %><br>
-  <%= f.select :token_id, [['No',nil]].concat(current_user.tokens_map)%>
-   <br><br>
+  <%= f.select :token_id, [['No']].concat(current_user.tokens_map)%>
+  <div id="vod" style="display:none;"><br>
+  <%= f.label :vod, "V.O.D. - Vibes on delivery"%>
+  <p>Recipient must send a token that's <br> worth at least:
+    <%= f.number_field :vod, in: 0..999999999 %> <s>N</s><br>to claim attachment.</p></div>
+   <br>
   <%= f.submit 'Send Message' %>
 <%end%>
 </div>
+<% content_for :js do %>
+  document.getElementById("message_token_id").addEventListener("change", function(){
+    document.getElementById("vod").style.display="block";
+  });
+    var vod = document.getElementById("message_vod");
+    vod.addEventListener("change", function(){
+      var b = document.getElementById("message_body")
+      b.value=b.value.replace(/^_vod_([0-9]+)[\n]?/,'');
+      b.value="_vod_"+vod.value+"\n"+b.value;
+    });
+<% end %>

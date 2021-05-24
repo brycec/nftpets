@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
     elsif logged_in? and current_user.name==params[:to]
       Message.where(to: current_user.name).order(created_at: 'desc').without current_user.messages
     elsif logged_in?
-      current_user.messages
+      current_user.messages.order(created_at: 'desc')
     else
       []
     end
@@ -58,7 +58,11 @@ Littering Neptune's orbit with fried terminals is the price we pay to save them 
     end
     @message.save
     current_user.heat
-    flash.notice = 'Message sent!'
+    if @message.valid?
+      flash.notice = 'Message sent!'
+    else
+      flash.notice = 'uh oh '+@message.errors.full_messages.join(", ")
+    end
     redirect_to '/messages'
   end
 

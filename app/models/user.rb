@@ -30,7 +30,7 @@ class User < ApplicationRecord
 
   def tokens_map
     self.tokens.map { |t|
-      [t.vibes?.to_s+'N '+(t.furbaby ? t.furbaby.dname+' '+t.furbaby.rarity : 'none'),t.id]
+      [t.dname,t.vibes?.to_i,t.id]
     }
   end
 

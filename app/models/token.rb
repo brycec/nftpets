@@ -17,6 +17,10 @@ class Token < ApplicationRecord
     end
   end
 
+  def dname
+    self.vibes?.to_s+'N '+(self.furbaby ? self.furbaby.dname+' '+self.furbaby.rarity : 'unoccupied')
+  end
+
   def vibing?
     s=self.furbaby.trade_s
     Token.trade_data.min{|a,b|a[:total]<=>b[:total]}[0] == s

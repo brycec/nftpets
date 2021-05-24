@@ -50,19 +50,31 @@ subject: %s
   </span>
 <% end %>
   <% if @fmessage %>
-  <h3>from: <%=@fmessage.from%></h3>
-  <h3>to: <%=@fmessage.to%></h3>
-  <h3>date: <%=space_time @fmessage.created_at.to_datetime%></h3>
+  <h3><small>from: </small><%=@fmessage.from%></h3>
+  <h3><small>to: </small><%=@fmessage.to%></h3>
+  <h3><small>date: </small><%=space_time @fmessage.created_at.to_datetime%></h3>
   <h2><%=@fmessage.subject%></h2>
   <p><% @fmessage.body.split("\n").map do |e| %>
       <%=e %>  <br/>
       <% end %>
     </p>
-
+<hr>
     <% if logged_in? %>
       <% if @fmessage.token_id %>
-        <%=button_to "claim attached token", '/tokens/'+@fmessage.token_id.to_s,
-         method: :patch  %>
+      <table><tr><th style="text-align:left;">📎 token attached:</th></tr>
+        <tr><td>&nbsp;<b><%=@fmessage.token.dname%></b></td></tr></table>
+<%=form_with url:'/tokens/'+@fmessage.token_id.to_s, method: :patch do |f| %>
+        <% if @fmessage.vod then t=current_user.tokens_map.filter {|t|t[1]and t[1]>=@fmessage.vod}%>
+          <b>V.O.D.</b> Sender requests a token with at least
+          <b><%=@fmessage.vod %><s>N</s></b><br>
+          <%= t.length>0 ? f.select(:payment, t) : ''%><br>
+        <% end %>
+        <% if @fmessage.vod and t.length<1 %>
+          You have no token with that much.
+          <% else %>
+        <%= f.submit "claim attached token"%>
+        <% end %>
+<% end %>
       <%end%>
       <% if a.length==0 %>
         <%= button_to 'mark old', '/messages/'+@fmessage.id.to_s, method: :patch %>
@@ -77,7 +89,5 @@ subject: %s
 </div>
 </div>
 <% content_for :js do %>
-setTimeout(function(){
 renderer.flyTo="moon";
-},30);
 <% end %>

@@ -1,10 +1,20 @@
 class Message < ApplicationRecord
-
+  belongs_to :token, required: false
   after_create do
     user=User.where(name: to).first
     if user
       user.messages<< self
     end
+  end
+
+  def vod
+    if self.body and self.body.slice(0,5)=="_vod_"
+      vod=/\A_vod_([0-9]+)/.match(self.body)[1].to_i
+      if vod > 0
+        return vod
+      end
+    end
+    false
   end
 end
 

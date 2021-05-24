@@ -78,7 +78,7 @@ class FurbabiesController < ApplicationController
         @furbaby.vocab.index(params[:last])].join(',')
     @furbaby.save
     if @furbaby.invalid?
-      flash.notice = @furbaby.errors.all_messages.join(' ')
+      flash.notice = @furbaby.errors.full_messages.join(' ')
     else
       flash.notice = "Nice to meet you, "+@furbaby.full_name+" 😸🤝😸"
     end

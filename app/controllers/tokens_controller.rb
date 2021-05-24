@@ -26,9 +26,19 @@ class TokensController < ApplicationController
     @token = Token.find(params[:id])
     @mom = Furbaby.find_by(id: params[:furbaby])
     if @token.user_id==1
-      @message=Message.where(token_id: @token.id).first
+      @message=Message.find_by(token_id: @token.id)
       @message.token_id=nil
       @token.user_id = current_user.id
+
+      payment=Token.find_by(id: params[:payment])
+      if @message.vod and payment and payment.vibes >= @message.vod
+        payment.user_id = User.find_by(name: @message.from).id
+        payment.save
+      elsif @message.vod
+        flash.notice = "uh oh"
+        redirect '/'
+        return
+      end
 
       @message.save
       @token.save
@@ -53,7 +63,7 @@ class TokensController < ApplicationController
           Event.create(user_id: current_user_id, key: "egg", value: @token.id)
           redirect_to '/tokens/'+@token.id.to_s
         else
-          flash.notice="oops "+@egg.errors.all_messages+@token.errors.all_messages
+          flash.notice="oops "+@egg.errors.full_messages.join(" ")+@token.errors.full_messages.join(" ")
           redirect_to '/'
         end
       elsif @mom.radiated?
@@ -64,7 +74,7 @@ class TokensController < ApplicationController
           Event.create(user_id: current_user_id, key: "fission", value: @token.id)
           redirect_to '/tokens/'+@token.id.to_s
         else
-          flash.notice="oops "+split.errors.all_messages
+          flash.notice="oops "+split.errors.full_messages.join(" ")
           redirect_to '/'
         end
       end
@@ -87,7 +97,7 @@ class TokensController < ApplicationController
         if @token.furbaby.valid? and @token.valid?
           redirect_to '/tokens/'+@token.id.to_s
         else
-          flash.notice="oops "+@token.furbaby.errors.all_messages+@token.errors.all_messages
+          flash.notice="oops "+@token.furbaby.errors.full_messages.join(" ")+@token.errors.full_messages.join(" ")
           redirect_to '/'
         end
       end
