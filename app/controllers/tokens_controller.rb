@@ -32,7 +32,14 @@ class TokensController < ApplicationController
 
       payment=Token.find_by(id: params[:payment])
       if @message.vod and payment and payment.vibes >= @message.vod
-        payment.user_id = User.find_by(name: @message.from).id
+        Message.create({
+          to: @message.from,
+          from: current_user.name,
+          subject: 'V.O.D. '+payment.vibes.to_s+'N',
+          token_id: payment.id,
+          body: "Attached is the V.O.D. payment token."
+        })
+        payment.user_id=1
         payment.save
       elsif @message.vod
         flash.notice = "uh oh"
