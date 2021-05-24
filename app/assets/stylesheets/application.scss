@@ -293,3 +293,43 @@ b.bad { color: red; }
 small {
   line-height: 1em;
 }
+
+@keyframes huey {
+  from {
+    filter: hue-rotate(180deg);
+  }
+  to {
+    filter: hue-rotate();
+  }
+}
+@keyframes blurry {
+  from {
+    filter: blur(0.5em);
+  }
+  to {
+    filter: blur();
+  }
+}
+@keyframes shakey {
+  0% {
+    margin-top: -1em;
+  }
+  25% {
+    margin-top: 3em;
+  }
+  75% {
+    margin-left: 3em;
+  }
+  100% {
+    margin-left: 0em;
+  }
+}
+.huey {
+  animation: huey 3s 1 ease-out;
+}
+.blurry {
+  animation: blurry 3s 1 ease-out;
+}
+.shakey {
+  animation: shakey .06s infinite ease-in;
+}

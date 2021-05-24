@@ -32,7 +32,7 @@ CONNECTING...
 |___|   |_______| |___|   |_______| |___| |_______| |___| |_______|_|   |_|
 
 -==============================- ONLINE -=================================-
-v0.0.2 - (C)opyleft 3000 and Never. No rights reserved. All works stolen.
+v0.0.3 - (C)opyleft 3000 and Never. No rights reserved. All works stolen.
 By operating nftpets terminals you are agreeing to all terms and conditions
 possibly imaginable including but not limited to manipulation of spacetime.
 SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.now).rfc822 %>
@@ -57,7 +57,7 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
 <% f = Furbaby.where.not(created_at: DateTime.new).order(created_at: 'desc').take(5).shuffle.first %>
 <%=render f%>
 <% if f.token %>
-  <p>🐾 (Part of <%=link_to f.token.user.name, '/users/'+f.token.user.id.to_s%>'s portfolio)</p>
+  <p>🐾 (Part of <%=link_to f.token.user.name+"'s portfolio", '/users/'+f.token.user.id.to_s%>)</p>
 <% end %>
 <pre>
 

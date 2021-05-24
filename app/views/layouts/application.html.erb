@@ -8,16 +8,28 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-      <% if params[:e]=="0" then session.delete(:e) end %>
-      <% if params[:bg]=="0" then session.delete(:bg) end %>
-  </head>
-  <body>
-<div id="box">
+  <% if params[:e]=="0" then session.delete(:e) end %>
+  <% if params[:bg]=="0" then session.delete(:bg) end %>
+
+  <% if params[:bg]=="1" or session[:bg]=="1" %>
+  <script type="module">window.wompy=window.clicky=window.beepy=function(){}</script>
+  <% session[:bg]="1" %>
+  <% else %>
+  <%= render 'threedee' %>
+  <script type="module" src="<%=javascript_url 'app' %>"></script>
+  <% end %>
+
+</head>
+<body>
+  <div id="box">
     <div id="win">
       <div id="bar">
         <div class="login">
           <% if logged_in? %>
-            <%=link_to current_user.name, '/users/'+current_user.id.to_s %>:<%=current_user.networth.to_s %><s>N</s>
+          <% current_user.damage?.times do |e| %>
+          ❌
+          <% end %>
+          <%=link_to current_user.name, '/users/'+current_user.id.to_s %>:<%=current_user.networth.to_s %><s>N</s>
           | <%= link_to "mail", '/messages/'%>:<%=current_user.messages.length.to_s%>
           | <%= link_to "logout", '/logout'%>
           <% else %>
@@ -25,21 +37,16 @@
           <%= link_to "sign up", '/users/new' %>
           <%end%>
           <br>
-            <% if logged_in? %>
-             <% current_user.damage?.times do |e| %>
-              ❌
-             <% end %>
-            <% end %>
           <%=space_time DateTime.now %>
           <% if !session[:e] %>
-            <%= link_to "emoji?", '?e=1', method: :get %>
+          <%= link_to "emoji?", '?e=1', method: :get %>
           <% else %>
-            <%= link_to "emoji!", '?e=0', method: :get %>
+          <%= link_to "emoji!", '?e=0', method: :get %>
           <% end %>
           <% if !session[:bg] %>
-            <%= link_to "bg?", '?bg=1', method: :get %>
+          <%= link_to "bg?", '?bg=1', method: :get %>
           <% else %>
-            <%= link_to "bg!", '?bg=0', method: :get %>
+          <%= link_to "bg!", '?bg=0', method: :get %>
           <% end %>
         </div>
         <h1><%= link_to "@nftpets/", '/' %> <%= yield :path %></h1>
@@ -64,23 +71,22 @@
     </div>
   </div>
 
-    <% if params[:bg]=="1" or session[:bg]=="1" %>
-     <% session[:bg]="1" %>
-     <% else %>
-      <%= render 'threedee' %>
-      <script type="module">
-        <%= yield :js %>
-      </script>
-    <% end %>
-
+  <script type="module">
+    if (window.renderer) {
+      window.renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( window.renderer.domElement );
+      renderer.flyTo="origin";
+      <%= yield :js %>
+    }
+  </script>
   <% if params[:e]=="1" or session[:e]=="1" %>
-      <% session[:e]="1" %>
-      <%=javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js"%>
-      <script>
-        window.addEventListener("load", function(){
-          twemoji.parse(document.body);});
-        </script>
-  <% end %>
+  <% session[:e]="1" %>
+  <%=javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js"%>
+  <script>
+    window.addEventListener("load", function(){
+      twemoji.parse(document.body);});
+    </script>
+    <% end %>
     <script type="module">
       var mi=document.getElementsByClassName('maili');
       for (var i=0; i<mi.length; i++) {
@@ -94,32 +100,23 @@
       }
 
       <% if current_user %>
-      var init = <%=current_user.how_hot.to_s %>;
-      clearTimeout(document.damage);
-      var damage = function(){
-        document.body.style.filter="hue-rotate("+init*155.+"deg)";
-        document.getElementById('win').style.filter="blur("+init*10.+"px)";
-        if (init>=0) {
-          init-=0.01;
-          document.damage=setTimeout(damage,50);
-        } else {
-          document.body.style.filter="";
-          document.getElementById('win').style.filter="";
-        }
-      }; damage();
+      var sec = <%=(current_user.how_hot*10).to_s %>;
+      var b = document.body;
+      if (sec>0) {
+        var w = document.getElementById('win');
+        b.style.animationDuration=sec+"s";
+        w.style.animationDuration=sec+"s";
+        b.classList.add("huey");
+        w.classList.add("blurry");
+      }
       if (document.getElementById('alert')) {
         window.wompy();
-        var shakes = 0;
-        var shake = function(){
-          document.body.style="padding:"+Math.random()*30+"px "+Math.random()*30+"px";
-          if (shakes<15) {
-            shakes+=1;
-            setTimeout(shake,30);
-          }
-        };shake();
+        b.classList.add("shakey");
+        setTimeout(function(){
+          b.classList.remove("shakey");
+        },350);
       }
       <% end %>
     </script>
-
   </body>
   </html>
