@@ -205,7 +205,7 @@ class Furbaby < ApplicationRecord
 
   def rarity
     c = self.egg? ? 0 : self.count_rare_dna
-    return c<10 ? "⭐️"*self.count_rare_dna : c.to_s+"⭐️"
+    return c<10 ? "⭐️"*c : c.to_s+"⭐️"
   end
 
   def dname
