@@ -53,9 +53,14 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
   </p>
 
 </span>
-
-
+<h2>🌟 Furbaby Showcase 🌟</h2>
+<% f = Furbaby.where.not(created_at: DateTime.new).order(created_at: 'desc').take(5).shuffle.first %>
+<%=render f%>
+<% if f.token %>
+  <p>🐾 (Part of <%=link_to f.token.user.name, '/users/'+f.token.user.id.to_s%>'s portfolio)</p>
+<% end %>
 <pre>
+
                 CURRENT VIBE MARKET CAPITALIZATION
 -===================================================================-
   Symbol                 ||     <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%>   /    <%}%>
