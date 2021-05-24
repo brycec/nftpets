@@ -1,5 +1,10 @@
 class Message < ApplicationRecord
   belongs_to :token, required: false
+  before_save do
+    if self.token_id==0
+      self.token_id=nil
+    end
+  end
   after_create do
     user=User.where(name: to).first
     if user
