@@ -23,9 +23,16 @@ class SessionsController < ApplicationController
   def m
     if params[:m]!=Token.trade_data[1][:total]
       redirect_to '/'
-    elsif params[:w]
+    else
+      @old_events=Event.old
+      @old_anons=User.old_anon
+    end
+    if params[:w]
       if params[:w]=="events"
-        Event.old.each do |e|e.destroy end
+        @old_events.each do |e|e.destroy end
+        redirect_to '/m/'+params[:m]
+      elsif params[:w]=="anon"
+        @old_anons.each do |e|e.destroy end
         redirect_to '/m/'+params[:m]
       end
     end

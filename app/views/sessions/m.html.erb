@@ -1,5 +1,5 @@
 WARNING: This page is cursed and using it will curse you, too.
 <div class="btn">
-<%=link_to 'events clean',params[:m]+'/events'%><br>
-<%=link_to 'bye anon',params[:m]+'/anon'%>
+<%=link_to @old_events.length.to_s+' old events',params[:m]+'/events' %><br>
+<%=link_to @old_anons.length.to_s+' old anons', params[:m]+'/anon' %>
 </div>

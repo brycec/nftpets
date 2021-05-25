@@ -7,6 +7,14 @@ class User < ApplicationRecord
     message: "can only be: _, a-z, A-Z, or 0-9" }
   validates :name, uniqueness: true
   has_secure_password
+  scope :old_anon, ->{
+    where('name ~ ?', '^anon\d+$')
+      .where('created_at < ?', Time.now-1.day)
+      .order(created_at: 'desc')
+  }
+  before_destroy do
+    self.tokens.each do |t| t.destroy end
+  end
 
   def networth
     self.tokens.inject(0) do |a,b| a+b.vibes end
