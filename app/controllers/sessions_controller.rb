@@ -19,4 +19,15 @@ class SessionsController < ApplicationController
     @_current_user = nil
     redirect_to '/'
   end
+
+  def m
+    if params[:m]!=Token.trade_data[1][:total]
+      redirect_to '/'
+    elsif params[:w]
+      if params[:w]=="events"
+        Event.old.each do |e|e.destroy end
+        redirect_to '/m/'+params[:m]
+      end
+    end
+  end
 end

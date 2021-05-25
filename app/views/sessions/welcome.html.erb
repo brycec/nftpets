@@ -63,8 +63,8 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
 
                 CURRENT VIBE MARKET CAPITALIZATION
 -===================================================================-
-  Symbol                 ||     <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%>   /    <%}%>
-  Total Vibe Cap (N)     ||      <% syms.each{|e| %><%=e[:total]%>    /      <%}%>
+  Symbol              ||  <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%><%= " "*(9-e[:word].length) %><%}%>
+  Total Vibe Cap (N)  ||  <% syms.each{|e| %><%=e[:total]%><%= " "*(11-e[:total].length) %> <%}%>
 ---------------------------------------------------------------------<%vibing=syms.min{|a,b|a[:total]<=>b[:total]}[:word].upcase%>
 Neptune is currently vibing with <%= vibing %>.
 Petting a <%=vibing%> baby will generate double vibes.

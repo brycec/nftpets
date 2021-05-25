@@ -57,8 +57,16 @@ def Token.symbol_id(s)
       f.token
     }
 end
-def Token.symbol_total(s)
+def Token.symbol_total!(s) # skip cache
   Token.symbol_id(s).inject(0) {|a,t| a+t.vibes}
+end
+def Token.symbol_total(s)
+  e = Event.last_sample # caching through events
+  if e
+    e.value.split(',')[s]
+  else
+    Token.symbol_total!(s)
+  end
 end
 def Token.trade_data
   Furbaby::TRADE_SYMS.entries.each_with_index.inject([]) do |a,(e,i)|
