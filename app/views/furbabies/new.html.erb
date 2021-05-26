@@ -1,3 +1,4 @@
+<% content_for :path do %><%=link_to 'furbabies/','/furbabies'%> new<% end %>
 <h2>You've located a stray furbaby</h2>
 
 <%= form_with url: '/furbabies', method: :post do |f| %>

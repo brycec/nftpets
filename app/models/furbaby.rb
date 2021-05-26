@@ -9,14 +9,28 @@ class Furbaby < ApplicationRecord
     join_table: "furbabies_parents"
   has_one :token
   validates :dna, presence: true, format: { with: /\A[AaBb]+\z/,
-    message: "not AaBbb" }
-  scope :with_symbol, ->(s) {
-    where("dna ~ ?", QUERYS[s])
-  }
+    message: "not AaBb" }
   scope :not_egg, -> {
     where.not(created_at: DateTime.new)
   }
-
+  scope :with_syms, ->(a) {
+    # a is list of emoji coords like [[0,1],[13,0]] for boys with rocks
+    gs = ["AA","Aa","aa"]#,"BB", "Bb","bb"] # TO DO
+    c = GENES.length*2
+    q = "."*(NUM_GENES*c)
+    a.each do |sym|
+      if sym[1]>gs.length then raise "bad syms "+a.to_s end
+      q=q.slice(0, sym[0]*c)+gs[sym[1]]+".."+q.slice((sym[0]+1)*c,q.length)
+    end
+    while q.include? gs[1]+".."
+      q.sub! gs[1]+"..","("+gs[1]+"|"+gs[1].reverse+").."
+    end
+    q="^"+q+"$"
+    where("dna ~ ?", q)
+  }
+  scope :with_symbol, ->(s) {
+    with_syms([[s,NUM_GENES-1]])
+  }
   EMOJI = [
  %w(🚺 🚹 🚼 ⚧ 🚻 🚮),
  %w(S M L s v l),
@@ -77,11 +91,6 @@ class Furbaby < ApplicationRecord
   GENES = ['A','B'] # .last gene is rare
   RARE_G = 2.times.map{GENES.last.downcase}.join # the rare gene 'bb'
   NUM_GENES = EMOJI.length # (20x4 chars/chromosome = dna string length)
-
-  # TO DO
-  QUERYS = ["AA","(Aa|aA)","aa"].map do |e|
-    ("^"+"."*((NUM_GENES-1)*GENES.length*2))+e+".."
-  end
 
   ASTRO = [[20,'♑️ capricorn'],
     [19,'♒️ aquarius',],

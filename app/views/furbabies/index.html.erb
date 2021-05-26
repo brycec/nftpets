@@ -1,14 +1,12 @@
+<% content_for :path do %><%=link_to 'furbabies/','/furbabies'%> <% end %>
 <h2>stray furbabies</h2>
 
 <table>
-  <tr><th>bday</th><th>dna</th></tr>
   <% @furbabies.each do |f| %>
   <tr>
     <td>
-     <%=f.created_at%>
-    </td>
-    <td>
-     <%=f.dna%>
+      <h1> <%=Token.where(furbaby_id:f.id).first=%> </h1>
+      <%=render f %>
     </td>
   </tr>
   <%end%>

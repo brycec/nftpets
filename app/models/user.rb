@@ -21,8 +21,8 @@ class User < ApplicationRecord
   end
 
   def holding(s)
-    self.furbabies.not_egg.with_symbol(s).inject(0){|a,b|
-        a+b.token.vibes
+    self.tokens.symbol_id(s).inject(0){|a,b|
+        a+b.vibes
       }
   end
 

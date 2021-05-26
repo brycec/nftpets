@@ -1,4 +1,4 @@
-<% content_for :path do %><%=link_to 'tokens/','/tokens'%><%=@token.id.to_s%><% end %>
+<% content_for :path do %><%=link_to 'tokens/','/tokens'%> <%=@token.id.to_s%><% end %>
 <table>
   <tr>
   <th>furbaby#</th>
@@ -12,9 +12,9 @@
 </table>
 <br>
 <% if current_user and @furbaby %>
-<% if @token.vibing? %> <b class="warn">Vibing! Pets worth 2<s>N</s>!</b><br><% end %>
+<% if @token.vibing? %> <b class="warn">Vibing!</b><br><% end %>
 <span class="btn">
-<%=button_to '👋 Pet', '/tokens/'+@token.id.to_s, method: :patch%>
+<%=button_to '👋 Pet'+ (@token.vibing? ? ' x2!' :''), '/tokens/'+@token.id.to_s, method: :patch%>
 <% if current_user.id==@token.user_id and !@furbaby.name %>
 <%=button_to '📝 Name', '/furbabies/'+@furbaby.id.to_s+'/edit', method: :get%>
 <% end %>

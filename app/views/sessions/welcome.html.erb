@@ -1,4 +1,3 @@
-<% syms = Token.trade_data %>
 <pre id="splash">
 CONNECTING...
 -========================================================================-
@@ -32,7 +31,7 @@ CONNECTING...
 |___|   |_______| |___|   |_______| |___| |_______| |___| |_______|_|   |_|
 
 -==============================- ONLINE -=================================-
-v0.0.3 - (C)opyleft 3000 and Never. No rights reserved. All works stolen.
+v0.0.4 - (C)opyleft 3000 and Never. No rights reserved. All works stolen.
 By operating nftpets terminals you are agreeing to all terms and conditions
 possibly imaginable including but not limited to manipulation of spacetime.
 SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.now).rfc822 %>
@@ -42,7 +41,7 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
   <p>
 
     <% if logged_in? %>
-      logged in as <b><%=current_user.name%></b>
+      logged in as <b><%=current_user.name%></b><br><br>
       <%= link_to "go to mail", '/messages' %>
       <%= link_to "go to tokens", '/users/'+current_user.id.to_s %>
     <% else %>
@@ -58,13 +57,44 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
 <%=render f%>
 <% if f.token %>
   <p>🐾 (Part of <%=link_to f.token.user.name+"'s portfolio", '/users/'+f.token.user.id.to_s%>)</p>
+<% elsif current_user %>
+<!-- stray adoption -->
 <% end %>
+<br>
+<% sq = Token.squeeze_data; sqe=Furbaby::EMOJI[Event.squeeze_on].take(3)%>
+<% if sq.length>0 %>
+<h2>🤏 The Squeeze: <%=sq[0][:emoji]%><%=sq[0][:word]%> v. <%= sq[1][:emoji]%><%=sq[1][:word]%></h2>
+<p><%=sq[0][:word].capitalize%> traders are currently squeezing
+  <%=sq[1][:word].capitalize%> traders with
+  <%=sqe.join %>!</p>
+<pre><%=sqe[0]%> -&gt; <%=sqe[2]%>       <%=sq[0][:emoji]%><%=sq[0][:word]
+  %>: <%=sqe[sq[0][:squeeze].last[0]]
+  %> (<%=sq[0][:squeeze].reverse.map{|e|e[1].to_s+sqe[e[0]]}.join ', '%>)
+ \      \     <%=sq[1][:emoji]%><%=sq[1][:word]
+ %>: <%=sqe[sq[1][:squeeze].last[0]] %> (<%=sq[1][:squeeze].reverse.map{|e|e[1].to_s+sqe[e[0]]}.join ', '%>)
+  &lt;- <%=sqe[1]%> &lt;-     standing: <%
+  if sq[0][:squeeze].last[0]==sq[1][:squeeze].last[0]%><%=sq.max_by{|e|e[:squeeze].last[1]}[:word]%> winning tie break<%
+  elsif Token.beats?(sq[0][:squeeze].last[0],sq[1][:squeeze].last[0])%><%=sq[0][:word]%> winning<%
+  else %><%=sq[1][:word]%> winning
+  <% end %>
+
+Trade cycle ends in: <%=Event.squeeze_time.strftime("%Mm:%Ss")  %>
+</pre>
+<small><b>Squeezin' what now?</b>
+Traders elect a sub symbol by investing into furbabies with both the trade symbol
+and their favored sub symbol. At the end of the trade cycle, the sub symbols
+are chosen and the traders who elected the superior symbol wins. Tokens of the losing
+symbol get half their value taken away and split amongst the winning tokens. If they elect
+the same symbol, the biggest investment wins.</small>
+<% end %>
+
+<% syms = Token.trade_data %>
 <pre>
 
                 CURRENT VIBE MARKET CAPITALIZATION
 -===================================================================-
-  Symbol              ||  <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%><%= " "*(9-e[:word].length) %><%}%>
-  Total Vibe Cap (N)  ||  <% syms.each{|e| %><%=e[:total]%><%= " "*(11-e[:total].length) %> <%}%>
+  Symbol              ||  <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%><%= " "*(9-e[:word].to_s.length) %><%}%>
+  Total Vibe Cap (N)  ||  <% syms.each{|e| %><%=e[:total]%><%= " "*(11-e[:total].to_s.length) %> <%}%>
 ---------------------------------------------------------------------<%vibing=syms.min{|a,b|a[:total]<=>b[:total]}[:word].upcase%>
 Neptune is currently vibing with <%= vibing %>.
 Petting a <%=vibing%> baby will generate double vibes.

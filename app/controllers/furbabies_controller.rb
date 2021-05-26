@@ -86,8 +86,6 @@ class FurbabiesController < ApplicationController
   end
 
   def index
-    @furbabies = Array.new(3) {|i|
-       Furbaby.new(dna:'x'+i.to_s)
-      }
+    @furbabies = Furbaby.all.without(Furbaby.joins(:token))
   end
 end
