@@ -53,7 +53,7 @@ SERVER STATUS: FULLY OPERATIONAL        <%= DateTime.parse(space_time DateTime.n
 
 </span>
 <h2>🌟 Furbaby Showcase 🌟</h2>
-<% f = Furbaby.where.not(created_at: DateTime.new).order(created_at: 'desc').take(5).shuffle.first %>
+<% f = Furbaby.new; f.rand_dna; f.created_at=Time.now-rand() %>
 <%=render f%>
 <% if f.token %>
   <p>🐾 (Part of <%=link_to f.token.user.name+"'s portfolio", '/users/'+f.token.user.id.to_s%>)</p>

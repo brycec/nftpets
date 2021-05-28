@@ -223,12 +223,12 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     // gender
     [],
     // size
-    [()=>{cat.scale.setScalar(.3);cat.scale.x=.23;cat.position.y=-.8},
-      ()=>{cat.scale.setScalar(.5)},
-      ()=>{cat.scale.x=1.2;cat.scale.y=.6},
-      ()=>{cat.scale.setScalar(.15);cat.position.y=-1},
-      ()=>{cat.scale.x=.7+sin(now()/9e2)/4;cat.scale.y=.6-cos(now()/2e3)/4;cat.position.y=.02},
-      ()=>{cat.scale.x=2;cat.scale.y=.8;cat.position.y=.08}],
+    [()=>{cat.scale.setScalar(.6);cat.scale.x=.44;catP.position.y+=-.4},
+      ()=>{cat.scale.setScalar(.8)},
+      ()=>{cat.scale.x=1.5;},
+      ()=>{cat.scale.setScalar(.15);catP.position.y+=-1},
+      ()=>{cat.scale.x=.7+sin(now()/9e2)/4;cat.scale.y=.6-cos(now()/2e3)/4},
+      ()=>{cat.scale.x=2.5;cat.scale.y=.8;catP.position.y+=.08}],
     // breed
     [()=>{doge.visible=false;catcat.visible=true;tab.visible=false},
       ()=>{catcat.visible=false;doge.visible=false;tab.visible=true},
@@ -241,8 +241,9 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     coin.rotation.z += 0.01;
     egg.position.y=999;
     sat.position.x=-45;
-    catP.position.setY(4.2);
-    catP.scale.setScalar(2);
+    catP.position.setY(4.15);
+    catP.scale.setScalar(1.1);
+    catP.rotation.set(0,0,0);
     cat.position.setY(0);
     if (renderer.pheno) {
       for (var p = 0; p<renderer.pheno.length; p++) {
@@ -256,6 +257,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
         planet.position.clone().setX(coin.position.x+10)
         .sub(camera.position).divideScalar(4));
       camera.lookAt(coin.position);
+      catP.position.setY(999);
     }
     if (renderer.flyTo=="cat" || renderer.flyTo=="hand") {
       catP.scale.setScalar(.7);
@@ -271,16 +273,15 @@ loader.load(window.GLTF_URL, function ( gltf ) {
         .sub(camera.position).divideScalar(4));
       camera.lookAt(catP.position.clone().setX(catP.position.x-1.2));
     } else if (renderer.flyTo=="stray") {
-      cat.position.y+=(20-cat.position.y)/4.0;
-      cat.rotation.set(sin(now()/3e4)*2,
+      catP.position.y+=(42-catP.position.y)/4.0;
+      catP.rotation.set(sin(now()/3e4)*2,
         cos(now()/1e4)*2,
         sin(now()/2e4)*2);
 
       camera.position.copy(
-        cat.position.clone().setX(cat.position.x+25)
-        .setY(cat.position.y+30)
-        .sub(camera.position).divideScalar(2));
-      camera.lookAt(cat.position.clone().setY(cat.position.y-1));
+        catP.position.clone().setX(catP.position.x+4)
+        .setY(catP.position.y-1.4));
+      camera.lookAt(catP.position.clone().setZ(catP.position.z+.8));
     } else if (renderer.flyTo=="egg") {
       egg.position.y=0.59;
       cat.position.y=99;
@@ -306,7 +307,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     if (renderer.flyTo=="hand") {
     hand.rotation.set(-1,1.1,1);
     hand.position.set(0.6+cos(now()/5e2)/6,
-      0.5+cos(now()/5e2)/8,
+      0.45+cos(now()/5e2)/8,
       0.7+sin(now()/5e2)/2);
       heart.position.y=(6+2*(cos(now()/2e2)/20)-heart.position.y)/2.0;
     } else {
