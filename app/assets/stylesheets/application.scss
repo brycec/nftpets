@@ -103,6 +103,7 @@ b.bad { color: red; }
 
 #win input, .btn a, textarea, select {
   padding: 0.8em 1em;
+  appearance: none;
 }
 #win input:hover, .btn a:hover {
   cursor: pointer;

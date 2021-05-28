@@ -84,7 +84,7 @@
   <% session[:e]="1" %>
   <%=javascript_include_tag "https://twemoji.maxcdn.com/v/latest/twemoji.min.js"%>
   <script>
-    window.addEventListener("load", function(){
+    window.addEventListener("turbolinks:load", function(){
       twemoji.parse(document.body);});
     </script>
     <% end %>

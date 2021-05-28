@@ -73,14 +73,16 @@ window.wompy = function() {
     sound.setNodeSource(o);
   }
 };
-var a = document.getElementsByTagName("a");
-for (var i=0;i<a.length;i++) {
-  a[i].addEventListener('click',window.clicky);
-}
-a = document.getElementById("notice");
-if (a) {
-  window.beepy();
-}
+document.addEventListener("turbolinks:load", () => {
+  var a = document.getElementsByTagName("a");
+  for (var i=0;i<a.length;i++) {
+    a[i].addEventListener('click',window.clicky);
+  }
+  a = document.getElementById("notice");
+  if (a) {
+    window.beepy();
+  }
+});
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 
