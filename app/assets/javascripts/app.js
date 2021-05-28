@@ -1,6 +1,10 @@
 THREE = window.THREE;
 const GLTFLoader = THREE.GLTFLoader;
-
+const sin = Math.sin;
+const cos = Math.cos;
+const PI = Math.PI;
+const round = Math.round;
+const now = Date.now;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0D1918);
 scene.fog = new THREE.FogExp2( 0x001110, 0.0011 );
@@ -19,7 +23,7 @@ const startAudio = function(e) {
   for (var i=0;i<3;i++) {
     const o = ac.createOscillator();
     o.type='triangle';
-    o.frequency.setValueAtTime((5*6^i)+Math.cos(Date.now()^-i), ac.currentTime);
+    o.frequency.setValueAtTime((5*6^i)+cos(now()^-i), ac.currentTime);
 
     const sound = new THREE.Audio(listener);
     sound.setNodeSource(o);
@@ -37,8 +41,8 @@ document.addEventListener('click', startAudio);
 
 var last = 0;
 window.clicky = function() {
-  if (last+300>=Date.now()) return;
-  last=Date.now();
+  if (last+300>=now()) return;
+  last=now();
   for (var i=0;i<3;i++) {
     const o = ac.createOscillator();
     o.type='triangle';
@@ -82,6 +86,7 @@ document.addEventListener("turbolinks:load", () => {
   if (a) {
     window.beepy();
   }
+
 });
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
@@ -112,8 +117,8 @@ scene.add( starsMesh );
 const moons = [];
 for ( let i = 0; i < 12; i ++ ) {
   const moonGeo = new THREE.SphereGeometry(3+rand(4),
-  4+Math.round(rand(5)),
-  4+Math.round(rand(5)));
+  4+round(rand(5)),
+  4+round(rand(5)));
   const moon = new THREE.Mesh( moonGeo, boxMaterial );
   moons.push(moon);
   scene.add( moon );
@@ -125,37 +130,68 @@ scene.add( planet );
 const light = new THREE.PointLight( 0xccffff, 0.8, );
 light.position.set(-222,777,333);
 scene.add( light );
-const mlight = new THREE.DirectionalLight( 0xff224D, 0.6 );
+const mlight = new THREE.DirectionalLight( 0xff325D, .5 );
 mlight.position.set(222,-999,-222);
 mlight.target = planet;
 scene.add(mlight);
 
 const loader = new GLTFLoader();
 loader.load(window.GLTF_URL, function ( gltf ) {
-
   let catgeo = gltf.scene.children[0].geometry;
-  const cat = new THREE.Mesh(catgeo, boxMaterial);
-  let catmesh = new THREE.Mesh( catgeo, phong );
-  catmesh.scale.setScalar(.998);
-  cat.add(catmesh);
-  scene.add(cat);
-
   let coingeo = gltf.scene.children[1].geometry;
+  let handgeo = gltf.scene.children[2].geometry;
+  let egggeo = gltf.scene.children[3].geometry;
+  let satgeo = gltf.scene.children[4].geometry;
+  let heartgeo = gltf.scene.children[5].geometry;
+  let dogegeo = gltf.scene.children[6].geometry;
+  let tabgeo = gltf.scene.children[7].geometry;
+
+  const catcat = new THREE.Mesh( tabgeo, new THREE.MeshBasicMaterial( { color: 0x003333,
+    wireframe: true, opacity: 0.5, transparent: true  }));
+  let catmesh = new THREE.Mesh( tabgeo,  new THREE.MeshPhongMaterial( {
+    color: 0x559999,
+    shininess: 0
+  } ) );
+  catmesh.scale.setScalar(.997);
+  catcat.add(catmesh);
+  catcat.visible=false;
+  const cat = new THREE.Group();
+  cat.add(catcat);
+  const catP = new THREE.Group();
+  catP.add(cat)
+  scene.add(catP);
+
+  const doge = new THREE.Mesh(dogegeo, new THREE.MeshBasicMaterial( { color: 0xf8c24D,
+    wireframe: true, opacity: 0.4, transparent: true  }) );
+  let dogemesh = new THREE.Mesh( dogegeo, new THREE.MeshPhongMaterial( {
+    color: 0xf8a22D,
+    shininess: 100,
+    emissive: 0x101005
+  } ) );
+  dogemesh.scale.setScalar(.998);
+  doge.add(dogemesh);
+  doge.visible=false;
+  cat.add(doge);
+
+  const tab = new THREE.Mesh( catgeo, boxMaterial  );
+  let tabmesh = new THREE.Mesh( catgeo, phong );
+  tabmesh.scale.setScalar(.998);
+  tab.add(tabmesh);
+  cat.add(tab);
+
   const coin = new THREE.Mesh(coingeo, boxMaterial);
   let coinmesh = new THREE.Mesh( coingeo, phong );
   coinmesh.scale.y=.95;
   coin.add(coinmesh);
   scene.add(coin);
 
-  let handgeo = gltf.scene.children[2].geometry;
   const hand = new THREE.Mesh(handgeo, boxMaterial);
   let handmesh = new THREE.Mesh( handgeo, phong );
   handmesh.scale.setScalar(.99);
   hand.add(handmesh);
-  scene.add(hand);
-  hand.scale.setScalar(.4);
+  hand.scale.setScalar(.7);
+  cat.add(hand);
 
-  let egggeo = gltf.scene.children[3].geometry;
   const egg = new THREE.Mesh(egggeo, boxMaterial);
   let eggmesh = new THREE.Mesh( egggeo, phong );
   eggmesh.scale.y=.98;
@@ -163,15 +199,13 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   egg.add(eggmesh);
   scene.add(egg);
 
-  let satgeo = gltf.scene.children[4].geometry;
   const sat = new THREE.Mesh(satgeo, boxMaterial);
   let satmesh = new THREE.Mesh( satgeo, phong );
   satmesh.scale.setScalar(.998);
   sat.add(satmesh);
   scene.add(sat);
-  sat.rotation.set(rand(Math.PI),rand(Math.PI),rand(Math.PI));
+  sat.rotation.set(rand(PI),rand(PI),rand(PI));
 
-  let heartgeo = gltf.scene.children[5].geometry;
   const heart = new THREE.Mesh(heartgeo,  new THREE.MeshBasicMaterial( { color: 0xf8429D,
     wireframe: true, opacity: 0.8, transparent: true  }) );
   let heartmesh = new THREE.Mesh( heartgeo, new THREE.MeshPhongMaterial( {
@@ -181,40 +215,66 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   } ) );
   heartmesh.scale.setScalar(.998);
   heart.add(heartmesh);
-  scene.add(heart);
+  cat.add(heart);
   heart.scale.setScalar(0.3);
   heart.position.z=0.4;
   heart.rotation.y=0.25;
-
+  renderer.phenoMap = [
+    // gender
+    [],
+    // size
+    [()=>{cat.scale.setScalar(.3);cat.scale.x=.23;cat.position.y=-.8},
+      ()=>{cat.scale.setScalar(.5)},
+      ()=>{cat.scale.x=1.2;cat.scale.y=.6},
+      ()=>{cat.scale.setScalar(.15);cat.position.y=-1},
+      ()=>{cat.scale.x=.7+sin(now()/9e2)/4;cat.scale.y=.6-cos(now()/2e3)/4;cat.position.y=.02},
+      ()=>{cat.scale.x=2;cat.scale.y=.8;cat.position.y=.08}],
+    // breed
+    [()=>{doge.visible=false;catcat.visible=true;tab.visible=false},
+      ()=>{catcat.visible=false;doge.visible=false;tab.visible=true},
+      ()=>{catcat.visible=false;doge.visible=true;tab.visible=false}],
+    // eyes
+    []
+  ];
   const updateModels = function(){
     requestAnimationFrame(updateModels);
     coin.rotation.z += 0.01;
     egg.position.y=999;
     sat.position.x=-45;
+    catP.position.setY(4.2);
+    catP.scale.setScalar(2);
+    cat.position.setY(0);
+    if (renderer.pheno) {
+      for (var p = 0; p<renderer.pheno.length; p++) {
+        if (renderer.phenoMap && renderer.phenoMap[p] && renderer.phenoMap[p].length > renderer.pheno[p]) {
+          renderer.phenoMap[p][renderer.pheno[p]]();
+        }
+      }
+    }
     if(renderer.flyTo=="coin") {
       camera.position.copy(
         planet.position.clone().setX(coin.position.x+10)
         .sub(camera.position).divideScalar(4));
       camera.lookAt(coin.position);
     }
-    if(renderer.flyTo=="cat" || renderer.flyTo=="hand") {
-      cat.scale.copy(cat.scale.clone().addScalar(4).sub(cat.scale).divideScalar(7))
-      cat.position.y+=(1.02-cat.position.y)/4.0;
+    if (renderer.flyTo=="cat" || renderer.flyTo=="hand") {
+      catP.scale.setScalar(.7);
+      catP.position.y=1;
 
       coin.rotation.z=0;
-      coin.rotation.x=Math.PI
+      coin.rotation.x=PI;
 
       camera.position.copy(
-        cat.position.clone().setZ(cat.position.z+10)
-        .setY(cat.position.y+6)
-        .setX(cat.position.x+5)
+        catP.position.clone().setZ(catP.position.z+12)
+        .setY(catP.position.y+6)
+        .setX(catP.position.x+3)
         .sub(camera.position).divideScalar(4));
-      camera.lookAt(cat.position.clone().setZ(cat.position.z+.7));
+      camera.lookAt(catP.position.clone().setX(catP.position.x-1.2));
     } else if (renderer.flyTo=="stray") {
       cat.position.y+=(20-cat.position.y)/4.0;
-      cat.rotation.set(Math.sin(Date.now()/3e4)*2,
-        Math.cos(Date.now()/1e4)*2,
-        Math.sin(Date.now()/2e4)*2);
+      cat.rotation.set(sin(now()/3e4)*2,
+        cos(now()/1e4)*2,
+        sin(now()/2e4)*2);
 
       camera.position.copy(
         cat.position.clone().setX(cat.position.x+25)
@@ -225,7 +285,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
       egg.position.y=0.59;
       cat.position.y=99;
       coin.rotation.z=0;
-      coin.rotation.x=Math.PI
+      coin.rotation.x=PI
 
       camera.position.copy(
         egg.position.clone().setZ(egg.position.z-12)
@@ -233,11 +293,8 @@ loader.load(window.GLTF_URL, function ( gltf ) {
         .sub(camera.position).divideScalar(4));
       camera.lookAt(egg.position);
     } else {
-      cat.position.y+=(4.25-cat.position.y)/3.0;
-      cat.scale.copy(cat.scale.clone().addScalar(4).sub(cat.scale).divideScalar(4));
-      cat.rotation.z=0;
-      cat.rotation.x=0;
-      coin.rotation.x+=(-Math.PI/2-coin.rotation.x)/4.0;
+
+      coin.rotation.x+=(-PI/2-coin.rotation.x)/4.0;
     }
     if (renderer.flyTo=="moon") {
       camera.position.copy(
@@ -248,14 +305,15 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     }
     if (renderer.flyTo=="hand") {
     hand.rotation.set(-1,1.1,1);
-    hand.position.set(0.43+Math.cos(Date.now()/5e2)/6,
-      1.35+Math.cos(Date.now()/5e2)/8,
-      0.4+Math.sin(Date.now()/5e2)/2);
-      heart.position.y=(6+2*(Math.cos(Date.now()/2e2)/20)-heart.position.y)/2.0;
+    hand.position.set(0.6+cos(now()/5e2)/6,
+      0.5+cos(now()/5e2)/8,
+      0.7+sin(now()/5e2)/2);
+      heart.position.y=(6+2*(cos(now()/2e2)/20)-heart.position.y)/2.0;
     } else {
       hand.position.y+=(999-hand.position.y)/4.0;
       heart.position.y=(-999-heart.position.y)/2.0;
     }
+
   };updateModels();
 
 });
@@ -264,19 +322,19 @@ const animate = function () {
   requestAnimationFrame( animate );
   moons.forEach((moon,i) => {
     const r = moon.geometry.parameters.radius+2;
-    moon.position.z = Math.sin(r*Date.now()/4e5)*2*(r*10);
-    moon.position.x = Math.cos(r*Date.now()/5e5)*3*(r*10);
+    moon.position.z = sin(r*now()/4e5)*2*(r*10);
+    moon.position.x = cos(r*now()/5e5)*3*(r*10);
   });
 
-  scene.rotation.x = +Math.cos(Date.now()/3e4)/20;
-  scene.rotation.y = +Math.sin(Date.now()/2e4)/10;
-  //scene.rotation.z = +Math.cos(Date.now()/3e4)/10;
+  scene.rotation.x = +cos(now()/3e4)/20;
+  scene.rotation.y = +sin(now()/2e4)/10;
+  //scene.rotation.z = +cos(now()/3e4)/10;
 
   if(renderer.flyTo=="origin") {
-    const p = planet.position.clone().setY(planet.position.y+2).setX(planet.position.x-1);
+    const p = planet.position.clone().setY(planet.position.y+2).setX(planet.position.x-4);
     camera.position.copy(
       p.clone().setZ(planet.position.z+28)
-      .setX(planet.position.x+20)
+      .setX(planet.position.x+13)
       .setY(planet.position.y+20)
       .sub(camera.position).divideScalar(4));
     camera.lookAt(p);
@@ -284,7 +342,7 @@ const animate = function () {
   renderer.render( scene, camera );
 };
 
-scene.rotation.y = -Math.random();
+scene.rotation.y = -rand();
 animate();
 
 window.renderer = renderer;

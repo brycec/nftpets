@@ -13,7 +13,7 @@
   <% if params[:bg]=="0" then session.delete(:bg) end %>
 
   <% if params[:bg]=="1" or session[:bg]=="1" %>
-  <script type="module">window.wompy=window.clicky=window.beepy=function(){}</script>
+  <script type="module">window.wompy=window.clicky=window.beepy=()=>{}</script>
   <% session[:bg]="1" %>
   <% else %>
   <%= render 'threedee' %>
