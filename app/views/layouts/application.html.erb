@@ -16,7 +16,9 @@
   <script type="module">window.wompy=window.clicky=window.beepy=()=>{}</script>
   <% session[:bg]="1" %>
   <% else %>
-  <%= render 'threedee' %>
+  <script type="module">
+  window.GLTF_URL = "<%=image_url 'nftpets.gltf' %>";
+  </script>
   <script type="module" src="<%=asset_pack_url 'app.js' %>"></script>
   <% end %>
 

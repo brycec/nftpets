@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   get 'm/:m', to: 'sessions#m'
   get 'm/:m/:w', to: 'sessions#m'
 
-  get '/build/three.module.js', to: 'three#module'
-
   get 'dead', to: 'users#dead'
 
   get 'blog', to: 'messages#blog'
