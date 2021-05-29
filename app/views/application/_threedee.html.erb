@@ -1,5 +1,7 @@
 <script type="module">
-import * as THREE from "<%=javascript_url 'three.module' %>";
+import * as THREE from "<%=asset_pack_url 'build/three.js' %>";
+import GLTFLoader from "<%=asset_pack_url 'lib/js/m/GLTFLoader.js' %>";
+import LineMaterial from "<%=asset_pack_url 'lib/js/m/LineMaterial.js' %>";
 window.THREE = THREE;
 window.GLTF_URL = "<%=image_url 'nftpets.gltf' %>";
 </script>

@@ -91,15 +91,20 @@ document.addEventListener("turbolinks:load", () => {
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 
-const boxGeometry = new THREE.SphereGeometry(3,9,8);
-const boxMaterial = new THREE.MeshBasicMaterial( { color: 0x73F8ED,
-  wireframe: true, opacity: 0.8, transparent: true  } );
+const sphereGeometry = new THREE.SphereGeometry(3,9,8);
+const boxGeometry = new THREE.WireframeGeometry(sphereGeometry);
+
+const boxMaterial = new THREE.LineBasicMaterial( { color: 0x73F8ED,
+  linewidth: 1, linecap: 'round', opacity: 0.8, transparent: true  } );
 
 const phong = new THREE.MeshPhongMaterial( {
   color: 0x73F8ED,
   shininess: 100,
   emissive: 0x001515
 } );
+
+const planet = new THREE.LineSegments( boxGeometry, boxMaterial );
+scene.add( planet );
 
 const rand = THREE.MathUtils.randFloatSpread;
 const stars = [];
@@ -116,16 +121,14 @@ const starsMesh = new THREE.Points( geometry, material );
 scene.add( starsMesh );
 const moons = [];
 for ( let i = 0; i < 12; i ++ ) {
-  const moonGeo = new THREE.SphereGeometry(3+rand(4),
+  const moonGeoS = new THREE.SphereGeometry(3+rand(4),
   4+round(rand(5)),
   4+round(rand(5)));
-  const moon = new THREE.Mesh( moonGeo, boxMaterial );
+  const moonGeo = new THREE.WireframeGeometry(moonGeoS);
+  const moon = new THREE.LineSegments( moonGeo, boxMaterial );
   moons.push(moon);
   scene.add( moon );
 }
-
-const planet = new THREE.Mesh( boxGeometry, boxMaterial );
-scene.add( planet );
 
 const light = new THREE.PointLight( 0xccffff, 0.8, );
 light.position.set(-222,777,333);
@@ -216,7 +219,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   heartmesh.scale.setScalar(.998);
   heart.add(heartmesh);
   cat.add(heart);
-  heart.scale.setScalar(0.3);
+  heart.scale.setScalar(0.6);
   heart.position.z=0.4;
   heart.rotation.y=0.25;
   renderer.phenoMap = [
@@ -322,7 +325,8 @@ loader.load(window.GLTF_URL, function ( gltf ) {
 const animate = function () {
   requestAnimationFrame( animate );
   moons.forEach((moon,i) => {
-    const r = moon.geometry.parameters.radius+2;
+    const r = moon.geometry.attributes.position.length/60;
+    //console.log(moon);adsfads
     moon.position.z = sin(r*now()/4e5)*2*(r*10);
     moon.position.x = cos(r*now()/5e5)*3*(r*10);
   });

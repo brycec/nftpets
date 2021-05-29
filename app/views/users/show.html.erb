@@ -81,6 +81,7 @@ Your friend,
   <%end%>
 </table>
 <% if logged_in? and @user.id == current_user.id  %>
+Token Tax: 0%
  <%= form_with model: Token do |f|%>
    <%= f.submit "mint token" %>
  <%end%>

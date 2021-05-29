@@ -17,7 +17,7 @@
   <% session[:bg]="1" %>
   <% else %>
   <%= render 'threedee' %>
-  <script type="module" src="<%=javascript_url 'app' %>"></script>
+  <script type="module" src="<%=asset_pack_url 'app.js' %>"></script>
   <% end %>
 
 </head>
