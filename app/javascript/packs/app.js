@@ -1,5 +1,7 @@
-THREE = window.THREE;
-const GLTFLoader = THREE.GLTFLoader;
+import * as GLTFLoader from "../lib/js/m/GLTFLoader.js";
+import * as LineMaterial from "../lib/js/m/LineMaterial.js";
+import * as THREE from "../build/three.module.js";
+
 const sin = Math.sin;
 const cos = Math.cos;
 const PI = Math.PI;
@@ -138,7 +140,7 @@ mlight.position.set(222,-999,-222);
 mlight.target = planet;
 scene.add(mlight);
 
-const loader = new GLTFLoader();
+const loader = new GLTFLoader.GLTFLoader();
 loader.load(window.GLTF_URL, function ( gltf ) {
   let catgeo = gltf.scene.children[0].geometry;
   let coingeo = gltf.scene.children[1].geometry;
@@ -325,7 +327,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
 const animate = function () {
   requestAnimationFrame( animate );
   moons.forEach((moon,i) => {
-    const r = moon.geometry.attributes.position.length/60;
+    const r = moon.geometry.attributes.position.count/60;
     //console.log(moon);adsfads
     moon.position.z = sin(r*now()/4e5)*2*(r*10);
     moon.position.x = cos(r*now()/5e5)*3*(r*10);
