@@ -27,7 +27,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by(id: params[:id])
     @tokens = @user.tokens
-    @token = Token.new
+    @token = Token.find_by(id: params[:token_id])
+    if !@token.present? and @tokens.present?
+      @token = @tokens.first
+    end
   end
 
   def dead

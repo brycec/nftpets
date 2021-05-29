@@ -138,6 +138,9 @@ class Token < ApplicationRecord
       a.push({word: e[0], emoji: e[1], total: symbol_total(i), sym: i })
     end
   end
+  def self.trade_total
+    trade_data.inject(0){|a,b|a+b[:total]}
+  end
   def self.squeeze_data
     self.trade_data.map { |e|
       e[:squeeze] = squeeze?(e[:sym])

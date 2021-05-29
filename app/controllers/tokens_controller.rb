@@ -13,13 +13,7 @@ class TokensController < ApplicationController
 
   def show
     @token = Token.find(params[:id])
-    if @token.furbaby_id
-      @furbaby = Furbaby.find(@token.furbaby_id)
-      if @furbaby.egg?
-        @egg=@furbaby
-        @furbaby=nil
-      end
-    end
+    redirect_to '/users/'+@token.user.id.to_s+'/'+@token.id.to_s
   end
 
   def update
@@ -53,8 +47,9 @@ class TokensController < ApplicationController
       flash.notice='Claimed a token!'
       redirect_to '/tokens/'+@token.id.to_s
     elsif @token.furbaby_id and !@token.furbaby.egg? and !@mom
+      old = @token.vibes
       @token.pet
-      flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️'
+      flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️ +'+(@token.vibes-old).to_s
       current_user.heat
       Event.create(user_id: current_user_id, key: "pet", value: @token.id)
       redirect_to '/tokens/'+@token.id.to_s+'?pet=true'

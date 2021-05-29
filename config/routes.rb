@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   get 'blog', to: 'messages#blog'
 
   resources :users, :messages, :furbabies, :tokens
+
+  get '/users/:id/:token_id', to: 'users#show'
 end

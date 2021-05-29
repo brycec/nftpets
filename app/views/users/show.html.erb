@@ -3,7 +3,7 @@
 <table>
   <tr><th>operator</th><th>since</th><th>cpu</th><th>holdings</th><th>networth</th></tr>
   <tr>
-    <td><%=@user.name%></td>
+    <td><b><%=@user.name%><%if current_user and @user.id==current_user.id%> (you)<% end %><b></td>
     <td> <%=space_time @user.created_at.to_datetime %> </td>
     <td> <%=render inline: ['<b class="good">New</b>',
       '<b class="ok">Dented</b>',
@@ -14,30 +14,33 @@
         <%=h[0]%><%=h[1]%><s>N</s>
         <% end %>
       </td>
-    <td><%=@user.networth%><s>N</s></td>
-  </tr>
-  <tr>
-    <td colspan=5>
-      <%s = @user.holdings.inject(0){|a,b|a+b[1]}%>
-      <table>
-        <tr>
-      <%@user.holdings.each do |h| %>
-      <th style="text-align:center; width:<%=((h[1].to_f/s)*100).to_s%>%">
-        <%=((h[1].to_f/s)*100).round(1).to_s%>%
-        </th>
-      <% end %>
-      </tr>
-        <tr>
-      <%@user.holdings.each do |h| %>
-      <td style="text-align:center; width:<%=((h[1].to_f/s)*100).to_s%>%">
-        <%=h[0]%>
-        </td>
-      <% end %>
-      </tr>
-      </table>
-      </td>
+    <td><b><%=@user.networth%><s>N</s></b></td>
   </tr>
 </table>
+
+  <%s = @user.holdings.inject(0){|a,b|a+b[1]}%>
+  <% if s > 0 %>
+  <table>
+    <tr>
+  <%@user.holdings.each do |h| %>
+  <% if h[1] > 0 %>
+  <th style="width:<%=((h[1].to_f/s)*100).to_s%>%">
+    <%=h[0]%>
+    </th>
+    <% end %>
+  <% end %>
+  </tr>
+    <tr>
+  <%@user.holdings.each do |h| %>
+  <% if h[1] > 0 %>
+  <td style="text-align:center">
+  <%=((h[1].to_f/s)*100).round(1).to_s%>%
+    </td>
+  <% end %>
+  <% end %>
+  </tr>
+  </table>
+  <% end %>
 <% if current_user and @user.id != current_user.id %>
 <span class="btn">
   <%=link_to 'send message', controller: 'messages', action: 'new',
@@ -51,10 +54,17 @@ Your friend,
 %s}, @user.name, current_user.name) %>
  <% end %>
  </span>
-<h2><%=@user.name%>'s tokens:</h2>
+
+<% if @token %>
+<%=render @token %>
+<% elsif @user.id==current_user.id %>
+<p>
+  This is your page and you have no tokens. Did you check your <%=link_to 'mail','/messages'%>?
+  </p>
+<% end %>
 <table>
   <tr>
-    <th>id</th><th>furbaby</th><th>rarity</th><th>vibes</th>
+    <th>token</th><th>furbaby</th><th>rarity</th><th>vibes</th>
   </tr>
   <%@tokens.order(created_at:'desc').each do |t| f=t.furbaby%>
    <tr class="maili">
@@ -80,11 +90,3 @@ Your friend,
    </tr>
   <%end%>
 </table>
-<% if logged_in? and @user.id == current_user.id  %>
-Token Tax: 0%
- <%= form_with model: Token do |f|%>
-   <%= f.submit "mint token" %>
- <%end%>
-
-<h5><i>This is your page.</i></h5>
-<% end %>

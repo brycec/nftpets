@@ -112,6 +112,6 @@ s+=ppp %>[<%ppp.times do%><%='-'%><%end %><%= s<=60 ? '-' : ''  %><%=syms[i][:em
                    THE RECENT OPERATOR ACTIVITY FEED
 -=====================================================================-
 <% Event.where.not(user_id:1).order(created_at:'desc').first(100).each do |e| %>
-<%=space_time e.created_at.to_datetime%> <%=link_to e.user.name, '/users/'+e.user.id.to_s%> did '<%=e.key%>' to '<%=e.value%>'
+<%=space_time e.created_at.to_datetime%> <%=link_to e.user.name, '/users/'+e.user.id.to_s%> did '<%=e.key%>' to '<%=link_to e.value, '/tokens/'+e.value%>'
 <% end %>
 </pre>

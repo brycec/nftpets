@@ -158,8 +158,8 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   let tabgeo = gltf.scene.children[7].geometry;
 
   const catWire = new WireGeo(tabgeo);
-  const catLine = new LineMat( { color: 0x003333,
-    linewidth: 0.0015  } );
+  const catLine = new LineMat( { color: 0x003939,
+    linewidth: 0.002, opacity: 0.6, transparent: true  } );
   const catcat = new Wire(catWire, catLine);
   let catmesh = new THREE.Mesh( tabgeo,  new THREE.MeshPhongMaterial( {
     color: 0x559999,
@@ -222,7 +222,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   sat.rotation.set(rand(PI),rand(PI),rand(PI));
 
   const heart = new Wire(new WireGeo(heartgeo),  new LineMat( { color: 0xf8429D,
-    linewidth: 0.0015, opacity: 0.8, transparent: true  }) );
+    linewidth: 0.0015, opacity: 0.6, transparent: true  }) );
   let heartmesh = new THREE.Mesh( heartgeo, new THREE.MeshPhongMaterial( {
     color: 0xf8429D,
     shininess: 100,
@@ -240,7 +240,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     // size
     [()=>{cat.scale.setScalar(.6);cat.scale.x=.44;catP.position.y+=-.24},
       ()=>{cat.scale.setScalar(.8)},
-      ()=>{cat.scale.x=1.5;catP.position.y+=.2},
+      ()=>{cat.scale.setScalar(.8);cat.scale.x=1.5;},
       ()=>{cat.scale.setScalar(.15);catP.position.y+=-1},
       ()=>{cat.scale.x=.7+sin(now()/9e2)/4;cat.scale.y=.6-cos(now()/2e3)/4},
       ()=>{cat.scale.x=2.5;cat.scale.y=.8;catP.position.y+=.08}],

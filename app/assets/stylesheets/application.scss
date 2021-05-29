@@ -62,7 +62,7 @@ b.bad { color: red; }
 #win {
   opacity: 0.95;
   max-width: 600px;
-  max-height: 1000px;
+  max-height: 800px;
   padding: 5px;
   margin-top: 2em;
   margin-left: 0.5em;
@@ -113,8 +113,22 @@ b.bad { color: red; }
 #win input:active, .btn a:active {
   background-color: $hhcyan;
 }
+.btn {
+  position: relative;
+}
 .btn a {
   margin: 0 0 0.5em 0.5em;
+}
+.btn small {
+  width: 16em;
+  display: none;
+  position: absolute;
+}
+.btn form:hover + small {
+  display: block;
+  top: 0;
+  right: -16em;
+  background: rgba(0, 0, 0, 0.7);
 }
 #win, input, .btn a, textarea, select {
   font-family: monospace;
@@ -159,6 +173,7 @@ b.bad { color: red; }
     border: solid 1px $cyan;
     border-bottom-color: $pcyan;
     margin-bottom: 0.4em;
+    overflow: hidden;
     th, td {
       border-radius: 0 0 0.5em 0.5em;
       padding: 0.4em;
