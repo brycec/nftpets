@@ -1,11 +1,17 @@
 import * as GLTFLoader from "../lib/js/m/GLTFLoader.js";
-import * as LineMaterial from "../lib/js/m/LineMaterial.js";
+import * as LineMaterial from "../lib/js/lines/LineMaterial.js";
+import * as Wireframe from "../lib/js/lines/Wireframe.js";
+import * as WireframeGeometry2 from "../lib/js/lines/WireframeGeometry2.js";
 import * as THREE from "../build/three.module.js";
 
+const LineMat = LineMaterial.LineMaterial;
+const Wire = Wireframe.Wireframe;
+const WireGeo = WireframeGeometry2.WireframeGeometry2;
 const sin = Math.sin;
 const cos = Math.cos;
 const PI = Math.PI;
 const round = Math.round;
+const rand = THREE.MathUtils.randFloatSpread;
 const now = Date.now;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0D1918);
@@ -92,12 +98,26 @@ document.addEventListener("turbolinks:load", () => {
 });
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setClearColor( 0x000000, 0.0 );
 
 const sphereGeometry = new THREE.SphereGeometry(3,9,8);
-const boxGeometry = new THREE.WireframeGeometry(sphereGeometry);
+const sphereWire = new WireGeo(sphereGeometry);
+const lineMat = new LineMat( { color: 0x33F8ED,
+  linewidth: 0.0014, opacity: 0.6, transparent: true  } );
 
-const boxMaterial = new THREE.LineBasicMaterial( { color: 0x73F8ED,
-  linewidth: 1, linecap: 'round', opacity: 0.8, transparent: true  } );
+const planet = new Wire( sphereWire, lineMat );
+scene.add( planet );
+
+const moons = [];
+for ( let i = 0; i < 12; i ++ ) {
+  const moonGeoS = new THREE.SphereGeometry(3+rand(4),
+  4+round(rand(5)),
+  4+round(rand(5)));
+  const moonGeo = new WireGeo(moonGeoS);
+  const moon = new Wire( moonGeo, lineMat );
+  moons.push(moon);
+  scene.add( moon );
+}
 
 const phong = new THREE.MeshPhongMaterial( {
   color: 0x73F8ED,
@@ -105,10 +125,6 @@ const phong = new THREE.MeshPhongMaterial( {
   emissive: 0x001515
 } );
 
-const planet = new THREE.LineSegments( boxGeometry, boxMaterial );
-scene.add( planet );
-
-const rand = THREE.MathUtils.randFloatSpread;
 const stars = [];
 for ( let i = 0; i < 20000; i ++ ) {
   const x = rand( 2000 )^2;
@@ -121,16 +137,6 @@ geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( stars, 3 ) 
 const material = new THREE.PointsMaterial( { color: 0x73F8ED } );
 const starsMesh = new THREE.Points( geometry, material );
 scene.add( starsMesh );
-const moons = [];
-for ( let i = 0; i < 12; i ++ ) {
-  const moonGeoS = new THREE.SphereGeometry(3+rand(4),
-  4+round(rand(5)),
-  4+round(rand(5)));
-  const moonGeo = new THREE.WireframeGeometry(moonGeoS);
-  const moon = new THREE.LineSegments( moonGeo, boxMaterial );
-  moons.push(moon);
-  scene.add( moon );
-}
 
 const light = new THREE.PointLight( 0xccffff, 0.8, );
 light.position.set(-222,777,333);
@@ -151,8 +157,10 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   let dogegeo = gltf.scene.children[6].geometry;
   let tabgeo = gltf.scene.children[7].geometry;
 
-  const catcat = new THREE.Mesh( tabgeo, new THREE.MeshBasicMaterial( { color: 0x003333,
-    wireframe: true, opacity: 0.5, transparent: true  }));
+  const catWire = new WireGeo(tabgeo);
+  const catLine = new LineMat( { color: 0x003333,
+    linewidth: 0.0015  } );
+  const catcat = new Wire(catWire, catLine);
   let catmesh = new THREE.Mesh( tabgeo,  new THREE.MeshPhongMaterial( {
     color: 0x559999,
     shininess: 0
@@ -166,8 +174,9 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   catP.add(cat)
   scene.add(catP);
 
-  const doge = new THREE.Mesh(dogegeo, new THREE.MeshBasicMaterial( { color: 0xf8c24D,
-    wireframe: true, opacity: 0.4, transparent: true  }) );
+  const doge = new Wire( new WireGeo(dogegeo),
+    new LineMat( { color: 0xf8c24D,
+    linewidth: 0.0014, opacity: 0.6, transparent: true  } ) );
   let dogemesh = new THREE.Mesh( dogegeo, new THREE.MeshPhongMaterial( {
     color: 0xf8a22D,
     shininess: 100,
@@ -178,41 +187,42 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   doge.visible=false;
   cat.add(doge);
 
-  const tab = new THREE.Mesh( catgeo, boxMaterial  );
+  const tabWire = new WireGeo(catgeo);
+  const tab = new Wire( tabWire, lineMat  );
   let tabmesh = new THREE.Mesh( catgeo, phong );
   tabmesh.scale.setScalar(.998);
   tab.add(tabmesh);
   cat.add(tab);
 
-  const coin = new THREE.Mesh(coingeo, boxMaterial);
+  const coin = new Wire(new WireGeo(coingeo), lineMat);
   let coinmesh = new THREE.Mesh( coingeo, phong );
   coinmesh.scale.y=.95;
   coin.add(coinmesh);
   scene.add(coin);
 
-  const hand = new THREE.Mesh(handgeo, boxMaterial);
+  const hand = new Wire(new WireGeo(handgeo), lineMat);
   let handmesh = new THREE.Mesh( handgeo, phong );
   handmesh.scale.setScalar(.99);
   hand.add(handmesh);
   hand.scale.setScalar(.7);
   cat.add(hand);
 
-  const egg = new THREE.Mesh(egggeo, boxMaterial);
+  const egg = new Wire(new WireGeo(egggeo), lineMat);
   let eggmesh = new THREE.Mesh( egggeo, phong );
   eggmesh.scale.y=.98;
   eggmesh.scale.z=.98;
   egg.add(eggmesh);
   scene.add(egg);
 
-  const sat = new THREE.Mesh(satgeo, boxMaterial);
+  const sat = new Wire(new WireGeo(satgeo), lineMat);
   let satmesh = new THREE.Mesh( satgeo, phong );
   satmesh.scale.setScalar(.998);
   sat.add(satmesh);
   scene.add(sat);
   sat.rotation.set(rand(PI),rand(PI),rand(PI));
 
-  const heart = new THREE.Mesh(heartgeo,  new THREE.MeshBasicMaterial( { color: 0xf8429D,
-    wireframe: true, opacity: 0.8, transparent: true  }) );
+  const heart = new Wire(new WireGeo(heartgeo),  new LineMat( { color: 0xf8429D,
+    linewidth: 0.0015, opacity: 0.8, transparent: true  }) );
   let heartmesh = new THREE.Mesh( heartgeo, new THREE.MeshPhongMaterial( {
     color: 0xf8429D,
     shininess: 100,
@@ -228,9 +238,9 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     // gender
     [],
     // size
-    [()=>{cat.scale.setScalar(.6);cat.scale.x=.44;catP.position.y+=-.4},
+    [()=>{cat.scale.setScalar(.6);cat.scale.x=.44;catP.position.y+=-.24},
       ()=>{cat.scale.setScalar(.8)},
-      ()=>{cat.scale.x=1.5;},
+      ()=>{cat.scale.x=1.5;catP.position.y+=.2},
       ()=>{cat.scale.setScalar(.15);catP.position.y+=-1},
       ()=>{cat.scale.x=.7+sin(now()/9e2)/4;cat.scale.y=.6-cos(now()/2e3)/4},
       ()=>{cat.scale.x=2.5;cat.scale.y=.8;catP.position.y+=.08}],
@@ -250,13 +260,6 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     catP.scale.setScalar(1.1);
     catP.rotation.set(0,0,0);
     cat.position.setY(0);
-    if (renderer.pheno) {
-      for (var p = 0; p<renderer.pheno.length; p++) {
-        if (renderer.phenoMap && renderer.phenoMap[p] && renderer.phenoMap[p].length > renderer.pheno[p]) {
-          renderer.phenoMap[p][renderer.pheno[p]]();
-        }
-      }
-    }
     if(renderer.flyTo=="coin") {
       camera.position.copy(
         planet.position.clone().setX(coin.position.x+10)
@@ -310,16 +313,23 @@ loader.load(window.GLTF_URL, function ( gltf ) {
       camera.lookAt(sat.position);
     }
     if (renderer.flyTo=="hand") {
-    hand.rotation.set(-1,1.1,1);
+    hand.rotation.set(-1.15,1.1,1);
     hand.position.set(0.6+cos(now()/5e2)/6,
       0.45+cos(now()/5e2)/8,
-      0.7+sin(now()/5e2)/2);
+      0.6+sin(now()/5e2)/2);
       heart.position.y=(6+2*(cos(now()/2e2)/20)-heart.position.y)/2.0;
     } else {
       hand.position.y+=(999-hand.position.y)/4.0;
       heart.position.y=(-999-heart.position.y)/2.0;
     }
 
+    if (renderer.pheno) {
+      for (var p = 0; p<renderer.pheno.length; p++) {
+        if (renderer.phenoMap && renderer.phenoMap[p] && renderer.phenoMap[p].length > renderer.pheno[p]) {
+          renderer.phenoMap[p][renderer.pheno[p]]();
+        }
+      }
+    }
   };updateModels();
 
 });
@@ -327,8 +337,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
 const animate = function () {
   requestAnimationFrame( animate );
   moons.forEach((moon,i) => {
-    const r = moon.geometry.attributes.position.count/60;
-    //console.log(moon);adsfads
+    const r = moon.geometry.id/4;
     moon.position.z = sin(r*now()/4e5)*2*(r*10);
     moon.position.x = cos(r*now()/5e5)*3*(r*10);
   });
