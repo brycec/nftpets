@@ -360,7 +360,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
 const animate = function () {
   requestAnimationFrame( animate );
   moons.forEach((moon,i) => {
-    const r = moon.geometry.id/4;
+    const r = sin(moon.geometry.id/1.71)*9;
     moon.position.z = sin(r*now()/4e5)*2*(r*10);
     moon.position.x = cos(r*now()/5e5)*3*(r*10);
   });
