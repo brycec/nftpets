@@ -9,11 +9,11 @@ class TokensController < ApplicationController
         if @token.valid?
           flash.notice='Minted a token! 🪙'
           Event.create(user_id: current_user_id, key: "mint", value: @token.id)
-          redirect_to '/tokens/'+@token.id.to_s
+          redirect_to '/users/'+current_user.id.to_s+'/'+@token.id.to_s+'?a=m1'
         end
       else
         flash.notice='Bad luck! No token was minted. 💔'
-        redirect_to '/users/'+current_user.id.to_s+'/'+from_token.id.to_s
+        redirect_to '/users/'+current_user.id.to_s+'/'+from_token.id.to_s+'?a=m0'
       end
     end
   end
@@ -56,10 +56,10 @@ class TokensController < ApplicationController
     elsif @token.furbaby_id and !@token.furbaby.egg? and !@mom
       old = @token.vibes
       @token.pet
-      flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️ +'+(@token.vibes-old).to_s
+      flash.notice='You pet the Furbaby! ❤️ x '+(@token.vibes-old).to_s
       current_user.heat
       Event.create(user_id: current_user_id, key: "pet", value: @token.id)
-      redirect_to '/users/'+@token.user.id.to_s+'/'+@token.id.to_s+'?pet=true'
+      redirect_to '/users/'+@token.user.id.to_s+'/'+@token.id.to_s+'?a=pet'
     elsif @token.user_id!=current_user.id
       flash.notice='weird...'
       redirect_to '/'

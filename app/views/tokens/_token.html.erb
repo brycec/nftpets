@@ -68,7 +68,7 @@ renderer.flyTo="egg";
 <% else %>
   renderer.flyTo="coin";
 <% end %>
-<% if params[:pet]=="true" %>
- renderer.flyTo="hand";
+<% if params[:a] %>
+ renderer.flyTo="<%=params[:a]%>";
 <%end %>
 <% end %>

@@ -251,6 +251,8 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     // eyes
     []
   ];
+  let keyf = 0;
+  let y = 0;
   const updateModels = function(){
     requestAnimationFrame(updateModels);
     coin.rotation.z += 0.01;
@@ -267,12 +269,13 @@ loader.load(window.GLTF_URL, function ( gltf ) {
       camera.lookAt(coin.position);
       catP.position.setY(999);
     }
-    if (renderer.flyTo=="cat" || renderer.flyTo=="hand") {
+    if (["cat","pet","m1","m0"].includes(renderer.flyTo)) {
       catP.scale.setScalar(.7);
       catP.position.y=1;
 
       coin.rotation.z=0;
       coin.rotation.x=PI;
+      coin.position.y=0;
 
       camera.position.copy(
         catP.position.clone().setZ(catP.position.z+12)
@@ -312,7 +315,7 @@ loader.load(window.GLTF_URL, function ( gltf ) {
 
       camera.lookAt(sat.position);
     }
-    if (renderer.flyTo=="hand") {
+    if (renderer.flyTo=="pet") {
     hand.rotation.set(-1.11,1.1,1);
     hand.position.set(0.65+cos(now()/5e2)/6,
       0.4+cos(now()/5e2)/8,
@@ -321,6 +324,26 @@ loader.load(window.GLTF_URL, function ( gltf ) {
     } else {
       hand.position.y+=(999-hand.position.y)/4.0;
       heart.position.y=(-999-heart.position.y)/2.0;
+    }
+    if (["m1","m0"].includes(renderer.flyTo)) {
+      let n = sin(now()/7e2) ;
+      if (y < 0 && n >= 0) {
+        keyf++;
+      }
+      y = n;
+      if (keyf==0) {
+        cat.position.y+=(1+sin(now()/2e1))/5;
+      } else if (keyf==1 && y>0) {
+        coin.position.y=n*7e1;
+        coin.rotation.z=now()/1e2%PI*2;
+      } else if (keyf==1 && y<0 || keyf>1) {
+          if (renderer.flyTo=="m0") {
+            renderer.flyTo="cat";
+          } else {
+            renderer.flyTo="coin";
+          }
+      }
+      camera.lookAt(coin.position.clone().setX(coin.position.x-1));
     }
 
     if (renderer.pheno) {
