@@ -32,7 +32,7 @@
      <%=render partial: 'based', locals: {e: tdata[furbaby.numerical_pheno.last%3]}%>
      <br><br>
 
-   <% if token %>
+   <% if token and logged_in? %>
      <% if token.vibing? %> <b class="warn">&nbsp;Vibing!</b><br><% end %>
      <span class="btn">
      <%=button_to '👋 Pet'+ (token.vibing? ? ' x2!' :''), '/tokens/'+token.id.to_s, method: :patch%>
