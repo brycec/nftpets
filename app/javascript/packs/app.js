@@ -194,6 +194,17 @@ loader.load(window.GLTF_URL, function ( gltf ) {
   tab.add(tabmesh);
   cat.add(tab);
 
+  let eyes = new THREE.Group();
+  for (let q = -1; q < 2; q=q+2 ) {
+  	let eyegeo = new WireGeo(new THREE.SphereGeometry( .05, 2, 2, 0, 3.14, 0, .9));
+  	let eyemat = new LineMat( { color: 0x33eeff,
+      linewidth: 0.008, opacity: 0.3, transparent: true  } );
+  	let eye = new Wire( eyegeo, eyemat );
+  	eye.position.x=0.21*q;
+    eyes.add(eye);
+  }
+  cat.add(eyes);
+
   const coin = new Wire(new WireGeo(coingeo), lineMat);
   let coinmesh = new THREE.Mesh( coingeo, phong );
   coinmesh.scale.y=.95;
@@ -245,11 +256,20 @@ loader.load(window.GLTF_URL, function ( gltf ) {
       ()=>{cat.scale.x=.7+sin(now()/9e2)/4;cat.scale.y=.6-cos(now()/2e3)/4},
       ()=>{cat.scale.x=2.5;cat.scale.y=.8;catP.position.y+=.08}],
     // breed
-    [()=>{doge.visible=false;catcat.visible=true;tab.visible=false},
-      ()=>{catcat.visible=false;doge.visible=false;tab.visible=true},
-      ()=>{catcat.visible=false;doge.visible=true;tab.visible=false}],
+    [()=>{doge.visible=false;catcat.visible=true;tab.visible=false;
+            eyes.children.forEach((e)=>{e.position.z=2.47;e.position.y=0.35})},
+      ()=>{catcat.visible=false;doge.visible=false;tab.visible=true;
+              eyes.children.forEach((e)=>{e.position.z=2.35;e.position.y=0.53})},
+      ()=>{catcat.visible=false;doge.visible=true;tab.visible=false;
+              eyes.children.forEach((e)=>{e.position.z=2.33;e.position.y=0.43})}],
     // eyes
-    []
+    //(🟡 🟢 🔵 🟠 🟣 🔴),
+    [()=>{eyes.children.forEach((e)=>{e.material.color=new THREE.Color(0xffee11)})},
+    ()=>{eyes.children.forEach((e)=>{e.material.color=new THREE.Color(0x22ee00)})},
+    ()=>{eyes.children.forEach((e)=>{e.material.color=new THREE.Color(0x0033ff)})},
+    ()=>{eyes.children.forEach((e)=>{e.material.color=new THREE.Color(0xff9900)})},
+    ()=>{eyes.children.forEach((e)=>{e.material.color=new THREE.Color(0xee00ee)})},
+    ()=>{eyes.children.forEach((e)=>{e.material.color=new THREE.Color(0xee1122)})}]
   ];
   let keyf = 0;
   let y = 0;
