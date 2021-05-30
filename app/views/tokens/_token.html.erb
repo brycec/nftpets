@@ -1,5 +1,6 @@
 <% furbaby = token.furbaby
-egg = furbaby ? furbaby.egg? : false %>
+egg = furbaby ? furbaby.egg? : false
+tdata = Token.trade_data %>
 <% if furbaby and not egg %>
 <%= render furbaby %>
 <% end %>
@@ -29,8 +30,6 @@ egg = furbaby ? furbaby.egg? : false %>
 <table>
   <tr>
    <%
-tdata = Token.trade_data
-total = Token.trade_total
 tdata.each do |e|
    %>
    <td>
@@ -39,8 +38,7 @@ tdata.each do |e|
     token_id: token.id, symbol: e[:word].to_s %>
    </span>
    <div style="float:right; width: 45%">
- (<%=e[:total].to_s%><s>N</s> / <%=total.to_s%><s>N</s>) =
- <b><%=((1-e[:total].to_f/total)*100).round.to_s%>% based</b>
+     <%=render partial: 'based', locals: {e: e} %>
 </div>
    </td>
   <% end %>
@@ -55,6 +53,10 @@ tdata.each do |e|
  <%end%>
  <%=button_to "😿 Release", '/tokens/'+token.id.to_s, method: :delete %>
  </div>
+ <%=render partial: 'based', locals: {e:tdata[furbaby.numerical_pheno.last%3]}%><br>
+<u><%=(furbaby.based*100).round%>% / <%=current_user.tokens.length%> tokens held =</u><br>
+<h2><%=(furbaby.based/current_user.tokens.length*100).round%>% chance to mint token</h2>
+
 <% end %>
 
 <% content_for :js do %>

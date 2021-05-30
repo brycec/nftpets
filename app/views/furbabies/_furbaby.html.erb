@@ -26,14 +26,13 @@
     <td rowspan=5>
      <%=furbaby.description %>
      <%
-     tdata = Token.trade_data
-     total = Token.trade_total
-     %>
-     <% e=tdata[furbaby.numerical_pheno.last]%>
-   (<%=e[:total].to_s%><s>N</s> / <%=total.to_s%><s>N</s>) =
-   <b><%=((1-e[:total].to_f/total)*100).round.to_s%>% based</b><br><br>
+      tdata = Token.trade_data
+      total = Token.trade_total
+      %>
+     <%=render partial: 'based', locals: {e: tdata[furbaby.numerical_pheno.last%3]}%>
+     <br><br>
 
-     <% if token %>
+   <% if token %>
      <% if token.vibing? %> <b class="warn">&nbsp;Vibing!</b><br><% end %>
      <span class="btn">
      <%=button_to '👋 Pet'+ (token.vibing? ? ' x2!' :''), '/tokens/'+token.id.to_s, method: :patch%>

@@ -263,6 +263,11 @@ class Furbaby < ApplicationRecord
     self.created_at==DateTime.new
   end
 
+  def based
+   tdata = Token.trade_data
+   1-tdata[numerical_pheno.last%3][:total].to_f/Token.trade_total
+  end
+
   def token_transfer b
     if self.token and b.token
       if self.pair?

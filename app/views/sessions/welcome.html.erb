@@ -93,8 +93,8 @@ the same symbol, the biggest investment wins.</small>
 
                 CURRENT VIBE MARKET CAPITALIZATION
 -===================================================================-
-  Symbol              ||  <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%><%= " "*(9-e[:word].to_s.length) %><%}%>
-  Total Vibe Cap (N)  ||  <% syms.each{|e| %><%=e[:total]%><%= " "*(11-e[:total].to_s.length) %> <%}%>
+ Symbol             ||  <% syms.each{|e| %><%=e[:emoji]%><%=e[:word]%><%= " "*(9-e[:word].to_s.length) %><%}%>🌐total
+ Total Vibe Cap (N) ||  <% syms.each{|e| %><%=e[:total]%><%= " "*(11-e[:total].to_s.length) %> <%}%><%=Token.trade_total%>
 ---------------------------------------------------------------------<%vibing=syms.min{|a,b|a[:total]<=>b[:total]}[:word].upcase%>
 Neptune is currently vibing with <%= vibing %>.
 Petting a <%=vibing%> baby will generate double vibes.
