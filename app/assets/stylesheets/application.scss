@@ -181,6 +181,9 @@ b.bad { color: red; }
       padding: 0.4em;
       border-right: solid 1px $hcyan;
       border-bottom: solid 1px $cyan;
+      .btn a {
+        margin: 0;
+      }
     }
     td {
       color: $acyan;

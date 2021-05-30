@@ -37,8 +37,8 @@ tdata.each do |e|
  <%= link_to e[:emoji]+e[:word].to_s, controller: 'furbabies', action: 'new',
     token_id: token.id, symbol: e[:word].to_s %>
    </span>
-   <div style="float:right; width: 45%">
-     <%=render partial: 'based', locals: {e: e} %>
+   <div style="float:right; width: 45%"><small>
+     <%=render partial: 'based', locals: {e: e} %></small>
 </div>
    </td>
   <% end %>
