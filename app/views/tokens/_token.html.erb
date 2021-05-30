@@ -49,13 +49,14 @@ tdata.each do |e|
 <% if current_user and furbaby and not egg and current_user.id==token.user_id %>
 <div class="btn">
  <%= form_with model: Token do |f|%>
+  <%= f.hidden_field :from_token_id, value: token.id.to_s %>
   <%= f.submit "🪙 Mint Token" %>
  <%end%>
  <%=button_to "😿 Release", '/tokens/'+token.id.to_s, method: :delete %>
  </div>
  <%=render partial: 'based', locals: {e:tdata[furbaby.numerical_pheno.last%3]}%><br>
 <u><%=(furbaby.based*100).round%>% / <%=current_user.tokens.length%> tokens held =</u><br>
-<h2><%=(furbaby.based/current_user.tokens.length*100).round%>% chance to mint token</h2>
+<h2><%=(furbaby.chance*100).round%>% chance to mint token</h2>
 
 <% end %>
 

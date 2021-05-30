@@ -1,13 +1,20 @@
 class TokensController < ApplicationController
   def create
-    if logged_in?
-      @token = Token.create(user_id:current_user.id)
-    end
-    if @token.valid?
-      flash.notice='Minted a token!'
+    from_token = Token.find(params[:token][:from_token_id])
+    if logged_in? and from_token.user.id == current_user.id
       2.times do current_user.heat end
-      Event.create(user_id: current_user_id, key: "mint", value: @token.id)
-      redirect_to '/tokens/'+@token.id.to_s
+      furbaby = from_token.furbaby
+      if rand()<furbaby.chance
+        @token = Token.create(user_id:current_user.id)
+        if @token.valid?
+          flash.notice='Minted a token! 🪙'
+          Event.create(user_id: current_user_id, key: "mint", value: @token.id)
+          redirect_to '/tokens/'+@token.id.to_s
+        end
+      else
+        flash.notice='Bad luck! No token was minted. 💔'
+        redirect_to '/users/'+current_user.id.to_s+'/'+from_token.id.to_s
+      end
     end
   end
 

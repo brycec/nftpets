@@ -268,6 +268,10 @@ class Furbaby < ApplicationRecord
    1-tdata[numerical_pheno.last%3][:total].to_f/Token.trade_total
   end
 
+  def chance
+    based/token.user.tokens.length
+  end
+
   def token_transfer b
     if self.token and b.token
       if self.pair?
