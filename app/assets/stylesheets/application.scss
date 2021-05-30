@@ -74,6 +74,7 @@ b.bad { color: red; }
     left: 0;
     background: $hhcyan;
     border-radius: 0.4em 0.4em 0 0;
+    z-index: 2;
     h1 {
       font-size: 1.2em;
       font-style: italic;
@@ -103,7 +104,7 @@ b.bad { color: red; }
 
 #win input, .btn a, textarea, select {
   padding: 0.8em 1em;
-  appearance: none;
+  -webkit-appearance: none;
 }
 #win input:hover, .btn a:hover {
   cursor: pointer;
