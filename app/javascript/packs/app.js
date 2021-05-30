@@ -313,9 +313,9 @@ loader.load(window.GLTF_URL, function ( gltf ) {
       camera.lookAt(sat.position);
     }
     if (renderer.flyTo=="hand") {
-    hand.rotation.set(-1.15,1.1,1);
-    hand.position.set(0.6+cos(now()/5e2)/6,
-      0.45+cos(now()/5e2)/8,
+    hand.rotation.set(-1.11,1.1,1);
+    hand.position.set(0.65+cos(now()/5e2)/6,
+      0.4+cos(now()/5e2)/8,
       0.6+sin(now()/5e2)/2);
       heart.position.y=(6+2*(cos(now()/2e2)/20)-heart.position.y)/2.0;
     } else {

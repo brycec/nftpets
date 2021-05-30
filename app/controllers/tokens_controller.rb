@@ -44,7 +44,7 @@ class TokensController < ApplicationController
         payment.save
       elsif @message.vod
         flash.notice = "uh oh"
-        redirect '/'
+        redirect_to '/'
         return
       end
 
@@ -59,7 +59,7 @@ class TokensController < ApplicationController
       flash.notice='You pet the Furbaby! ❤️ ❤️ ❤️ +'+(@token.vibes-old).to_s
       current_user.heat
       Event.create(user_id: current_user_id, key: "pet", value: @token.id)
-      redirect_to '/tokens/'+@token.id.to_s+'?pet=true'
+      redirect_to '/users/'+@token.user.id.to_s+'/'+@token.id.to_s+'?pet=true'
     elsif @token.user_id!=current_user.id
       flash.notice='weird...'
       redirect_to '/'
